@@ -1,0 +1,40 @@
+﻿<Window x:Class="FuzzyRain.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Fuzzy Rain" Height="600" Width="800" ShowInTaskbar="True" WindowStartupLocation="CenterScreen" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" Icon="/FuzzyRain;component/Images/rain.png">
+    <StackPanel Orientation="Vertical">
+        <Menu Grid.Row="0" IsMainMenu="True" Height="25" DockPanel.Dock="Top">
+            <MenuItem Header="_Archivo">
+                <MenuItem Name="MenuItemCargarLLuvia" Header="Cargar lluvias..." Click="MenuItemCargarLLuvia_Click">
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="MenuItemSalir" Header="_Salir" Click="MenuItemSalir_Click">
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <StackPanel Orientation="Horizontal"  Height="36">
+            <Button Content="Examinar..." Height="26" Margin="5" Name="ButtonExaminar" Width="Auto" Click="ButtonExaminar_Click" />
+            <Button Content="Comenzar" Height="26" Margin="5" IsEnabled="False" Name="ButtonComenzar" Width="Auto" Click="ButtonComenzar_Click"/>
+            <TextBox Name="TextBoxArchivoEntrada" Margin="5" IsEnabled="False" Width="625"/>
+        </StackPanel>
+        <Separator Height="20">
+        </Separator>
+        <StackPanel Orientation="Horizontal"  Height="Auto" HorizontalAlignment="Center">
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical"  Height="Auto" Width="220">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageLLuvia" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/rain.png">
+                </Image>
+                <Label Name="LabelLLuvia" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageSuperficie" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/surface.jpg">
+                </Image>
+                <Label Name="LabelSuperficie" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageVolumen" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/R530245-2_zczxczxc.png">
+                </Image>
+                <Label Name="LabelVolumen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>
