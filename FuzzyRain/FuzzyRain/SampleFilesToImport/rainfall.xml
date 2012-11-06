@@ -1,0 +1,188 @@
+<rainfall>
+	<yearfall year="1980">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="114" />
+		</fall>
+	</yearfall>
+	<yearfall year="1981">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="70" />
+		</fall>
+	</yearfall>	
+	<yearfall year="1982">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="89" />
+		</fall>
+	</yearfall>
+	<yearfall year="1983">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="154" />
+		</fall>
+	</yearfall>
+	<yearfall year="1984">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="31" />
+		</fall>
+	</yearfall>
+	<yearfall year="1985">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="225" />
+		</fall>
+	</yearfall>
+	<yearfall year="1986">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="149" />
+		</fall>
+	</yearfall>
+	<yearfall year="1987">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="67" />
+		</fall>
+	</yearfall>
+	<yearfall year="1988">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="13" />
+		</fall>
+	</yearfall>
+	<yearfall year="1989">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="45" />
+		</fall>
+	</yearfall>
+	<yearfall year="1990">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="125" />
+		</fall>
+	</yearfall>
+	<yearfall year="1991">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="123" />
+		</fall>
+	</yearfall>
+	<yearfall year="1992">		
+		<fall> 
+			<month value="10" />
+			<precipitation value="88" />
+		</fall>
+	</yearfall>
+	<yearfall year="1993">
+		<fall> 
+			<month value="10" />
+			<precipitation value="107" />
+		</fall>
+	</yearfall>
+	<yearfall year="1994">
+		<fall> 
+			<month value="10" />
+			<precipitation value="109" />
+		</fall>
+	</yearfall>
+	<yearfall year="1995">
+		<fall> 
+			<month value="10" />
+			<precipitation value="70" />
+		</fall>
+	</yearfall>
+	<yearfall year="1996">
+		<fall> 
+			<month value="10" />
+			<precipitation value="71" />
+		</fall>
+	</yearfall>
+	<yearfall year="1997">
+		<fall> 
+			<month value="10" />
+			<precipitation value="227" />
+		</fall>
+	</yearfall>
+	<yearfall year="1998">
+		<fall> 
+			<month value="10" />
+			<precipitation value="88" />
+		</fall>
+	</yearfall>
+	<yearfall year="1999">
+		<fall> 
+			<month value="10" />
+			<precipitation value="110" />
+		</fall>
+	</yearfall>
+	<yearfall year="2000">
+		<fall> 
+			<month value="10" />
+			<precipitation value="289.20" />
+		</fall>
+	</yearfall>
+	<yearfall year="2001">
+		<fall> 
+			<month value="10" />
+			<precipitation value="136" />
+		</fall>
+	</yearfall>
+	<yearfall year="2002">
+		<fall> 
+			<month value="10" />
+			<precipitation value="116" />
+		</fall>
+	</yearfall>
+	<yearfall year="2003">
+		<fall> 
+			<month value="10" />
+			<precipitation value="68" />
+		</fall>
+	</yearfall>
+	<yearfall year="2004">
+		<fall> 
+			<month value="10" />
+			<precipitation value="150" />
+		</fall>
+	</yearfall>
+	<yearfall year="2005">
+		<fall> 
+			<month value="10" />
+			<precipitation value="61" />
+		</fall>
+	</yearfall>
+	<yearfall year="2006">
+		<fall> 
+			<month value="10" />
+			<precipitation value="184" />
+		</fall>
+	</yearfall>
+	<yearfall year="2007">
+		<fall> 
+			<month value="10" />
+			<precipitation value="156" />
+		</fall>
+	</yearfall>
+	<yearfall year="2008">
+		<fall> 
+			<month value="10" />
+			<precipitation value="206" />
+		</fall>
+	</yearfall>
+	<yearfall year="2009">
+		<fall> 
+			<month value="10" />
+			<precipitation value="28" />
+		</fall>
+	</yearfall>
+	<yearfall year="2010">
+		<fall> 
+			<month value="10" />
+			<precipitation value="90" />
+		</fall>
+	</yearfall>
+</rainfall>
