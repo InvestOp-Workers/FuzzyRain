@@ -117,20 +117,22 @@ namespace FuzzyRain
             // TODO: Numeros de eventos a considerar luego de la simulacion. Tendría que llegar como entrada.
             int numberOfEvents = 40;
 
+            // TODO: se está simulando sólo considerando la información del mes de octubre para los diferentes años.
+            // Obviamente habría que modificar un poco el código para que tenga en cuenta todos los meses.
             double mean = StatisticalMetrics.GetAverage(distributions[10].ValuesInOrderOfAppearance, DistributionType.Weekly);                        
 
             // TODO: el desvio esta harcodeado porque la formula para calcularlo no esta funcionando. Habría que ver si la formula 
             // que encontré es equivocada o la implementación la hice mal. Analizar.
-            double std_dev = 15.6465375035832;
+            double std_dev = 15.6465375035832;            
             // double std_dev = StatisticalMetrics.GetDesv(distributions[10].ValuesInOrderOfAppearance, DistributionType.Weekly);                        
 
-            // Obtain Model                        
-            var myModel = new MonteCarloModel(rankCount, ranks, mean, std_dev);
 
-            List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
+            // Obtain Model                        
+            var myModel = new MonteCarloModel(rankCount, ranks, mean, std_dev);            
 
             // TODO: esto esta puesto aca para verificar los valores de media que obtengo luego de la simulacion. Pero esto debiera ser removido posteriormente
             // o ubicado donde corresponda.
+            List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
             var mean_ForAllEvents = StatisticalMetrics.GetAverage(myModel.MyDistribution.ValuesInOrderOfAppearance);
             var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
         }
@@ -144,8 +146,10 @@ namespace FuzzyRain
             // no se si sera una buena estructura pero fue la primera que se me ocurrió para probar el parseo. De ultima habria que cambiarla
             Distribution[] monthsPrecipitations = new Distribution[13];
 
-            monthsPrecipitations[10] = new Distribution();
-            monthsPrecipitations[11] = new Distribution();
+            for (int i = 1; i <= 12; i++)
+            {
+                monthsPrecipitations[i] = new Distribution();            
+            }
 
             try
             {
@@ -155,11 +159,31 @@ namespace FuzzyRain
                 {                    
                     month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
-
+                    
+                    if (month == 1)
+                        monthsPrecipitations[1].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 2)
+                        monthsPrecipitations[2].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 3)
+                        monthsPrecipitations[3].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 4)
+                        monthsPrecipitations[4].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 5)
+                        monthsPrecipitations[5].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 6)
+                        monthsPrecipitations[6].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 7)
+                        monthsPrecipitations[7].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 8)
+                        monthsPrecipitations[8].AddValueInOrderOfAppearance(precipitation);
+                    if (month == 9)
+                        monthsPrecipitations[9].AddValueInOrderOfAppearance(precipitation);
                     if (month == 10)
-                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation);
+                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation);                    
                     else if (month == 11)
                         monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation);
+                    else if (month == 12)
+                        monthsPrecipitations[12].AddValueInOrderOfAppearance(precipitation);
                 }
 
             }
