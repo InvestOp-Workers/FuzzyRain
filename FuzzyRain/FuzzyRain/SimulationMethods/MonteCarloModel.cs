@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using React.Distribution;
+using System.Linq;
+using FuzzyRain.Model;
 
 namespace SimulationMethods
 {
@@ -9,7 +11,6 @@ namespace SimulationMethods
     public class MonteCarloModel
     {                           
         public Distribution MyDistribution { get; set; }
-        public List<double> ValuesInOrderOfAppearance = new List<double>();
 
         private double _mean = 0.0;
         private double _std_dev = 0.0;
@@ -25,7 +26,7 @@ namespace SimulationMethods
         }
 
         public MonteCarloModel(int rankCount, Rank[] ranks)
-        {                        
+        {
             MyDistribution = new Distribution();
             MyDistribution.RankCount = rankCount;
             MyDistribution.Ranks = ranks;
@@ -44,12 +45,17 @@ namespace SimulationMethods
             {                
                 double nextValue = distributionType.NextDouble();                
                 
-                i++;
-                ValuesInOrderOfAppearance.Add(nextValue);
+                i++;                
                 MyDistribution.PutValueInRank(nextValue);                
             }            
+        }
 
-            var avg = MyDistribution.Average;            
+        public List<double> GetFirstNEvents(int count)
+        {
+            //TODO: verificar si es posible que la librería solo genere números positivos (lo hice pero no encontré la forma).
+            List<double> valuesPositive = MyDistribution.ValuesInOrderOfAppearance.Where(x => x >= 0).ToList();
+
+            return valuesPositive.Take<double>(count).ToList();
         }
     }    
 }

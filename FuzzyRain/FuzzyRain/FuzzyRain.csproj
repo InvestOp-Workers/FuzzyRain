@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Distribution.cs" />
+    <Compile Include="Model\DistributionType.cs" />
+    <Compile Include="Model\StatisticalMetrics.cs" />
     <Compile Include="Model\Rank.cs" />
     <Compile Include="SimulationMethods\MonteCarloModel.cs" />
     <Page Include="MainWindow.xaml">

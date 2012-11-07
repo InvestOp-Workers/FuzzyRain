@@ -1,44 +1,23 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Collections.Generic;
+using FuzzyRain.Model;
 
 public class Distribution
 {
     public string Name { get; set; }
     public int RankCount { get; set; }
     public Rank[] Ranks { get; set; }
+    public List<double> ValuesInOrderOfAppearance = new List<double>();
+
+    public Distribution()
+    {
+        ValuesInOrderOfAppearance = new List<double>();        
+    }
     
-    public double Average 
-    {
-        get 
-        {            
-            int elementsCount = 0;
-            double summary = 0;
-            for (int i = 0; i < RankCount; i++)
-            {
-                foreach (double value in Ranks[i].Values)
-                {
-                    summary = summary + value;
-                    elementsCount++;
-                }
-            }
-
-            return summary / elementsCount;
-        }
-    }
-
-    public int GetRank(double value)
-    {
-        for(int i = 0; i < RankCount; i++)
-        {
-            if (value <= Ranks[i].UpperLimit)
-                return i;
-        }
-
-        return RankCount - 1;
-    }
-
     public bool PutValueInRank(double value)
     {
+        AddValueInOrderOfAppearance(value);
+
         for(int i = 0; i < RankCount; i++)
         {
             if (value <= Ranks[i].UpperLimit)
@@ -49,10 +28,12 @@ public class Distribution
         }
 
         return false;
-    }    
+    }
 
     public double PutValueInRankUsingFrequency(double value)
     {
+        AddValueInOrderOfAppearance(value);        
+
         double valueToReturn = 0.0;
 
         for (int i = 0; i < RankCount; i++)
@@ -67,5 +48,10 @@ public class Distribution
         }
 
         return valueToReturn;
-    }    
+    }
+
+    public void AddValueInOrderOfAppearance(double value)
+    {
+        ValuesInOrderOfAppearance.Add(value);
+    }
 }

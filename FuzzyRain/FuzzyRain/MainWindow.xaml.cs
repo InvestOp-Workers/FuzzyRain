@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using SimulationMethods;
 using System.IO;
 using System.Xml;
+using FuzzyRain.Model;
 
 namespace FuzzyRain
 {
@@ -68,8 +69,10 @@ namespace FuzzyRain
         {
             BeginSimulation();
             
+            // Parseo
+            Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
+
             // Simulacion
-            List<double>[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
             MonteCarloSimulation(valuesParsed);
         }
 
@@ -97,45 +100,52 @@ namespace FuzzyRain
             UpdateAnimationTimer.Start();
         }
 
-        private void MonteCarloSimulation(List<double>[] values)
+        private void MonteCarloSimulation(Distribution[] distributions)
         {
-            // TODO: Replace harcoded values by import values of excel.
-            // We need a file with the ranks and cumulative frequency 
+            // TODO: Los rangos estan harcodeados, de todos modos no aplicarían cuando el calculo se hace utilizando la libreria react.Net.
+            // Para el caso del algoritmo de MonteCarlo implementado "artesanalmente" debieramos ver como se armarían los rangos o si, talvez,
+            // debieramos importarlo desde el archivo de entrada tambien. Analizar!!
             var rankCount = 12;
-            //double[] limits = new double[rankCount];
+                        
             Rank[] ranks = new Rank[rankCount];
 
             for (int i = 0; i < rankCount; i++)
-            {
-                //limits[i] = i * 10;
+            {            
                 ranks[i] = new Rank(i * 10, i * 10 + 10);
             }
-            
-            double mean = GetMean(values[10]);
-            double std_dev = 15.6465375035832;
 
-            // TODO: verficar porque no lo este calculando de manera correcta.
-            //double std_dev = GetDesv(values[10], mean);
-
+            // TODO: Numeros de eventos a considerar luego de la simulacion. Tendría que llegar como entrada.
             int numberOfEvents = 40;
+
+            double mean = StatisticalMetrics.GetAverage(distributions[10].ValuesInOrderOfAppearance, DistributionType.Weekly);                        
+
+            // TODO: el desvio esta harcodeado porque la formula para calcularlo no esta funcionando. Habría que ver si la formula 
+            // que encontré es equivocada o la implementación la hice mal. Analizar.
+            double std_dev = 15.6465375035832;
+            // double std_dev = StatisticalMetrics.GetDesv(distributions[10].ValuesInOrderOfAppearance, DistributionType.Weekly);                        
 
             // Obtain Model                        
             var myModel = new MonteCarloModel(rankCount, ranks, mean, std_dev);
 
-            myModel.ValuesInOrderOfAppearance.Take(numberOfEvents).ToList();
+            List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
+
+            // TODO: esto esta puesto aca para verificar los valores de media que obtengo luego de la simulacion. Pero esto debiera ser removido posteriormente
+            // o ubicado donde corresponda.
+            var mean_ForAllEvents = StatisticalMetrics.GetAverage(myModel.MyDistribution.ValuesInOrderOfAppearance);
+            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
         }
 
-        public List<double>[] ParseFile(string fileName)
+        public Distribution[] ParseFile(string fileName)
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(fileName);            
 
-            // TODO: Es un array de 12 listas, 1 x mes, las cuales tienen los valores de lluvias de ese mes para la cantidad de años muestreados.
-            // no parece una buena estructura pero fue la primera que se me ocurrió para probar el parseo, hay que cambiarla.
-            List<double>[] monthsPrecipitations = new List<double>[13];
-            
-            monthsPrecipitations[10] = new List<double>();
-            monthsPrecipitations[11] = new List<double>();
+            // TODO: Es un array de 12 Distributions, 1 x mes, las cuales tienen los valores de lluvias de ese mes para la cantidad de años muestreados.
+            // no se si sera una buena estructura pero fue la primera que se me ocurrió para probar el parseo. De ultima habria que cambiarla
+            Distribution[] monthsPrecipitations = new Distribution[13];
+
+            monthsPrecipitations[10] = new Distribution();
+            monthsPrecipitations[11] = new Distribution();
 
             try
             {
@@ -147,9 +157,9 @@ namespace FuzzyRain
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
 
                     if (month == 10)
-                        monthsPrecipitations[10].Add(precipitation);
+                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation);
                     else if (month == 11)
-                        monthsPrecipitations[11].Add(precipitation);
+                        monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation);
                 }
 
             }
@@ -159,37 +169,6 @@ namespace FuzzyRain
             }
 
             return monthsPrecipitations;
-        }
-
-        private double GetMean(List<double> values)
-        {
-            double sum = 0;
-
-            foreach (double val in values)
-            {
-                sum = sum + val;
-            }
-
-            // calcula la media por mes
-            //return sum / values.Count;
-
-            // TODO: Esto devolveria la media de la semana, porque el valor del mes sería 4 valores iguales por cada semana
-            // de todos modos hay que ver como es mejor implementar esto, es solo para ir armando un esqueleto.
-            return sum / (values.Count * 4);
-        }
-
-        // TODO: Verfiicar la formula ya que la aplico y no me da el valor del desvio que esta en el archivo.
-        private double GetDesv(List<double> values, double mean)
-        {
-            double sum = 0;
-
-            foreach (double val in values)
-            {
-                sum = sum + Math.Pow(val - mean, 2);
-            }
-
-            sum = sum / ( (values.Count * 4) - 1 );
-            return Math.Sqrt( sum );
-        }
+        }        
     }
 }
