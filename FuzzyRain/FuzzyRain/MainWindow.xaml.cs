@@ -119,22 +119,20 @@ namespace FuzzyRain
 
             // TODO: se está simulando sólo considerando la información del mes de octubre para los diferentes años.
             // Obviamente habría que modificar un poco el código para que tenga en cuenta todos los meses.
-            double mean = StatisticalMetrics.GetAverage(distributions[10].ValuesInOrderOfAppearance, DistributionType.Weekly);                        
-
-            // TODO: el desvio esta harcodeado porque la formula para calcularlo no esta funcionando. Habría que ver si la formula 
-            // que encontré es equivocada o la implementación la hice mal. Analizar.
-            double std_dev = 15.6465375035832;            
-            // double std_dev = StatisticalMetrics.GetDesv(distributions[10].ValuesInOrderOfAppearance, DistributionType.Weekly);                        
-
+            double mean = StatisticalMetrics.GetAverage(distributions[10].ValuesInOrderOfAppearance);
+            double std_dev = StatisticalMetrics.GetDesv(distributions[10].ValuesInOrderOfAppearance);
 
             // Obtain Model                        
             var myModel = new MonteCarloModel(rankCount, ranks, mean, std_dev);            
 
-            // TODO: esto esta puesto aca para verificar los valores de media que obtengo luego de la simulacion. Pero esto debiera ser removido posteriormente
-            // o ubicado donde corresponda.
+            // TODO: esto esta puesto aca para verificar los valores de media que obtengo luego de la simulacion. Pero esto debiera ser removido 
+            // o reubicado donde corresponda.
             List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
             var mean_ForAllEvents = StatisticalMetrics.GetAverage(myModel.MyDistribution.ValuesInOrderOfAppearance);
-            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
+            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);
+
+            var desv_ForAllEvents = StatisticalMetrics.GetDesv(myModel.MyDistribution.ValuesInOrderOfAppearance);
+            var desv_NEvents = StatisticalMetrics.GetDesv(valuesToUseInFuzzyLogic);
         }
 
         public Distribution[] ParseFile(string fileName)
@@ -161,29 +159,29 @@ namespace FuzzyRain
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
                     
                     if (month == 1)
-                        monthsPrecipitations[1].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 2)
-                        monthsPrecipitations[2].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 3)
-                        monthsPrecipitations[3].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 4)
-                        monthsPrecipitations[4].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 5)
-                        monthsPrecipitations[5].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 6)
-                        monthsPrecipitations[6].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 7)
-                        monthsPrecipitations[7].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 8)
-                        monthsPrecipitations[8].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 9)
-                        monthsPrecipitations[9].AddValueInOrderOfAppearance(precipitation);
-                    if (month == 10)
-                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation);                    
+                        monthsPrecipitations[1].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 2)
+                        monthsPrecipitations[2].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 3)
+                        monthsPrecipitations[3].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 4)
+                        monthsPrecipitations[4].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 5)
+                        monthsPrecipitations[5].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 6)
+                        monthsPrecipitations[6].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 7)
+                        monthsPrecipitations[7].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 8)
+                        monthsPrecipitations[8].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 9)
+                        monthsPrecipitations[9].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                    else if (month == 10)
+                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
                     else if (month == 11)
-                        monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation);
+                        monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
                     else if (month == 12)
-                        monthsPrecipitations[12].AddValueInOrderOfAppearance(precipitation);
+                        monthsPrecipitations[12].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
                 }
 
             }
@@ -194,5 +192,5 @@ namespace FuzzyRain
 
             return monthsPrecipitations;
         }        
-    }
+    }    
 }
