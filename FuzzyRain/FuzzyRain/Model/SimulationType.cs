@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FuzzyRain.Model
 {
-    public enum DistributionType
+    public enum SimulationType
     {
         Daily = 30,
         Weekly = 4,

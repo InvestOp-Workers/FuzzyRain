@@ -50,16 +50,16 @@ public class Distribution
         return valueToReturn;
     }    
 
-    public void AddValueInOrderOfAppearance(double value, DistributionType distributionType)
+    public void AddValueInOrderOfAppearance(double value, SimulationType simulationType)
     {
         // EXPLICACION DE ESTE CODIGO: los datos de entrada son siempre mensuales (así está definido el formato de entrada), entonces, si la simulacion 
         // será diaria, debe dividerse cada dato mensual por 30 e ingresarlo como un suceso 30 veces para luego calcular la media y el desvio standard de 
         // manera adecuada.
         // Similar sería si se pretende una simulación semanal, deberia dividirse el dato ingresado por 4 e ingresarlo como que ocurrió en 4 oportunidades.
 
-        var valueToAdd = value / (int)distributionType;
+        var valueToAdd = value / (int)simulationType;
 
-        for (int i = 1; i <= (int)distributionType; i++)
+        for (int i = 1; i <= (int)simulationType; i++)
         {
             AddValueInOrderOfAppearance(valueToAdd);
         }

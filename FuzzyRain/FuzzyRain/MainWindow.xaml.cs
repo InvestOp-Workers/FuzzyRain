@@ -153,35 +153,37 @@ namespace FuzzyRain
             {
                 int month;
                 double precipitation;
+                SimulationType simulationType = GetSimulationType();
+
                 foreach (XmlNode item in xDoc.SelectNodes("/rainfall/yearfall/fall"))
                 {                    
                     month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
                     
                     if (month == 1)
-                        monthsPrecipitations[1].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[1].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 2)
-                        monthsPrecipitations[2].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[2].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 3)
-                        monthsPrecipitations[3].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[3].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 4)
-                        monthsPrecipitations[4].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[4].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 5)
-                        monthsPrecipitations[5].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[5].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 6)
-                        monthsPrecipitations[6].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[6].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 7)
-                        monthsPrecipitations[7].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[7].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 8)
-                        monthsPrecipitations[8].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[8].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 9)
-                        monthsPrecipitations[9].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[9].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 10)
-                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 11)
-                        monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation, simulationType);
                     else if (month == 12)
-                        monthsPrecipitations[12].AddValueInOrderOfAppearance(precipitation, DistributionType.Weekly);
+                        monthsPrecipitations[12].AddValueInOrderOfAppearance(precipitation, simulationType);
                 }
 
             }
@@ -191,6 +193,19 @@ namespace FuzzyRain
             }
 
             return monthsPrecipitations;
-        }        
+        }
+
+        private SimulationType GetSimulationType()
+        {
+            switch (cmbSimulationType.SelectedIndex)
+            {
+                case 0:
+                    return SimulationType.Daily;
+                case 1:
+                    return SimulationType.Weekly;
+                default:
+                    return SimulationType.Monthly;
+            }
+        }
     }    
 }
