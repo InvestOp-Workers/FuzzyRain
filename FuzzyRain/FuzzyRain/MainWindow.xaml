@@ -27,6 +27,120 @@
         </StackPanel>
         <Separator Height="20">
         </Separator>
+
+        <Grid Margin="0,0,0,0" Height="220">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="220"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Height="200" Width="200" HorizontalAlignment="Left" Margin="0,0,0,20">
+                <TextBlock>Datos de entrada:</TextBlock>
+                <TabControl x:Name="tabMonths" >
+                    <TabItem Header="Oct" IsSelected="True">
+                        <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20" >
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                                <TextBlock x:Name="avg_10"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                                <TextBlock x:Name="desv_10"></TextBlock>
+                            </StackPanel>                            
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Visible" IsEnabled="True" Height="100" Margin="10,10,10,0">-->
+                                <ListView Name="values_10" Height="100"/>
+                            <!--</ScrollViewer>-->
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Nov">
+                        <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                                <TextBlock x:Name="avg_11"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                                <TextBlock x:Name="desv_11"></TextBlock>
+                            </StackPanel>                            
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Visible" IsEnabled="True" Height="100" Margin="10,10,10,0">-->
+                                <ListView Name="values_11" Height="100"/>
+                            <!--</ScrollViewer>-->
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Dic">
+                        <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                                <TextBlock x:Name="avg_12"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                                <TextBlock x:Name="desv_12"></TextBlock>
+                            </StackPanel>
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Visible" IsEnabled="True" Height="100" Margin="10,10,10,0">-->
+                                <ListView Name="values_12" Height="100"/>
+                            <!--</ScrollViewer>-->
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Height="220" Width="200" HorizontalAlignment="Left" Margin="0,0,0,20">
+                <TextBlock>Datos de Simulacion:</TextBlock>
+                <TabControl x:Name="tabMonthsOutput">
+                    <TabItem Header="Oct" IsSelected="True">
+                        <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                                <TextBlock x:Name="avg_output_10"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                                <TextBlock x:Name="desv_output_10"></TextBlock>
+                            </StackPanel>
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Visible" IsEnabled="True" Height="100" Width="120" Margin="10,10,10,0">-->
+                                <ListView Name="values_output_10" Height="100"/>
+                            <!--</ScrollViewer>-->
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Nov">
+                        <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                                <TextBlock x:Name="avg_output_11"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                                <TextBlock x:Name="desv_output_11"></TextBlock>
+                            </StackPanel>
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Visible" IsEnabled="True" Height="100" Width="120" Margin="10,10,10,0">-->
+                                <ListView Name="values_output_11" Height="100"/>
+                            <!--</ScrollViewer>-->
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Dic">
+                        <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                                <TextBlock x:Name="avg_output_12"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                                <TextBlock x:Name="desv_output_12"></TextBlock>
+                            </StackPanel>
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Visible" IsEnabled="True" Height="100" Width="120" Margin="10,10,10,0">-->
+                                <ListView Name="values_output_12" Height="100"/>
+                            <!--</ScrollViewer>-->
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </StackPanel>
+        </Grid>
+
         <StackPanel Orientation="Horizontal"  Height="Auto" HorizontalAlignment="Center">
             <StackPanel VerticalAlignment="Center" Orientation="Vertical"  Height="Auto" Width="220">
                 <Image VerticalAlignment="Center" Height="200" Name="ImageLLuvia" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/rain.png">

@@ -122,6 +122,8 @@ namespace FuzzyRain
             double mean = StatisticalMetrics.GetAverage(distributions[10].ValuesInOrderOfAppearance);
             double std_dev = StatisticalMetrics.GetDesv(distributions[10].ValuesInOrderOfAppearance);
 
+            SetDataMonth(distributions[10].ValuesInOrderOfAppearance, 10, mean, std_dev, true);
+
             // Obtain Model                        
             var myModel = new MonteCarloModel(rankCount, ranks, mean, std_dev);            
 
@@ -129,10 +131,12 @@ namespace FuzzyRain
             // o reubicado donde corresponda.
             List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
             var mean_ForAllEvents = StatisticalMetrics.GetAverage(myModel.MyDistribution.ValuesInOrderOfAppearance);
-            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);
+            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
 
             var desv_ForAllEvents = StatisticalMetrics.GetDesv(myModel.MyDistribution.ValuesInOrderOfAppearance);
             var desv_NEvents = StatisticalMetrics.GetDesv(valuesToUseInFuzzyLogic);
+
+            SetDataMonth(valuesToUseInFuzzyLogic, 10, mean_NEvents, desv_NEvents, false);
         }
 
         public Distribution[] ParseFile(string fileName)
@@ -205,6 +209,22 @@ namespace FuzzyRain
                     return SimulationType.Weekly;
                 default:
                     return SimulationType.Monthly;
+            }
+        }
+
+        private void SetDataMonth(List<double> distributions, int month, double avg, double desv, bool isInput)
+        {
+            if (isInput)
+            {
+                ((ListView)tabMonths.FindName("values_" + month)).ItemsSource = distributions;
+                ((TextBlock)tabMonths.FindName("avg_" + month)).Text = avg.ToString("#0.00");
+                ((TextBlock)tabMonths.FindName("desv_" + month)).Text = desv.ToString("#0.00");
+            }
+            else
+            {
+                ((ListView)tabMonthsOutput.FindName("values_output_" + month)).ItemsSource = distributions;
+                ((TextBlock)tabMonthsOutput.FindName("avg_output_" + month)).Text = avg.ToString("#0.00");
+                ((TextBlock)tabMonthsOutput.FindName("desv_output_" + month)).Text = desv.ToString("#0.00");
             }
         }
     }    
