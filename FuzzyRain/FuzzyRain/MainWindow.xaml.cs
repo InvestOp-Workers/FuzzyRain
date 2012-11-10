@@ -73,7 +73,12 @@ namespace FuzzyRain
             Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
 
             // Simulacion
-            MonteCarloSimulation(valuesParsed);
+            Simulation(valuesParsed);
+
+            stkDataInput.Visibility = System.Windows.Visibility.Visible;
+            stkDataOutput.Visibility = System.Windows.Visibility.Visible;
+
+            ButtonComenzar.Content = "Re-intentar";
         }
 
         private void UpdateAnimationTimer_Tick(object sender, EventArgs e)
@@ -100,7 +105,7 @@ namespace FuzzyRain
             UpdateAnimationTimer.Start();
         }
 
-        private void MonteCarloSimulation(Distribution[] distributions)
+        private void Simulation(Distribution[] distributions)
         {
             // TODO: Los rangos estan harcodeados, de todos modos no aplicarían cuando el calculo se hace utilizando la libreria react.Net.
             // Para el caso del algoritmo de MonteCarlo implementado "artesanalmente" debieramos ver como se armarían los rangos o si, talvez,
@@ -113,9 +118,8 @@ namespace FuzzyRain
             {            
                 ranks[i] = new Rank(i * 10, i * 10 + 10);
             }
-
-            // TODO: Numeros de eventos a considerar luego de la simulacion. Tendría que llegar como entrada.
-            int numberOfEvents = 40;
+            
+            int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? 0 : int.Parse(txtCountEvents.Text);
 
             // TODO: se está simulando sólo considerando la información del mes de octubre para los diferentes años.
             // Obviamente habría que modificar un poco el código para que tenga en cuenta todos los meses.
@@ -131,9 +135,9 @@ namespace FuzzyRain
             // o reubicado donde corresponda.
             List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
             var mean_ForAllEvents = StatisticalMetrics.GetAverage(myModel.MyDistribution.ValuesInOrderOfAppearance);
-            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
-
             var desv_ForAllEvents = StatisticalMetrics.GetDesv(myModel.MyDistribution.ValuesInOrderOfAppearance);
+
+            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
             var desv_NEvents = StatisticalMetrics.GetDesv(valuesToUseInFuzzyLogic);
 
             SetDataMonth(valuesToUseInFuzzyLogic, 10, mean_NEvents, desv_NEvents, false);
