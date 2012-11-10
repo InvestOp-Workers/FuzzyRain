@@ -9,6 +9,22 @@ public class Distribution
     public Rank[] Ranks { get; set; }
     public List<double> ValuesInOrderOfAppearance = new List<double>();
 
+    public double Average
+    {
+        get
+        {
+            return StatisticalMetrics.GetAverage(ValuesInOrderOfAppearance);
+        }
+    }
+
+    public double Std_Desv
+    {
+        get
+        {
+            return StatisticalMetrics.GetDesv(ValuesInOrderOfAppearance);
+        }
+    }
+
     public Distribution()
     {
         ValuesInOrderOfAppearance = new List<double>();        
@@ -65,7 +81,7 @@ public class Distribution
         }
     }
 
-    private void AddValueInOrderOfAppearance(double value)
+    public void AddValueInOrderOfAppearance(double value)
     {
         ValuesInOrderOfAppearance.Add(value);
     }

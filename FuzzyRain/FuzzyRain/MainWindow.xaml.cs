@@ -121,26 +121,20 @@ namespace FuzzyRain
             
             int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? 0 : int.Parse(txtCountEvents.Text);
 
-            // TODO: se está simulando sólo considerando la información del mes de octubre para los diferentes años.
-            // Obviamente habría que modificar un poco el código para que tenga en cuenta todos los meses.
-            double mean = StatisticalMetrics.GetAverage(distributions[10].ValuesInOrderOfAppearance);
-            double std_dev = StatisticalMetrics.GetDesv(distributions[10].ValuesInOrderOfAppearance);
+            // Set Parsed Data
+            SetDataMonths(distributions, true);
 
-            SetDataMonth(distributions[10].ValuesInOrderOfAppearance, 10, mean, std_dev, true);
+            Distribution[] simulations = new Distribution[13];
+            for (int i = 1; i <= 12; i++)
+            {
+                simulations[i] = new Distribution();
+                var myModel = new MonteCarloModel(distributions[i].Average, distributions[i].Std_Desv);
+                
+                simulations[i].ValuesInOrderOfAppearance = myModel.GetFirstNEvents(numberOfEvents);
+            }
 
-            // Obtain Model                        
-            var myModel = new MonteCarloModel(rankCount, ranks, mean, std_dev);            
-
-            // TODO: esto esta puesto aca para verificar los valores de media que obtengo luego de la simulacion. Pero esto debiera ser removido 
-            // o reubicado donde corresponda.
-            List<double> valuesToUseInFuzzyLogic = myModel.GetFirstNEvents(numberOfEvents);
-            var mean_ForAllEvents = StatisticalMetrics.GetAverage(myModel.MyDistribution.ValuesInOrderOfAppearance);
-            var desv_ForAllEvents = StatisticalMetrics.GetDesv(myModel.MyDistribution.ValuesInOrderOfAppearance);
-
-            var mean_NEvents = StatisticalMetrics.GetAverage(valuesToUseInFuzzyLogic);            
-            var desv_NEvents = StatisticalMetrics.GetDesv(valuesToUseInFuzzyLogic);
-
-            SetDataMonth(valuesToUseInFuzzyLogic, 10, mean_NEvents, desv_NEvents, false);
+            // Set Simulated Data
+            SetDataMonths(simulations, false);
         }
 
         public Distribution[] ParseFile(string fileName)
@@ -216,19 +210,25 @@ namespace FuzzyRain
             }
         }
 
-        private void SetDataMonth(List<double> distributions, int month, double avg, double desv, bool isInput)
+        private void SetDataMonths(Distribution[] distributions, bool isInput)
         {
-            if (isInput)
-            {
-                ((ListView)tabMonths.FindName("values_" + month)).ItemsSource = distributions;
-                ((TextBlock)tabMonths.FindName("avg_" + month)).Text = avg.ToString("#0.00");
-                ((TextBlock)tabMonths.FindName("desv_" + month)).Text = desv.ToString("#0.00");
-            }
-            else
-            {
-                ((ListView)tabMonthsOutput.FindName("values_output_" + month)).ItemsSource = distributions;
-                ((TextBlock)tabMonthsOutput.FindName("avg_output_" + month)).Text = avg.ToString("#0.00");
-                ((TextBlock)tabMonthsOutput.FindName("desv_output_" + month)).Text = desv.ToString("#0.00");
+            for (int month = 10; month <= 12; month++)
+            {                
+                double avg = distributions[month].Average;
+                double desv = distributions[month].Std_Desv;
+
+                if (isInput)
+                {
+                    ((ListView)tabMonths.FindName("values_" + month)).ItemsSource = distributions[month].ValuesInOrderOfAppearance;
+                    ((TextBlock)tabMonths.FindName("avg_" + month)).Text = avg.ToString("#0.00");
+                    ((TextBlock)tabMonths.FindName("desv_" + month)).Text = desv.ToString("#0.00");
+                }
+                else
+                {
+                    ((ListView)tabMonthsOutput.FindName("values_output_" + month)).ItemsSource = distributions[month].ValuesInOrderOfAppearance;
+                    ((TextBlock)tabMonthsOutput.FindName("avg_output_" + month)).Text = avg.ToString("#0.00");
+                    ((TextBlock)tabMonthsOutput.FindName("desv_output_" + month)).Text = desv.ToString("#0.00");
+                }
             }
         }
     }    

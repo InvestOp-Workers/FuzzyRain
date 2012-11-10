@@ -33,6 +33,14 @@ namespace SimulationMethods
             Run();
         }
 
+        public MonteCarloModel(double mean, double std_dev)
+        {
+            _mean = mean;
+            _std_dev = std_dev;
+            MyDistribution = new Distribution();
+            Run();
+        }
+
         /// <summary>
         /// Runs the Monte Carlo Simulation
         /// </summary>
@@ -46,7 +54,8 @@ namespace SimulationMethods
                 double nextValue = distributionType.NextDouble();                
                 
                 i++;                
-                MyDistribution.PutValueInRank(nextValue);                
+                //MyDistribution.PutValueInRank(nextValue);
+                MyDistribution.AddValueInOrderOfAppearance(nextValue);
             }            
         }
 
