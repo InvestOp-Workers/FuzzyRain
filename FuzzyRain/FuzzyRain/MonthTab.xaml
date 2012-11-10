@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="FuzzyRain.MonthTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <StackPanel>
+        <TextBlock x:Name="txtTitle"></TextBlock>
+        <TabControl x:Name="tabMonths" >
+            <TabItem Header="Oct" IsSelected="True">
+                <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20" >
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                        <TextBlock x:Name="avg_10"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                        <TextBlock x:Name="desv_10"></TextBlock>
+                    </StackPanel>
+
+                    <ListView Name="values_10" Height="300"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Nov">
+                <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                        <TextBlock x:Name="avg_11"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                        <TextBlock x:Name="desv_11"></TextBlock>
+                    </StackPanel>
+
+                    <ListView Name="values_11" Height="300"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Dic">
+                <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+                        <TextBlock x:Name="avg_12"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+                        <TextBlock x:Name="desv_12"></TextBlock>
+                    </StackPanel>
+
+                    <ListView Name="values_12" Height="300"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </StackPanel>                
+</UserControl>

@@ -56,7 +56,12 @@ namespace SimulationMethods
                 i++;                
                 //MyDistribution.PutValueInRank(nextValue);
                 MyDistribution.AddValueInOrderOfAppearance(nextValue);
-            }            
+            }
+
+            // TODO: Estos valores corresponden a la media y desvio de toda la simulacion (los 20000 sucesos). Quizas debieran ser mostrados como 
+            // informacion de la simulacion en la salida junto a la media y el desvio, que se estan mostrando ahora, para la cantidad de sucesos devueltos.
+            var avg = MyDistribution.Average;
+            var desv = MyDistribution.Std_Desv;
         }
 
         public List<double> GetFirstNEvents(int count)

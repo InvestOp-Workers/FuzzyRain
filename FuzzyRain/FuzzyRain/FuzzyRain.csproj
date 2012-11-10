@@ -68,6 +68,9 @@
     <Compile Include="Model\SimulationType.cs" />
     <Compile Include="Model\StatisticalMetrics.cs" />
     <Compile Include="Model\Rank.cs" />
+    <Compile Include="MonthTab.xaml.cs">
+      <DependentUpon>MonthTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimulationMethods\MonteCarloModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -81,6 +84,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MonthTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -125,7 +125,7 @@ namespace FuzzyRain
             SetDataMonths(distributions, true);
 
             Distribution[] simulations = new Distribution[13];
-            for (int i = 1; i <= 12; i++)
+            for (int i = 10; i <= 12; i++)
             {
                 simulations[i] = new Distribution();
                 var myModel = new MonteCarloModel(distributions[i].Average, distributions[i].Std_Desv);
@@ -212,24 +212,15 @@ namespace FuzzyRain
 
         private void SetDataMonths(Distribution[] distributions, bool isInput)
         {
-            for (int month = 10; month <= 12; month++)
-            {                
-                double avg = distributions[month].Average;
-                double desv = distributions[month].Std_Desv;
-
-                if (isInput)
-                {
-                    ((ListView)tabMonths.FindName("values_" + month)).ItemsSource = distributions[month].ValuesInOrderOfAppearance;
-                    ((TextBlock)tabMonths.FindName("avg_" + month)).Text = avg.ToString("#0.00");
-                    ((TextBlock)tabMonths.FindName("desv_" + month)).Text = desv.ToString("#0.00");
-                }
-                else
-                {
-                    ((ListView)tabMonthsOutput.FindName("values_output_" + month)).ItemsSource = distributions[month].ValuesInOrderOfAppearance;
-                    ((TextBlock)tabMonthsOutput.FindName("avg_output_" + month)).Text = avg.ToString("#0.00");
-                    ((TextBlock)tabMonthsOutput.FindName("desv_output_" + month)).Text = desv.ToString("#0.00");
-                }
+            if (isInput)
+            {                                
+                inputTab.SetDataMonths(distributions);
             }
+            else
+            {                
+                outputTab.SetDataMonths(distributions);
+            }            
         }
+
     }    
 }
