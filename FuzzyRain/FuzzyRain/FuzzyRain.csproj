@@ -120,7 +120,7 @@
     <Resource Include="Images\surface.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\R530245-2_zczxczxc.png" />
+    <Resource Include="Images\volume.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SampleFilesToImport\rainfall.xml" />
