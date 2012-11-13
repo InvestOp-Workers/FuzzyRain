@@ -16,6 +16,7 @@ using SimulationMethods;
 using System.IO;
 using System.Xml;
 using FuzzyRain.Model;
+using FuzzyLogic;
 
 namespace FuzzyRain
 {
@@ -32,6 +33,8 @@ namespace FuzzyRain
             UpdateAnimationTimer = new DispatcherTimer();
             UpdateAnimationTimer.Tick += new EventHandler(UpdateAnimationTimer_Tick);
             UpdateAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+
+            FuzzyLogic.FuzzyRain.Instance.DoInference(9);
         }
         private void OpenFile()
         {
@@ -89,15 +92,19 @@ namespace FuzzyRain
             ImageLLuvia.Height = newSize;
             LabelLLuvia.Content = newSize.ToString("00.00") + "mm";
 
-            double newSize1 = random.NextDouble() * 200;
-            ImageSuperficie.Width = newSize1;
-            ImageSuperficie.Height = newSize1;
-            LabelSuperficie.Content = newSize1.ToString("00.00") + "mm";
+            FuzzyRainResult result = FuzzyLogic.FuzzyRain.Instance.DoInference((float)newSize);
+            if (result != null)
+            {
+                double newSize1 = random.NextDouble() * 200;
+                ImageSuperficie.Width = newSize1;
+                ImageSuperficie.Height = newSize1;
+                LabelSuperficie.Content = result.Surface.ToString("00.00") + "mm";
 
-            double newSize2 = random.NextDouble() * 200;
-            ImageVolumen.Width = newSize2;
-            ImageVolumen.Height = newSize2;
-            LabelVolumen.Content = newSize2.ToString("00.00") + "mm";
+                double newSize2 = random.NextDouble() * 200;
+                ImageVolumen.Width = newSize2;
+                ImageVolumen.Height = newSize2;
+                LabelVolumen.Content = result.Volume.ToString("00.00") + "mm";
+            }
         }
 
         private void BeginSimulation()

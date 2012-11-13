@@ -31,7 +31,7 @@
         <Separator Height="20">
         </Separator>
 
-        <Grid Margin="0,0,0,0" Height="420">
+        <Grid Margin="0,0,0,0" Height="200">
             <Grid.RowDefinitions>
                 <RowDefinition Height="420"></RowDefinition>
             </Grid.RowDefinitions>
@@ -64,7 +64,7 @@
                 <Label Name="LabelSuperficie" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
             </StackPanel>
             <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
-                <Image VerticalAlignment="Center" Height="200" Name="ImageVolumen" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/R530245-2_zczxczxc.png">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageVolumen" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/volume.png">
                 </Image>
                 <Label Name="LabelVolumen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
             </StackPanel>

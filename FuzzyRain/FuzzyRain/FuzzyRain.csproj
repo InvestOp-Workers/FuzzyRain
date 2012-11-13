@@ -64,6 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FuzzyLogic\FuzzyRain.cs" />
+    <Compile Include="FuzzyLogic\FuzzyRainResult.cs" />
     <Compile Include="Model\Distribution.cs" />
     <Compile Include="Model\SimulationType.cs" />
     <Compile Include="Model\StatisticalMetrics.cs" />
@@ -120,7 +122,7 @@
     <Resource Include="Images\surface.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\R530245-2_zczxczxc.png" />
+    <Resource Include="Images\volume.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SampleFilesToImport\rainfall.xml" />
