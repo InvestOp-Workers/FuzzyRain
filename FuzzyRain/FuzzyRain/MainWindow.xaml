@@ -31,9 +31,9 @@
         <Separator Height="20">
         </Separator>
 
-        <Grid Margin="0,0,0,0" Height="200">
+        <Grid Margin="0,0,0,0" Height="320">
             <Grid.RowDefinitions>
-                <RowDefinition Height="420"></RowDefinition>
+                <RowDefinition Height="320"></RowDefinition>
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>

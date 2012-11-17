@@ -74,6 +74,7 @@
       <DependentUpon>MonthTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="SimulationMethods\MonteCarloModel.cs" />
+    <Compile Include="SimulationMethods\MonteCarloWithRanks.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

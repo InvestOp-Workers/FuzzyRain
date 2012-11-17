@@ -21,7 +21,7 @@
                         <TextBlock x:Name="desv_10"></TextBlock>
                     </StackPanel>
 
-                    <ListView Name="values_10" Height="300"/>
+                    <ListView Name="values_10" Height="200"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Nov">
@@ -36,7 +36,7 @@
                         <TextBlock x:Name="desv_11"></TextBlock>
                     </StackPanel>
 
-                    <ListView Name="values_11" Height="300"/>
+                    <ListView Name="values_11" Height="200"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Dic">
@@ -51,7 +51,7 @@
                         <TextBlock x:Name="desv_12"></TextBlock>
                     </StackPanel>
 
-                    <ListView Name="values_12" Height="300"/>
+                    <ListView Name="values_12" Height="200"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
