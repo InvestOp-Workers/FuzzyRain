@@ -7,7 +7,7 @@ namespace FuzzyRain.Model
 {
     public static class StatisticalMetrics
     {
-        public static double GetAverage(List<double> values)
+        public static double GetAverage(IList<double> values)
         {
             double summary = 0;
             foreach (var value in values)
@@ -18,7 +18,7 @@ namespace FuzzyRain.Model
             return summary / values.Count;
         }
         
-        public static double GetDesv(List<double> values)
+        public static double GetDesv(IList<double> values)
         {
             double sum = 0;
             double mean = GetAverage(values);

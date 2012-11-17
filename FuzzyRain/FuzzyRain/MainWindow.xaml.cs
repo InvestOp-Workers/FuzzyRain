@@ -71,12 +71,14 @@ namespace FuzzyRain
         private void ButtonComenzar_Click(object sender, RoutedEventArgs e)
         {
             BeginSimulation();
-            
-            // Parseo
-            Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
 
-            // Simulacion
-            Simulation(valuesParsed);
+            //TODO: si aplicamos los dos modos de simulacion, este valor deberia ser seleccionado como entrada.
+            bool applyRanks = true;
+
+            // Parseo
+            Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text, applyRanks);
+
+            Simulation(valuesParsed, applyRanks);
 
             stkDataInput.Visibility = System.Windows.Visibility.Visible;
             stkDataOutput.Visibility = System.Windows.Visibility.Visible;
@@ -112,20 +114,13 @@ namespace FuzzyRain
             UpdateAnimationTimer.Start();
         }
 
-        private void Simulation(Distribution[] distributions)
+        private void Simulation(Distribution[] distributions, bool applyRanks)
         {
             // TODO: Los rangos estan harcodeados, de todos modos no aplicarían cuando el calculo se hace utilizando la libreria react.Net.
             // Para el caso del algoritmo de MonteCarlo implementado "artesanalmente" debieramos ver como se armarían los rangos o si, talvez,
             // debieramos importarlo desde el archivo de entrada tambien. Analizar!!
             var rankCount = 12;
-                        
-            Rank[] ranks = new Rank[rankCount];
 
-            for (int i = 0; i < rankCount; i++)
-            {            
-                ranks[i] = new Rank(i * 10, i * 10 + 10);
-            }
-            
             int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? 0 : int.Parse(txtCountEvents.Text);
 
             // Set Parsed Data
@@ -135,16 +130,24 @@ namespace FuzzyRain
             for (int i = 10; i <= 12; i++)
             {
                 simulations[i] = new Distribution();
-                var myModel = new MonteCarloModel(distributions[i].Average, distributions[i].Std_Desv);
                 
-                simulations[i].ValuesInOrderOfAppearance = myModel.GetFirstNEvents(numberOfEvents);
+                if (applyRanks)
+                {
+                    var myModel = new MonteCarloWithRanks(rankCount, distributions[i].Ranks);
+                    simulations[i].ValuesInOrderOfAppearance = myModel.GetFirstNEvents(numberOfEvents);
+                }
+                else
+                {
+                    var myModel = new MonteCarloModel(distributions[i].Average, distributions[i].Std_Desv);
+                    simulations[i].ValuesInOrderOfAppearance = myModel.GetFirstNEvents(numberOfEvents);
+                }                                
             }
 
             // Set Simulated Data
             SetDataMonths(simulations, false);
         }
 
-        public Distribution[] ParseFile(string fileName)
+        public Distribution[] ParseFile(string fileName, bool applyRanks)
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(fileName);            
@@ -155,7 +158,10 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution();            
+                monthsPrecipitations[i] = new Distribution();
+
+                if(applyRanks)
+                    monthsPrecipitations[i].Ranks = CreateRanks(12);                
             }
 
             try
@@ -169,30 +175,14 @@ namespace FuzzyRain
                     month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
                     
-                    if (month == 1)
-                        monthsPrecipitations[1].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 2)
-                        monthsPrecipitations[2].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 3)
-                        monthsPrecipitations[3].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 4)
-                        monthsPrecipitations[4].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 5)
-                        monthsPrecipitations[5].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 6)
-                        monthsPrecipitations[6].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 7)
-                        monthsPrecipitations[7].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 8)
-                        monthsPrecipitations[8].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 9)
-                        monthsPrecipitations[9].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 10)
-                        monthsPrecipitations[10].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 11)
-                        monthsPrecipitations[11].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    else if (month == 12)
-                        monthsPrecipitations[12].AddValueInOrderOfAppearance(precipitation, simulationType);
+                    if (applyRanks)
+                    {
+                        monthsPrecipitations[month].PutValueInRank(precipitation, simulationType);
+                    }
+                    else
+                    {
+                        monthsPrecipitations[month].AddValueInOrderOfAppearance(precipitation, simulationType);
+                    }
                 }
 
             }
@@ -202,6 +192,19 @@ namespace FuzzyRain
             }
 
             return monthsPrecipitations;
+        }
+
+        // TODO: los rangos deberian ser creados de manera matematica.
+        private Rank[] CreateRanks(int rankCount)
+        {
+            Rank[] ranks = new Rank[rankCount];
+
+            for (int i = 0; i < rankCount; i++)
+            {
+                ranks[i] = new Rank(i * 10, i * 10 + 10);
+            }
+
+            return ranks;
         }
 
         private SimulationType GetSimulationType()
