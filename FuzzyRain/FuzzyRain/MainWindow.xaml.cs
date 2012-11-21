@@ -186,7 +186,7 @@ namespace FuzzyRain
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 monthsPrecipitations = null;
             }
