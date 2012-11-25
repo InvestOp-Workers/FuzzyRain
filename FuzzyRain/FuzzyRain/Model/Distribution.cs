@@ -4,7 +4,7 @@ using FuzzyRain.Model;
 
 public class Distribution
 {
-    public string Name { get; set; }
+    private const int RANK_PRECISENESS = 40;
     public int RankCount 
     {
         get
@@ -16,7 +16,7 @@ public class Distribution
         }
     }
     public Rank[] Ranks { get; set; }
-    public IList<double> ValuesInOrderOfAppearance = new List<double>();
+    public IList<double> ValuesInOrderOfAppearance = new List<double>();    
 
     public double Average
     {
@@ -66,8 +66,19 @@ public class Distribution
             {
                 // TODO: el valor central no debiera ser tomado en cuenta, sino que debieramos obtener un valor mas preciso matematicamente 
                 //calculando proporcionalmente.
-                valueToReturn = currentRank.CenterValueOfRank;
+                //valueToReturn = currentRank.CenterValueOfRank;
 
+                if (i == 0)
+                {
+                    valueToReturn = ObtainValueInRank(currentRank.LowerLimit, currentRank.UpperLimit,
+                        ObtainPlaceInRank(0, currentRank.CumFrequency, value));
+                }
+                else
+                {
+                    valueToReturn = ObtainValueInRank(currentRank.LowerLimit, currentRank.UpperLimit,
+                        ObtainPlaceInRank(Ranks[i - 1].CumFrequency, currentRank.CumFrequency, value));
+                }
+                
                 currentRank.Values.Add(valueToReturn);
                 AddValueInOrderOfAppearance(valueToReturn);
                 return valueToReturn;
@@ -75,21 +86,32 @@ public class Distribution
         }
 
         return valueToReturn;
-    }    
+    }
 
-    public void AddValueInOrderOfAppearance(double value, SimulationType simulationType)
+    private int ObtainPlaceInRank(double valueInf, double valueSup, double value)
     {
-        // EXPLICACION DE ESTE CODIGO: los datos de entrada son siempre mensuales (así está definido el formato de entrada), entonces, si la simulacion 
-        // será diaria, debe dividerse cada dato mensual por 30 e ingresarlo como un suceso 30 veces para luego calcular la media y el desvio standard de 
-        // manera adecuada.
-        // Similar sería si se pretende una simulación semanal, deberia dividirse el dato ingresado por 4 e ingresarlo como que ocurrió en 4 oportunidades.
+        double rankAmplitude = valueSup - valueInf;
+        double rankPortion = rankAmplitude / RANK_PRECISENESS;
 
-        var valueToAdd = GetValueAccordingSimulationType(value, simulationType);
-
-        for (int i = 1; i <= (int)simulationType; i++)
+        int valueToReturn = 0;
+        for (int i = 1; i <= RANK_PRECISENESS; i++)
         {
-            AddValueInOrderOfAppearance(valueToAdd);
+            if (value <= valueInf + rankPortion * i)
+            {
+                valueToReturn = i;
+                break;
+            }
         }
+
+        return valueToReturn;
+    }
+
+    private double ObtainValueInRank(double valueInf, double valueSup, int placeInRank)
+    {
+        double rankAmplitude = valueSup - valueInf;
+        double rankPortion = rankAmplitude / RANK_PRECISENESS;
+
+        return valueInf + rankPortion * placeInRank;        
     }
 
     public void AddValueInOrderOfAppearance(double value)
@@ -100,14 +122,6 @@ public class Distribution
     private double GetValueAccordingSimulationType(double value, SimulationType simulationType)
     { 
         return value / (int)simulationType;
-    }
-
-    private void AddValueAccordingSimulationType(IList<double> list, double value, SimulationType simulationType)
-    {
-        for (int i = 1; i <= (int)simulationType; i++)
-        {
-            list.Add(value);
-        }
     }
 
     private void AddValueInRank(int indexRank, double value, SimulationType simulationType)
@@ -130,16 +144,6 @@ public class Distribution
             {
                 Ranks[k].CumFrequency = (double)Ranks[k].Values.Count / allValuesCount;                
             }
-        }
-
-        //double cumulative = 0;
-        //for (int j = 0; j < indexRank; j++)
-        //{
-        //    cumulative = cumulative + Ranks[j].CumFrequency;
-        //}
-
-        //double frequencyInThisRank = (double)Ranks[indexRank].Values.Count / (double)ValuesInOrderOfAppearance.Count;
-
-        //Ranks[indexRank].CumFrequency = cumulative + frequencyInThisRank;
-    }
+        }        
+    }    
 }

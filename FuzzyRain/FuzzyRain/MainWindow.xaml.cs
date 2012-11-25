@@ -27,6 +27,8 @@ namespace FuzzyRain
     {
         private DispatcherTimer UpdateAnimationTimer;
 
+        private MonteCarloWithRanks[] models = new MonteCarloWithRanks[13];
+
         public MainWindow()
         {
             InitializeComponent();
@@ -72,13 +74,10 @@ namespace FuzzyRain
         {
             BeginSimulation();
 
-            //TODO: si aplicamos los dos modos de simulacion, este valor deberia ser seleccionado como entrada.
-            bool applyRanks = true;
-
             // Parseo
-            Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text, applyRanks);
+            Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
 
-            Simulation(valuesParsed, applyRanks);
+            Simulation(valuesParsed);
 
             stkDataInput.Visibility = System.Windows.Visibility.Visible;
             stkDataOutput.Visibility = System.Windows.Visibility.Visible;
@@ -114,12 +113,15 @@ namespace FuzzyRain
             UpdateAnimationTimer.Start();
         }
 
-        private void Simulation(Distribution[] distributions, bool applyRanks)
+        #region Simulation
+
+        private void Simulation(Distribution[] distributions)
         {
-            // TODO: Los rangos estan harcodeados, de todos modos no aplicarían cuando el calculo se hace utilizando la libreria react.Net.
-            // Para el caso del algoritmo de MonteCarlo implementado "artesanalmente" debieramos ver como se armarían los rangos o si, talvez,
-            // debieramos importarlo desde el archivo de entrada tambien. Analizar!!
+            // TODO: los rangos deberian ser creados de manera matematica.
             var rankCount = 12;
+
+            // TODO: debería ser importado desde el archivo o ingresado desde la ui.
+            var ErrorOfConvergence = 0.3;
 
             int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? 0 : int.Parse(txtCountEvents.Text);
 
@@ -131,37 +133,36 @@ namespace FuzzyRain
             {
                 simulations[i] = new Distribution();
                 
-                if (applyRanks)
+                // Iniciar la simulacion
+                models[i] = new MonteCarloWithRanks(ErrorOfConvergence, distributions[i], rankCount);
+
+                // Obtener el siguiente elemento luego de que la simulacon converge
+                // TODO: esto se tendría que hacer en la parte de lógica difusa
+                for (int e = 1; e <= numberOfEvents; e++)
                 {
-                    var myModel = new MonteCarloWithRanks(rankCount, distributions[i].Ranks);
-                    simulations[i].ValuesInOrderOfAppearance = myModel.GetFirstNEvents(numberOfEvents);
+                    simulations[i].ValuesInOrderOfAppearance.Add(models[i].NextValue());
                 }
-                else
-                {
-                    var myModel = new MonteCarloModel(distributions[i].Average, distributions[i].Std_Desv);
-                    simulations[i].ValuesInOrderOfAppearance = myModel.GetFirstNEvents(numberOfEvents);
-                }                                
+
+                SetConvergenceData(models[i].ConvergenceAvg, models[i].ConvergenceDesv, models[i].ConvergenceValue, i);                
             }
 
             // Set Simulated Data
-            SetDataMonths(simulations, false);
+            SetDataMonths(simulations, false);                        
         }
 
-        public Distribution[] ParseFile(string fileName, bool applyRanks)
+        public Distribution[] ParseFile(string fileName)
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(fileName);            
 
-            // TODO: Es un array de 12 Distributions, 1 x mes, las cuales tienen los valores de lluvias de ese mes para la cantidad de años muestreados.
-            // no se si sera una buena estructura pero fue la primera que se me ocurrió para probar el parseo. De ultima habria que cambiarla
             Distribution[] monthsPrecipitations = new Distribution[13];
 
             for (int i = 1; i <= 12; i++)
             {
                 monthsPrecipitations[i] = new Distribution();
 
-                if(applyRanks)
-                    monthsPrecipitations[i].Ranks = CreateRanks(12);                
+                // TODO: los rangos deberian ser creados de manera matematica.
+                monthsPrecipitations[i].Ranks = CreateRanks(12);                
             }
 
             try
@@ -174,15 +175,8 @@ namespace FuzzyRain
                 {                    
                     month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
-                    
-                    if (applyRanks)
-                    {
-                        monthsPrecipitations[month].PutValueInRank(precipitation, simulationType);
-                    }
-                    else
-                    {
-                        monthsPrecipitations[month].AddValueInOrderOfAppearance(precipitation, simulationType);
-                    }
+                                        
+                    monthsPrecipitations[month].PutValueInRank(precipitation, simulationType);                    
                 }
 
             }
@@ -231,6 +225,13 @@ namespace FuzzyRain
                 outputTab.SetDataMonths(distributions);
             }            
         }
+
+        private void SetConvergenceData(double avg, double desv, int eventNumberOfConvergence, int month)
+        {
+            outputTab.SetConvergenceData(avg, desv, eventNumberOfConvergence, month);
+        }
+
+        #endregion
 
     }    
 }

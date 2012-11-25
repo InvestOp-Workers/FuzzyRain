@@ -4,13 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="270" d:DesignWidth="300">
     
     <StackPanel>
         <TextBlock x:Name="txtTitle"></TextBlock>
         <TabControl x:Name="tabMonths" >
             <TabItem Header="Oct" IsSelected="True">
-                <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20" >
+                <StackPanel Width="180" HorizontalAlignment="Left" Margin="0,0,0,20" >
+                    <StackPanel x:Name="valueConvPanel_10" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
+                        <TextBlock x:Name="valueConv_10"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel x:Name="avgConvPanel_10" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">Media de Convergencia:</TextBlock>
+                        <TextBlock x:Name="avgConv_10"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel x:Name="desvConvPanel_10" Orientation="Horizontal" Visibility="Collapsed" >
+                    <TextBlock Margin="0,0,5,0">Desvio de Convergencia:</TextBlock>
+                        <TextBlock x:Name="desvConv_10"></TextBlock>
+                    </StackPanel>
+                    
+                    <Rectangle Height="8"></Rectangle>
+                    
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Margin="0,0,5,0">Media:</TextBlock>
                         <TextBlock x:Name="avg_10"></TextBlock>
@@ -21,11 +38,28 @@
                         <TextBlock x:Name="desv_10"></TextBlock>
                     </StackPanel>
 
-                    <ListView Name="values_10" Height="200"/>
+                    <ListView Name="values_10" Height="140"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Nov">
-                <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                <StackPanel Width="180" HorizontalAlignment="Left" Margin="0,0,0,20">
+                    <StackPanel x:Name="valueConvPanel_11" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
+                        <TextBlock x:Name="valueConv_11"></TextBlock>
+                    </StackPanel>
+                    
+                    <StackPanel x:Name="avgConvPanel_11" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">Media de Convergencia:</TextBlock>
+                        <TextBlock x:Name="avgConv_11"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel x:Name="desvConvPanel_11" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">Desvio de Convergencia:</TextBlock>
+                        <TextBlock x:Name="desvConv_11"></TextBlock>
+                    </StackPanel>
+
+                    <Rectangle Height="8"></Rectangle>
+
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Margin="0,0,5,0">Media:</TextBlock>
                         <TextBlock x:Name="avg_11"></TextBlock>
@@ -36,22 +70,39 @@
                         <TextBlock x:Name="desv_11"></TextBlock>
                     </StackPanel>
 
-                    <ListView Name="values_11" Height="200"/>
+                    <ListView Name="values_11" Height="140"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Dic">
-                <StackPanel Width="150" HorizontalAlignment="Left" Margin="0,0,0,20">
+                <StackPanel Width="180" HorizontalAlignment="Left" Margin="0,0,0,20">
+                    <StackPanel x:Name="valueConvPanel_12" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
+                        <TextBlock x:Name="valueConv_12"></TextBlock>
+                    </StackPanel>
+                    
+                    <StackPanel x:Name="avgConvPanel_12" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">Media de Convergencia:</TextBlock>
+                        <TextBlock x:Name="avgConv_12"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel x:Name="desvConvPanel_12" Orientation="Horizontal" Visibility="Collapsed" >
+                        <TextBlock Margin="0,0,5,0">Desvio de Convergencia:</TextBlock>
+                        <TextBlock x:Name="desvConv_12"></TextBlock>
+                    </StackPanel>
+
+                    <Rectangle Height="8"></Rectangle>
+
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Margin="0,0,5,0">Media:</TextBlock>
                         <TextBlock x:Name="avg_12"></TextBlock>
-                    </StackPanel>
-
+                    </StackPanel>                    
+                    
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
                         <TextBlock x:Name="desv_12"></TextBlock>
                     </StackPanel>
 
-                    <ListView Name="values_12" Height="200"/>
+                    <ListView Name="values_12" Height="140"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
