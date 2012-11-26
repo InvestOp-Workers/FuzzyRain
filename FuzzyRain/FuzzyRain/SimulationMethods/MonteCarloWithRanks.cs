@@ -20,7 +20,7 @@ namespace SimulationMethods
         public double ConvergenceAvg { get; set; }
         public double ConvergenceDesv { get; set; }
 
-        public MonteCarloWithRanks(double convergenceError, Distribution distBase, int rankCount)
+        public MonteCarloWithRanks(double convergenceError, Distribution distBase)
         {
             MyDistribution = new Distribution();            
             MyDistribution.Ranks = distBase.Ranks;

@@ -29,6 +29,12 @@ namespace FuzzyRain
 
         private MonteCarloWithRanks[] models = new MonteCarloWithRanks[13];
 
+        // TODO: los valores por defecto son los que fueron usados para el caso de estudio. Verificar.
+        private const int RANK_AMPLITUDE = 10;
+        private const int RANK_COUNT = 12;
+
+        private const double CONVERGENCE_ERROR = 0.25;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -117,11 +123,9 @@ namespace FuzzyRain
 
         private void Simulation(Distribution[] distributions)
         {
-            // TODO: los rangos deberian ser creados de manera matematica.
-            var rankCount = 12;
-
-            // TODO: debería ser importado desde el archivo o ingresado desde la ui.
-            var ErrorOfConvergence = 0.3;
+            double ErrorOfConvergence = 0;
+            double.TryParse(txtConvError.Text, out ErrorOfConvergence);
+            ErrorOfConvergence = ErrorOfConvergence != 0 ? ErrorOfConvergence : CONVERGENCE_ERROR;            
 
             int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? 0 : int.Parse(txtCountEvents.Text);
 
@@ -134,10 +138,10 @@ namespace FuzzyRain
                 simulations[i] = new Distribution();
                 
                 // Iniciar la simulacion
-                models[i] = new MonteCarloWithRanks(ErrorOfConvergence, distributions[i], rankCount);
-
-                // Obtener el siguiente elemento luego de que la simulacon converge
+                models[i] = new MonteCarloWithRanks(ErrorOfConvergence, distributions[i]);
+                
                 // TODO: esto se tendría que hacer en la parte de lógica difusa
+                // Obtener el siguiente elemento luego de que la simulacon converge
                 for (int e = 1; e <= numberOfEvents; e++)
                 {
                     simulations[i].ValuesInOrderOfAppearance.Add(models[i].NextValue());
@@ -152,6 +156,14 @@ namespace FuzzyRain
 
         public Distribution[] ParseFile(string fileName)
         {
+            var rankCount = 0;
+            int.TryParse(txtRankCount.Text, out rankCount);
+            rankCount = rankCount != 0 ? rankCount : RANK_COUNT;            
+           
+            var rankAmplitude = 0;
+            int.TryParse(txtRankAmplitude.Text, out rankAmplitude);
+            rankAmplitude = rankAmplitude != 0 ? rankAmplitude : RANK_AMPLITUDE;
+            
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(fileName);            
 
@@ -159,10 +171,8 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution();
-
-                // TODO: los rangos deberian ser creados de manera matematica.
-                monthsPrecipitations[i].Ranks = CreateRanks(12);                
+                monthsPrecipitations[i] = new Distribution();                
+                monthsPrecipitations[i].Ranks = CreateRanks(rankCount, rankAmplitude);                
             }
 
             try
@@ -187,15 +197,14 @@ namespace FuzzyRain
 
             return monthsPrecipitations;
         }
-
-        // TODO: los rangos deberian ser creados de manera matematica.
-        private Rank[] CreateRanks(int rankCount)
+        
+        private Rank[] CreateRanks(int rankCount, int rankAmplitude)
         {
             Rank[] ranks = new Rank[rankCount];
 
             for (int i = 0; i < rankCount; i++)
             {
-                ranks[i] = new Rank(i * 10, i * 10 + 10);
+                ranks[i] = new Rank(i * rankAmplitude, i * rankAmplitude + rankAmplitude);
             }
 
             return ranks;
