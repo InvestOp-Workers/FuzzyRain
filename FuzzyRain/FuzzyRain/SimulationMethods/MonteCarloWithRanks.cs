@@ -50,9 +50,9 @@ namespace SimulationMethods
 
             int x = 1;
 
-            // TODO: Se puede encontrar la convergencia con el 1° suceso pero no tendría validez, por eso se corrobora que sea mayor a 500. Consultar.
+            // TODO: Se puede encontrar la convergencia con el 1° suceso pero no tendría validez, por eso se corrobora que sea mayor a 100. Consultar.
             // Esta es la formula de convergencia que se dió en la catedra.
-            while (cantEvents < 500 || Math.Abs(originalAvg - avg) > ConvergenceError)
+            while (cantEvents < 100 || Math.Abs(originalAvg - avg) > ConvergenceError)
             {
                 //TODO: incrementa el error de convergencia en un 0.1 cada 100 mil eventos para que no se de el caso que nunca converja. Consultar.
                 if (cantEvents > x * 100000)
