@@ -35,6 +35,8 @@ namespace FuzzyRain
 
         private const double CONVERGENCE_ERROR = 0.25;
 
+        private const int NUMBER_OF_EVENTS_DEFAULT = 40;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -83,34 +85,40 @@ namespace FuzzyRain
             // Parseo
             Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
 
+            // Simulación de Monte Carlo
             Simulation(valuesParsed);
-
-            stkDataInput.Visibility = System.Windows.Visibility.Visible;
-            stkDataOutput.Visibility = System.Windows.Visibility.Visible;
 
             ButtonComenzar.Content = "Re-intentar";
         }
 
         private void UpdateAnimationTimer_Tick(object sender, EventArgs e)
         {
-            Random random = new Random();
-            double newSize = random.NextDouble() * 200;
-            ImageLLuvia.Width = newSize;
-            ImageLLuvia.Height = newSize;
-            LabelLLuvia.Content = newSize.ToString("00.00") + "mm";
+            //Random random = new Random();
+            //double newSize = random.NextDouble() * 200;
+            //ImageLLuvia.Width = newSize;
+            //ImageLLuvia.Height = newSize;
+            //LabelLLuvia.Content = newSize.ToString("00.00") + "mm";
 
-            FuzzyRainResult result = FuzzyLogic.FuzzyRain.Instance.DoInference((float)newSize);
-            if (result != null)
+            //FuzzyRainResult result = FuzzyLogic.FuzzyRain.Instance.DoInference((float)newSize);
+            //if (result != null)
+            //{
+            //    double newSize1 = random.NextDouble() * 200;
+            //    ImageSuperficie.Width = newSize1;
+            //    ImageSuperficie.Height = newSize1;
+            //    LabelSuperficie.Content = result.Surface.ToString("00.00") + "mm";
+
+            //    double newSize2 = random.NextDouble() * 200;
+            //    ImageVolumen.Width = newSize2;
+            //    ImageVolumen.Height = newSize2;
+            //    LabelVolumen.Content = result.Volume.ToString("00.00") + "mm";
+            //}
+
+            // TODO: deberian creearse threads que pidan el next value al models 
+            // (arreglo con las 12 instancias de la simulacion de montecarlo para cada mes)
+            for (int i = 10; i <= 12; i++)
             {
-                double newSize1 = random.NextDouble() * 200;
-                ImageSuperficie.Width = newSize1;
-                ImageSuperficie.Height = newSize1;
-                LabelSuperficie.Content = result.Surface.ToString("00.00") + "mm";
-
-                double newSize2 = random.NextDouble() * 200;
-                ImageVolumen.Width = newSize2;
-                ImageVolumen.Height = newSize2;
-                LabelVolumen.Content = result.Volume.ToString("00.00") + "mm";
+                TabItem tab = (TabItem)tabMonths.Items[i - 1];
+                ((MonthTabItemContent)tab.Content).Tick();
             }
         }
 
@@ -119,15 +127,15 @@ namespace FuzzyRain
             UpdateAnimationTimer.Start();
         }
 
-        #region Simulation
+        #region Simulation Methods
 
         private void Simulation(Distribution[] distributions)
         {
             double ErrorOfConvergence = 0;
             double.TryParse(txtConvError.Text, out ErrorOfConvergence);
-            ErrorOfConvergence = ErrorOfConvergence != 0 ? ErrorOfConvergence : CONVERGENCE_ERROR;            
+            ErrorOfConvergence = ErrorOfConvergence != 0 ? ErrorOfConvergence : CONVERGENCE_ERROR;
 
-            int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? 0 : int.Parse(txtCountEvents.Text);
+            int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? NUMBER_OF_EVENTS_DEFAULT : int.Parse(txtCountEvents.Text);
 
             // Set Parsed Data
             SetDataMonths(distributions, true);
@@ -223,24 +231,26 @@ namespace FuzzyRain
             }
         }
 
+        #endregion
+
+        #region User Control Handlers
+
         private void SetDataMonths(Distribution[] distributions, bool isInput)
         {
-            if (isInput)
-            {                                
-                inputTab.SetDataMonths(distributions);
+            for (int i = 10; i <= 12; i++)
+            {
+                TabItem tab = (TabItem)tabMonths.Items[i - 1];
+                ((MonthTabItemContent)tab.Content).SetDataMonths(distributions[i], isInput);
             }
-            else
-            {                
-                outputTab.SetDataMonths(distributions);
-            }            
         }
 
         private void SetConvergenceData(double avg, double desv, int eventNumberOfConvergence, int month)
         {
-            outputTab.SetConvergenceData(avg, desv, eventNumberOfConvergence, month);
+            TabItem tab = (TabItem)tabMonths.Items[month - 1];
+            ((MonthTabItemContent)tab.Content).SetConvergenceData(avg, desv, eventNumberOfConvergence);
         }
 
-        #endregion
+        #endregion        
 
     }    
 }

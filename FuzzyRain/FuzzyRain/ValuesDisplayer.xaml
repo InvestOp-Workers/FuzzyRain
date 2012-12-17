@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="FuzzyRain.ValuesDisplayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="310" d:DesignWidth="250">
+
+    <StackPanel Height="310" Width="250" HorizontalAlignment="Left" Margin="0,0,0,20" >
+        <TextBlock x:Name="contentTitle" FontWeight="Bold"></TextBlock>
+        <StackPanel x:Name="valueConvPanel" Orientation="Horizontal" Visibility="Hidden" >
+            <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
+            <TextBlock x:Name="txtValueConv"></TextBlock>
+        </StackPanel>
+
+        <StackPanel x:Name="avgConvPanel" Orientation="Horizontal" Visibility="Hidden" >
+            <TextBlock Margin="0,0,5,0">Media de Convergencia:</TextBlock>
+            <TextBlock x:Name="txtAvgConv"></TextBlock>
+        </StackPanel>
+
+        <StackPanel x:Name="desvConvPanel" Orientation="Horizontal" Visibility="Hidden" >
+            <TextBlock Margin="0,0,5,0">Desvio de Convergencia:</TextBlock>
+            <TextBlock x:Name="txtDesvConv"></TextBlock>
+        </StackPanel>
+
+        <Rectangle Height="8"></Rectangle>
+
+        <StackPanel Orientation="Horizontal" >
+            <TextBlock Margin="0,0,5,0">Media:</TextBlock>
+            <TextBlock x:Name="txtAvg"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" >
+            <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
+            <TextBlock x:Name="txtDesv"></TextBlock>
+        </StackPanel>
+
+        <ListView Name="lwValues" Height="220"/>
+    </StackPanel>
+
+</UserControl>

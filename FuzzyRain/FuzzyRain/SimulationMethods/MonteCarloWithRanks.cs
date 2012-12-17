@@ -11,7 +11,7 @@ namespace SimulationMethods
         public Distribution MyDistribution { get; set; }
         public List<double> ValuesToConvergence = new List<double>();
         public List<double> ValuesAfterConvergence = new List<double>();        
-        private Random random = new Random();
+        private Random random;
         private Distribution distributionBase;
         public double ConvergenceError { private get; set; }
         
@@ -22,6 +22,9 @@ namespace SimulationMethods
 
         public MonteCarloWithRanks(double convergenceError, Distribution distBase)
         {
+            int seed = unchecked( (int)DateTime.Now.Ticks );
+            random = new Random(seed);
+
             MyDistribution = new Distribution();            
             MyDistribution.Ranks = distBase.Ranks;
             ConvergenceError = convergenceError;

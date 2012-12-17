@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="FuzzyRain.MonthTabItemContent"
+             xmlns:myUserControl="clr-namespace:FuzzyRain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <StackPanel Height="600">
+
+        <StackPanel Orientation="Horizontal">
+            <myUserControl:ValuesDisplayer x:Name="ucInputData" Title="Datos de Entrada:" Margin="0,0,200,10" ></myUserControl:ValuesDisplayer>
+            <myUserControl:ValuesDisplayer x:Name="ucOutputData" Title="Datos Simulados:" Margin="0,0,0,10" ></myUserControl:ValuesDisplayer>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"  Height="Auto" HorizontalAlignment="Center">
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical"  Height="Auto" Width="220">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageLLuvia" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/rain.png">
+                </Image>
+                <Label Name="LabelLLuvia" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageSuperficie" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/surface.jpg">
+                </Image>
+                <Label Name="LabelSuperficie" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
+                <Image VerticalAlignment="Center" Height="200" Name="ImageVolumen" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/volume.png">
+                </Image>
+                <Label Name="LabelVolumen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
+            </StackPanel>
+        </StackPanel>
+
+    </StackPanel>
+
+</UserControl>
