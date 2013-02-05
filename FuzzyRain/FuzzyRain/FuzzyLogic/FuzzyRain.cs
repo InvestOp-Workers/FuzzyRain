@@ -86,20 +86,20 @@ namespace FuzzyLogic
             IS.NewRule("Rule 3", IF_IS("Rain", "Baja") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Chico"));
             IS.NewRule("Rule 4", IF_IS("Rain", "Baja") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "Chico"));
             // Rain Media
-            IS.NewRule("Rule 1", IF_IS("Rain", "Media") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
-            IS.NewRule("Rule 2", IF_IS("Rain", "Media") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
-            IS.NewRule("Rule 3", IF_IS("Rain", "Media") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Grande"));
-            IS.NewRule("Rule 4", IF_IS("Rain", "Media") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "Grande"));
+            IS.NewRule("Rule 5", IF_IS("Rain", "Media") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 6", IF_IS("Rain", "Media") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
+            IS.NewRule("Rule 7", IF_IS("Rain", "Media") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Grande"));
+            IS.NewRule("Rule 8", IF_IS("Rain", "Media") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "Grande"));
             // Rain Alta
-            IS.NewRule("Rule 1", IF_IS("Rain", "Alta") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
-            IS.NewRule("Rule 2", IF_IS("Rain", "Alta") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
-            IS.NewRule("Rule 3", IF_IS("Rain", "Alta") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Grande"));
-            IS.NewRule("Rule 4", IF_IS("Rain", "Alta") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "MuyGrande"));
+            IS.NewRule("Rule 9", IF_IS("Rain", "Alta") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 10", IF_IS("Rain", "Alta") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
+            IS.NewRule("Rule 11", IF_IS("Rain", "Alta") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Grande"));
+            IS.NewRule("Rule 12", IF_IS("Rain", "Alta") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "MuyGrande"));
             // Rain MuyAlta
-            IS.NewRule("Rule 1", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
-            IS.NewRule("Rule 2", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
-            IS.NewRule("Rule 3", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "MuyGrande"));
-            IS.NewRule("Rule 4", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "MuyGrande"));
+            IS.NewRule("Rule 13", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 14", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
+            IS.NewRule("Rule 15", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "MuyGrande"));
+            IS.NewRule("Rule 16", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "MuyGrande"));
 
              //float f = DoInference(5, 30);
         }
@@ -139,17 +139,17 @@ namespace FuzzyLogic
 
         private string IF_IS(string variable, string value)
         {
-            return string.Format("IF {0} IS {1}", variable, value);
+            return string.Format("IF {0} IS {1} ", variable, value);
         }
 
         private string AND_IS(string variable, string value)
         {
-            return string.Format("AND {0} IS {1}", variable, value);
+            return string.Format(" AND {0} IS {1} ", variable, value);
         }
 
         private string THEN_IS(string variable, string value)
         {
-            return string.Format("THEN {0} IS {1}", variable, value);
+            return string.Format(" THEN {0} IS {1} ", variable, value);
         }
     }
 }
