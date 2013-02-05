@@ -121,8 +121,8 @@ namespace FuzzyLogic
         {
             //var rain = 5;
             //var surf = 30;
-            IS.SetInput("Surface", rainAmount);
-            IS.SetInput("Rain", surfAmount);
+            IS.SetInput("Rain", rainAmount);
+            IS.SetInput("Surface", surfAmount);
 
             float result = 0;
             try
