@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FuzzyRain.Model;
+using SimulationMethods;
 
 namespace FuzzyRain
 {
@@ -30,7 +31,7 @@ namespace FuzzyRain
             InitializeComponent();
         }
 
-        public void SetDataMonths(Distribution distribution)
+        public void SetInitialData(Distribution distribution)
         {
             double avg = distribution.Average;
             double desv = distribution.Std_Desv;
@@ -49,6 +50,30 @@ namespace FuzzyRain
             valueConvPanel.Visibility = System.Windows.Visibility.Visible;
             avgConvPanel.Visibility = System.Windows.Visibility.Visible;
             desvConvPanel.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        public void AddNewSimulatedItem(double value)
+        {            
+            lwValues.Items.Add(value);
+        }
+
+        public void Finalize(Distribution distribution)
+        {
+            txtAvg.Text = distribution.Average.ToString("#0.00");
+            txtDesv.Text = distribution.Std_Desv.ToString("#0.00");
+        }
+
+        public void CleanData()
+        {     
+            // TODO: clear is not working. Review it!
+            //lwValues.Items.Clear();
+
+            txtValueConv.Text = string.Empty;
+            txtAvgConv.Text = string.Empty;
+            txtDesvConv.Text = string.Empty;
+
+            txtAvg.Text = string.Empty;
+            txtDesv.Text = string.Empty;
         }
     }
 }

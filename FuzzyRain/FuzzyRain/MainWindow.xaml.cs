@@ -44,7 +44,7 @@ namespace FuzzyRain
             UpdateAnimationTimer.Tick += new EventHandler(UpdateAnimationTimer_Tick);
             UpdateAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
 
-            FuzzyLogic.FuzzyRain.Instance.DoInference(9);
+            //FuzzyLogic.FuzzyRain.Instance.DoInference(9);
         }
         private void OpenFile()
         {
@@ -93,28 +93,6 @@ namespace FuzzyRain
 
         private void UpdateAnimationTimer_Tick(object sender, EventArgs e)
         {
-            //Random random = new Random();
-            //double newSize = random.NextDouble() * 200;
-            //ImageLLuvia.Width = newSize;
-            //ImageLLuvia.Height = newSize;
-            //LabelLLuvia.Content = newSize.ToString("00.00") + "mm";
-
-            //FuzzyRainResult result = FuzzyLogic.FuzzyRain.Instance.DoInference((float)newSize);
-            //if (result != null)
-            //{
-            //    double newSize1 = random.NextDouble() * 200;
-            //    ImageSuperficie.Width = newSize1;
-            //    ImageSuperficie.Height = newSize1;
-            //    LabelSuperficie.Content = result.Surface.ToString("00.00") + "mm";
-
-            //    double newSize2 = random.NextDouble() * 200;
-            //    ImageVolumen.Width = newSize2;
-            //    ImageVolumen.Height = newSize2;
-            //    LabelVolumen.Content = result.Volume.ToString("00.00") + "mm";
-            //}
-
-            // TODO: deberian creearse threads que pidan el next value al models 
-            // (arreglo con las 12 instancias de la simulacion de montecarlo para cada mes)
             for (int i = 10; i <= 12; i++)
             {
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
@@ -138,28 +116,17 @@ namespace FuzzyRain
             int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? NUMBER_OF_EVENTS_DEFAULT : int.Parse(txtCountEvents.Text);
 
             // Set Parsed Data
-            SetDataMonths(distributions, true);
+            SetInitialInputData(distributions);
 
             Distribution[] simulations = new Distribution[13];
             for (int i = 10; i <= 12; i++)
             {
-                simulations[i] = new Distribution();
-                
                 // Iniciar la simulacion
                 models[i] = new MonteCarloWithRanks(ErrorOfConvergence, distributions[i]);
-                
-                // TODO: esto se tendría que hacer en la parte de lógica difusa
-                // Obtener el siguiente elemento luego de que la simulacon converge
-                for (int e = 1; e <= numberOfEvents; e++)
-                {
-                    simulations[i].ValuesInOrderOfAppearance.Add(models[i].NextValue());
-                }
-
-                SetConvergenceData(models[i].ConvergenceAvg, models[i].ConvergenceDesv, models[i].ConvergenceValue, i);                
             }
 
             // Set Simulated Data
-            SetDataMonths(simulations, false);                        
+            SetInitialOutputData(models, numberOfEvents);
         }
 
         public Distribution[] ParseFile(string fileName)
@@ -235,19 +202,22 @@ namespace FuzzyRain
 
         #region User Control Handlers
 
-        private void SetDataMonths(Distribution[] distributions, bool isInput)
+        private void SetInitialInputData(Distribution[] distributions)
         {
             for (int i = 10; i <= 12; i++)
             {
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
-                ((MonthTabItemContent)tab.Content).SetDataMonths(distributions[i], isInput);
+                ((MonthTabItemContent)tab.Content).SetInitialInputData(distributions[i]);
             }
         }
 
-        private void SetConvergenceData(double avg, double desv, int eventNumberOfConvergence, int month)
+        private void SetInitialOutputData(MonteCarloWithRanks[] models, int numberOfEvents)
         {
-            TabItem tab = (TabItem)tabMonths.Items[month - 1];
-            ((MonthTabItemContent)tab.Content).SetConvergenceData(avg, desv, eventNumberOfConvergence);
+            for (int i = 10; i <= 12; i++)
+            {
+                TabItem tab = (TabItem)tabMonths.Items[i - 1];
+                ((MonthTabItemContent)tab.Content).SetInitialOutputData(models[i], numberOfEvents);
+            }
         }
 
         #endregion        
