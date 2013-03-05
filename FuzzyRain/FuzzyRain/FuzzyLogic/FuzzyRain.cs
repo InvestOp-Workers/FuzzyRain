@@ -11,7 +11,8 @@ namespace FuzzyLogic
         private InferenceSystem IS;
         private static FuzzyRain instance;
 
-        private FuzzyRain() {
+        private FuzzyRain()
+        {
             InitFuzzyEngine();
         }
 
@@ -29,118 +30,78 @@ namespace FuzzyLogic
 
         private void InitFuzzyEngine()
         {
+            //*** RAIN ***//
+            FuzzySet fs_rain_baja = new FuzzySet("Baja", new TrapezoidalFunction(15, 30, TrapezoidalFunction.EdgeType.Right));
+            FuzzySet fs_rain_media = new FuzzySet("Media", new TrapezoidalFunction(20, 30, 50, 60));
+            FuzzySet fs_rain_alta = new FuzzySet("Alta", new TrapezoidalFunction(50, 70, 90, 100));
+            FuzzySet fs_rain_muyAlta = new FuzzySet("MuyAlta", new TrapezoidalFunction(100, 120, TrapezoidalFunction.EdgeType.Left));
 
-            //// Linguistic labels (fuzzy sets) that compose the distances
-            //FuzzySet fsNear = new FuzzySet("Near", new TrapezoidalFunction(15, 50, TrapezoidalFunction.EdgeType.Right));
-            //FuzzySet fsMedium = new FuzzySet("Medium", new TrapezoidalFunction(15, 50, 60, 100));
-            //FuzzySet fsFar = new FuzzySet("Far", new TrapezoidalFunction(60, 100, TrapezoidalFunction.EdgeType.Left));
+            LinguisticVariable lvRain = new LinguisticVariable("Rain", 0, 130);
+            lvRain.AddLabel(fs_rain_baja);
+            lvRain.AddLabel(fs_rain_media);
+            lvRain.AddLabel(fs_rain_alta);
+            lvRain.AddLabel(fs_rain_muyAlta);
 
-            //// Right Distance (Input)
-            //LinguisticVariable lvRight = new LinguisticVariable("RightDistance", 0, 120);
-            //lvRight.AddLabel(fsNear);
-            //lvRight.AddLabel(fsMedium);
-            //lvRight.AddLabel(fsFar);
 
-            //// Left Distance (Input)
-            //LinguisticVariable lvLeft = new LinguisticVariable("LeftDistance", 0, 120);
-            //lvLeft.AddLabel(fsNear);
-            //lvLeft.AddLabel(fsMedium);
-            //lvLeft.AddLabel(fsFar);
+            //*** SURFACE ***//
+            FuzzySet fs_surface_chica = new FuzzySet("Chica", new TrapezoidalFunction(0, 5, 20, 30));
+            FuzzySet fs_surface_mediana = new FuzzySet("Mediana", new TrapezoidalFunction(20, 30, 70, 80));
+            FuzzySet fs_surface_grande = new FuzzySet("Grande", new TrapezoidalFunction(70, 80, 100, 110));
+            FuzzySet fs_surface_muyGrande = new FuzzySet("MuyGrande", new TrapezoidalFunction(100, 110, 140, 150));
 
-            //// Front Distance (Input)
-            //LinguisticVariable lvFront = new LinguisticVariable("FrontalDistance", 0, 120);
-            //lvFront.AddLabel(fsNear);
-            //lvFront.AddLabel(fsMedium);
-            //lvFront.AddLabel(fsFar);
+            LinguisticVariable lvSurface = new LinguisticVariable("Surface", 0, 150);
+            lvSurface.AddLabel(fs_surface_chica);
+            lvSurface.AddLabel(fs_surface_mediana);
+            lvSurface.AddLabel(fs_surface_grande);
+            lvSurface.AddLabel(fs_surface_muyGrande);
 
-            //// Linguistic labels (fuzzy sets) that compose the angle
-            //FuzzySet fsVN = new FuzzySet("VeryNegative", new TrapezoidalFunction(-40, -35, TrapezoidalFunction.EdgeType.Right));
-            //FuzzySet fsN = new FuzzySet("Negative", new TrapezoidalFunction(-40, -35, -25, -20));
-            //FuzzySet fsLN = new FuzzySet("LittleNegative", new TrapezoidalFunction(-25, -20, -10, -5));
-            //FuzzySet fsZero = new FuzzySet("Zero", new TrapezoidalFunction(-10, 5, 5, 10));
-            //FuzzySet fsLP = new FuzzySet("LittlePositive", new TrapezoidalFunction(5, 10, 20, 25));
-            //FuzzySet fsP = new FuzzySet("Positive", new TrapezoidalFunction(20, 25, 35, 40));
-            //FuzzySet fsVP = new FuzzySet("VeryPositive", new TrapezoidalFunction(35, 40, TrapezoidalFunction.EdgeType.Left));
 
-            //// Angle
-            //LinguisticVariable lvAngle = new LinguisticVariable("Angle", -50, 50);
-            //lvAngle.AddLabel(fsVN);
-            //lvAngle.AddLabel(fsN);
-            //lvAngle.AddLabel(fsLN);
-            //lvAngle.AddLabel(fsZero);
-            //lvAngle.AddLabel(fsLP);
-            //lvAngle.AddLabel(fsP);
-            //lvAngle.AddLabel(fsVP);
+            //*** VOLUMEN (OUTPUT) ***//
+            FuzzySet fs_vol_chico = new FuzzySet("Chico", new TrapezoidalFunction(0, 5, 20, 30));
+            FuzzySet fs_vol_mediano = new FuzzySet("Mediano", new TrapezoidalFunction(20, 30, 70, 80));
+            FuzzySet fs_vol_grande = new FuzzySet("Grande", new TrapezoidalFunction(70, 80, 100, 110));
+            FuzzySet fs_vol_muyGrande = new FuzzySet("MuyGrande", new TrapezoidalFunction(100, 110, 140, 200));
 
-            //// The database
-            //Database fuzzyDB = new Database();
-            //fuzzyDB.AddVariable(lvFront);
-            //fuzzyDB.AddVariable(lvLeft);
-            //fuzzyDB.AddVariable(lvRight);
-            //fuzzyDB.AddVariable(lvAngle);
+            LinguisticVariable lvVolumen = new LinguisticVariable("Volumen", 0, 200);
+            lvVolumen.AddLabel(fs_vol_chico);
+            lvVolumen.AddLabel(fs_vol_mediano);
+            lvVolumen.AddLabel(fs_vol_grande);
+            lvVolumen.AddLabel(fs_vol_muyGrande);
 
-            //// Creating the inference system
-            //IS = new InferenceSystem(fuzzyDB, new CentroidDefuzzifier(1000));
 
-            //// Going Straight
-            //IS.NewRule("Rule 1", "IF FrontalDistance IS Far THEN Angle IS Zero");
-            //// Going Straight (if can go anywhere)
-            //IS.NewRule("Rule 2", "IF FrontalDistance IS Far AND RightDistance IS Far AND LeftDistance IS Far THEN Angle IS Zero");
-            //// Near right wall
-            //IS.NewRule("Rule 3", "IF RightDistance IS Near AND LeftDistance IS Not Near THEN Angle IS LittleNegative");
-            //// Near left wall
-            //IS.NewRule("Rule 4", "IF RightDistance IS Not Near AND LeftDistance IS Near THEN Angle IS LittlePositive");
-            //// Near front wall - room at right
-            //IS.NewRule("Rule 5", "IF RightDistance IS Far AND FrontalDistance IS Near THEN Angle IS Positive");
-            //// Near front wall - room at left
-            //IS.NewRule("Rule 6", "IF LeftDistance IS Far AND FrontalDistance IS Near THEN Angle IS Negative");
-            //// Near front wall - room at both sides - go right
-            //IS.NewRule("Rule 7", "IF RightDistance IS Far AND LeftDistance IS Far AND FrontalDistance IS Near THEN Angle IS Positive");
-
-            // Linguistic labels (fuzzy sets) that compose the distances
-            FuzzySet fsLow = new FuzzySet("Low", new TrapezoidalFunction(0, 5, 0, 5));
-            FuzzySet fsMedium = new FuzzySet("Medium", new TrapezoidalFunction(0, 5, 15, 25));
-            FuzzySet fsHigh = new FuzzySet("High", new TrapezoidalFunction(25, 100, 25, 100));
-
-            LinguisticVariable lvRain = new LinguisticVariable("Rain", 0, 1000);
-            lvRain.AddLabel(fsLow);
-            lvRain.AddLabel(fsMedium);
-            lvRain.AddLabel(fsHigh);
-
-            /*// creating the Clause
-            Clause fuzzyClause = new Clause(lvRain, fsLow);
-            // setting the numerical input of the variable to evaluate the Clause
-            lvRain.NumericInput = 35;
-            float result = fuzzyClause.Evaluate();
-            Console.WriteLine(result.ToString());*/
-
-            FuzzySet fsVL = new FuzzySet("VL", new TrapezoidalFunction(0, 5, 0, 5));
-            FuzzySet fsL = new FuzzySet("L", new TrapezoidalFunction(5, 25, 5, 25));
-            FuzzySet fsM = new FuzzySet("M", new TrapezoidalFunction(25, 50, 25, 50));
-            FuzzySet fsH = new FuzzySet("H", new TrapezoidalFunction(50, 75, 50, 75));
-            FuzzySet fsVH = new FuzzySet("VH", new TrapezoidalFunction(75, 100, 75, 100));
-
-            LinguisticVariable lvSurface = new LinguisticVariable("Surface", 0, 100);
-            lvSurface.AddLabel(fsVL);
-            lvSurface.AddLabel(fsL);
-            lvSurface.AddLabel(fsM);
-            lvSurface.AddLabel(fsH);
-            lvSurface.AddLabel(fsVH);
-
-            // The database*/
+            // The database
             Database fuzzyDB = new Database();
             fuzzyDB.AddVariable(lvRain);
             fuzzyDB.AddVariable(lvSurface);
-            
+            fuzzyDB.AddVariable(lvVolumen);
+
             // Creating the inference system
-            IS = new InferenceSystem(fuzzyDB, new CentroidDefuzzifier(1000));
+            CentroidDefuzzifier centroide = new CentroidDefuzzifier(1000);
+            IS = new InferenceSystem(fuzzyDB, centroide);
+            
+            ///*** RULES ***//
+            // Rain Baja
+            IS.NewRule("Rule 1", IF_IS("Rain", "Baja") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 2", IF_IS("Rain", "Baja") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 3", IF_IS("Rain", "Baja") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 4", IF_IS("Rain", "Baja") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "Chico"));
+            // Rain Media
+            IS.NewRule("Rule 5", IF_IS("Rain", "Media") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 6", IF_IS("Rain", "Media") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
+            IS.NewRule("Rule 7", IF_IS("Rain", "Media") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Grande"));
+            IS.NewRule("Rule 8", IF_IS("Rain", "Media") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "Grande"));
+            // Rain Alta
+            IS.NewRule("Rule 9", IF_IS("Rain", "Alta") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 10", IF_IS("Rain", "Alta") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
+            IS.NewRule("Rule 11", IF_IS("Rain", "Alta") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "Grande"));
+            IS.NewRule("Rule 12", IF_IS("Rain", "Alta") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "MuyGrande"));
+            // Rain MuyAlta
+            IS.NewRule("Rule 13", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Chica") + THEN_IS("Volumen", "Chico"));
+            IS.NewRule("Rule 14", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Mediana") + THEN_IS("Volumen", "Mediano"));
+            IS.NewRule("Rule 15", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "Grande") + THEN_IS("Volumen", "MuyGrande"));
+            IS.NewRule("Rule 16", IF_IS("Rain", "MuyAlta") + AND_IS("Surface", "MuyGrande") + THEN_IS("Volumen", "MuyGrande"));
 
-            // Going Straight
-            IS.NewRule("Rule 1", "IF Rain IS Low THEN Surface IS VL");
-            IS.NewRule("Rule 2", "IF Rain IS Medium THEN Surface IS L");
-
-            FuzzyRainResult f = DoInference(3);
-            f.Surface = 0;
+             //float f = DoInference(5, 30);
         }
 
         public FuzzyRainResult DoInference(float rainAmount)
@@ -154,6 +115,41 @@ namespace FuzzyLogic
             {
                 return null;
             }
+        }
+
+        public float DoInference(float rainAmount, float surfAmount)
+        {
+            //var rain = 5;
+            //var surf = 30;
+            IS.SetInput("Rain", rainAmount);
+            IS.SetInput("Surface", surfAmount);
+
+            float result = 0;
+            try
+            {
+                result = IS.Evaluate("Volumen");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
+        private string IF_IS(string variable, string value)
+        {
+            return string.Format("IF {0} IS {1} ", variable, value);
+        }
+
+        private string AND_IS(string variable, string value)
+        {
+            return string.Format(" AND {0} IS {1} ", variable, value);
+        }
+
+        private string THEN_IS(string variable, string value)
+        {
+            return string.Format(" THEN {0} IS {1} ", variable, value);
         }
     }
 }

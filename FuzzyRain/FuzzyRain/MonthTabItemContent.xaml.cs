@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FuzzyRain.Model;
 using FuzzyLogic;
+using SimulationMethods;
 
 namespace FuzzyRain
 {
@@ -21,49 +22,62 @@ namespace FuzzyRain
     /// </summary>
     public partial class MonthTabItemContent : UserControl
     {
+        private MonteCarloWithRanks myModel;
+        private Distribution myDistribution;
+        int eventsCount;
+
         public MonthTabItemContent()
         {
             InitializeComponent();
+            myDistribution = new Distribution();
         }
 
-        public void SetDataMonths(Distribution distribution, bool IsInputData)
+        public void SetInitialInputData(Distribution distribution)
         {
-            if (IsInputData)
-            {
-                ucInputData.SetDataMonths(distribution);
-            }
-            else
-            {
-                ucOutputData.SetDataMonths(distribution);
-            }
+            ucInputData.CleanData();
+            ucInputData.SetInitialData(distribution);            
         }
 
-        public void SetConvergenceData(double avg, double desv, int eventNumberOfConvergence)
+        public void SetInitialOutputData(MonteCarloWithRanks model, int numberOfEvents)
         {
-            ucOutputData.SetConvergenceData(avg, desv, eventNumberOfConvergence);
-        }
+            myModel = model;
+            eventsCount = numberOfEvents;
+
+            ucOutputData.CleanData();
+            ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);
+        }                
 
         public void Tick()
         {
-            Random random = new Random();
-            double newSize = random.NextDouble() * 200;
-            ImageLLuvia.Width = newSize;
-            ImageLLuvia.Height = newSize;
-            LabelLLuvia.Content = newSize.ToString("00.00") + "mm";
-
-            FuzzyRainResult result = FuzzyLogic.FuzzyRain.Instance.DoInference((float)newSize);
-            if (result != null)
+            if (eventsCount == 0)
             {
-                double newSize1 = random.NextDouble() * 200;
-                ImageSuperficie.Width = newSize1;
-                ImageSuperficie.Height = newSize1;
-                LabelSuperficie.Content = result.Surface.ToString("00.00") + "mm";
-
-                double newSize2 = random.NextDouble() * 200;
-                ImageVolumen.Width = newSize2;
-                ImageVolumen.Height = newSize2;
-                LabelVolumen.Content = result.Volume.ToString("00.00") + "mm";
+                ucOutputData.Finalize(myDistribution);
+                eventsCount -= 1;
+                return;
             }
+
+            if (eventsCount < 0)
+                return;
+                
+            eventsCount -= 1;
+
+            double rain = myModel.NextValue();
+            myDistribution.ValuesInOrderOfAppearance.Add(rain);
+            ucOutputData.AddNewSimulatedItem(rain);            
+
+            ImageLLuvia.Width = rain;
+            ImageLLuvia.Height = rain;
+            LabelLLuvia.Content = rain.ToString("00.00") + "mm";
+
+            double surface = 100;
+            ImageSuperficie.Width = surface;
+            ImageSuperficie.Height = surface;
+            LabelSuperficie.Content = surface.ToString("00.00") + "mm";
+
+            double volumen = FuzzyLogic.FuzzyRain.Instance.DoInference((float)rain, (float)surface);            
+            ImageVolumen.Width = volumen;
+            ImageVolumen.Height = volumen;
+            LabelVolumen.Content = volumen.ToString("00.00") + "mm";
         }
     }
 }
