@@ -46,8 +46,12 @@ namespace FuzzyRain
 
             //FuzzyLogic.FuzzyRain.Instance.DoInference(9);
         }
+
         private void OpenFile()
         {
+            ButtonComenzar.Content = "Comenzar";
+            CleanAllInitialData();
+
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             dlg.DefaultExt = ".txt";
@@ -80,6 +84,8 @@ namespace FuzzyRain
 
         private void ButtonComenzar_Click(object sender, RoutedEventArgs e)
         {
+            InitInputValues();
+
             BeginSimulation();
 
             // Parseo
@@ -89,6 +95,25 @@ namespace FuzzyRain
             Simulation(valuesParsed);
 
             ButtonComenzar.Content = "Re-intentar";
+        }
+
+        private void InitInputValues()
+        {
+            var rankCount = 0;
+            int.TryParse(txtRankCount.Text, out rankCount);
+            txtRankCount.Text = rankCount != 0 ? rankCount.ToString() : RANK_COUNT.ToString();
+
+            var rankAmplitude = 0;
+            int.TryParse(txtRankAmplitude.Text, out rankAmplitude);
+            txtRankAmplitude.Text = rankAmplitude != 0 ? rankAmplitude.ToString() : RANK_AMPLITUDE.ToString();
+
+            double ErrorOfConvergence = 0;
+            double.TryParse(txtConvError.Text, out ErrorOfConvergence);
+            txtConvError.Text = ErrorOfConvergence != 0 ? ErrorOfConvergence.ToString() : CONVERGENCE_ERROR.ToString();
+
+            var numberOfEvents = 0;
+            int.TryParse(txtCountEvents.Text, out numberOfEvents);
+            txtCountEvents.Text = numberOfEvents != 0 ? numberOfEvents.ToString() : NUMBER_OF_EVENTS_DEFAULT.ToString();
         }
 
         private void UpdateAnimationTimer_Tick(object sender, EventArgs e)
@@ -109,10 +134,7 @@ namespace FuzzyRain
 
         private void Simulation(Distribution[] distributions)
         {
-            double ErrorOfConvergence = 0;
-            double.TryParse(txtConvError.Text, out ErrorOfConvergence);
-            ErrorOfConvergence = ErrorOfConvergence != 0 ? ErrorOfConvergence : CONVERGENCE_ERROR;
-
+            double ErrorOfConvergence = double.Parse(txtConvError.Text);
             int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? NUMBER_OF_EVENTS_DEFAULT : int.Parse(txtCountEvents.Text);
 
             // Set Parsed Data
@@ -131,13 +153,8 @@ namespace FuzzyRain
 
         public Distribution[] ParseFile(string fileName)
         {
-            var rankCount = 0;
-            int.TryParse(txtRankCount.Text, out rankCount);
-            rankCount = rankCount != 0 ? rankCount : RANK_COUNT;            
-           
-            var rankAmplitude = 0;
-            int.TryParse(txtRankAmplitude.Text, out rankAmplitude);
-            rankAmplitude = rankAmplitude != 0 ? rankAmplitude : RANK_AMPLITUDE;
+            var rankCount = int.Parse(txtRankCount.Text);
+            var rankAmplitude = int.Parse(txtRankAmplitude.Text);
             
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(fileName);            
@@ -201,6 +218,15 @@ namespace FuzzyRain
         #endregion
 
         #region User Control Handlers
+
+        private void CleanAllInitialData()
+        {
+            for (int i = 10; i <= 12; i++)
+            {
+                TabItem tab = (TabItem)tabMonths.Items[i - 1];
+                ((MonthTabItemContent)tab.Content).CleanInitialData();
+            }
+        }
 
         private void SetInitialInputData(Distribution[] distributions)
         {

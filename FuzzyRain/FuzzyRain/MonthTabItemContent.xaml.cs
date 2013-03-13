@@ -44,8 +44,19 @@ namespace FuzzyRain
             eventsCount = numberOfEvents;
 
             ucOutputData.CleanData();
+            ucOutputData.CleanDataList();
             ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);
-        }                
+        }
+
+        /// <summary>
+        /// Cleans output data control
+        /// </summary>
+        public void CleanInitialData()
+        {
+            ucInputData.CleanData();
+            ucOutputData.CleanData();
+            ucOutputData.CleanDataList();
+        }
 
         public void Tick()
         {

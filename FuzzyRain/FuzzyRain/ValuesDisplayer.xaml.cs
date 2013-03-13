@@ -63,10 +63,14 @@ namespace FuzzyRain
             txtDesv.Text = distribution.Std_Desv.ToString("#0.00");
         }
 
+        public void CleanDataList()
+        {            
+            lwValues.Items.Clear();
+        }
+
         public void CleanData()
         {     
-            // TODO: clear is not working. Review it!
-            //lwValues.Items.Clear();
+            lwValues.ItemsSource = null;
 
             txtValueConv.Text = string.Empty;
             txtAvgConv.Text = string.Empty;
