@@ -36,25 +36,25 @@ namespace FuzzyRain
             double avg = distribution.Average;
             double desv = distribution.Std_Desv;
 
-            lwValues.ItemsSource = distribution.ValuesInOrderOfAppearance;
+            lwValues.ItemsSource = distribution.ValuesInOrderOfAppearance.Select(x => x.GetFormatedValue());
             txtAvg.Text = avg.ToString("#0.00");
             txtDesv.Text = desv.ToString("#0.00");
         }
 
         public void SetConvergenceData(double avg, double desv, int eventNumberOfConvergence)
         {
-            txtValueConv.Text = eventNumberOfConvergence.ToString();
+            //txtValueConv.Text = eventNumberOfConvergence.ToString();
             txtAvgConv.Text = avg.ToString("#0.00");
             txtDesvConv.Text = desv.ToString("#0.00");
 
-            valueConvPanel.Visibility = System.Windows.Visibility.Visible;
+            //valueConvPanel.Visibility = System.Windows.Visibility.Visible;
             avgConvPanel.Visibility = System.Windows.Visibility.Visible;
             desvConvPanel.Visibility = System.Windows.Visibility.Visible;
         }
 
-        public void AddNewSimulatedItem(double value)
+        public void AddNewSimulatedItem(Rain rain)
         {            
-            lwValues.Items.Add(value);
+            lwValues.Items.Add(rain.GetFormatedValue());
         }
 
         public void Finalize(Distribution distribution)
@@ -72,7 +72,7 @@ namespace FuzzyRain
         {     
             lwValues.ItemsSource = null;
 
-            txtValueConv.Text = string.Empty;
+            //txtValueConv.Text = string.Empty;
             txtAvgConv.Text = string.Empty;
             txtDesvConv.Text = string.Empty;
 

@@ -28,19 +28,19 @@ namespace FuzzyRain
 
         public MonthTabItemContent()
         {
-            InitializeComponent();
-            myDistribution = new Distribution();
+            InitializeComponent();            
         }
 
         public void SetInitialInputData(Distribution distribution)
         {
             ucInputData.CleanData();
-            ucInputData.SetInitialData(distribution);            
+            ucInputData.SetInitialData(distribution);
         }
 
         public void SetInitialOutputData(MonteCarloWithRanks model, int numberOfEvents)
         {
             myModel = model;
+            myDistribution = new Distribution(myModel.MyDistribution.SimulationType);
             eventsCount = numberOfEvents;
 
             ucOutputData.CleanData();
@@ -72,9 +72,8 @@ namespace FuzzyRain
                 
             eventsCount -= 1;
 
-            double rain = myModel.NextValue();
-            myDistribution.ValuesInOrderOfAppearance.Add(rain);
-            ucOutputData.AddNewSimulatedItem(rain);            
+            double rain = myModel.NextValue();            
+            ucOutputData.AddNewSimulatedItem(myDistribution.AddValueInOrderOfAppearance(rain, eventsCount));
 
             ImageLLuvia.Width = rain;
             ImageLLuvia.Height = rain;

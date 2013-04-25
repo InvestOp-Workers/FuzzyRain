@@ -19,14 +19,14 @@ namespace SimulationMethods
         {
             _mean = mean;
             _std_dev = std_dev;
-            MyDistribution = new Distribution();
+            MyDistribution = new Distribution(SimulationType.Weekly);
             MyDistribution.Ranks = ranks;
             Run();
         }
 
         public MonteCarloModel(int rankCount, Rank[] ranks)
         {
-            MyDistribution = new Distribution();
+            MyDistribution = new Distribution(SimulationType.Weekly);
             MyDistribution.Ranks = ranks;
             Run();
         }
@@ -35,7 +35,7 @@ namespace SimulationMethods
         {
             _mean = mean;
             _std_dev = std_dev;
-            MyDistribution = new Distribution();
+            MyDistribution = new Distribution(SimulationType.Weekly);
             Run();
         }
 
@@ -53,7 +53,7 @@ namespace SimulationMethods
                 
                 i++;                
                 //MyDistribution.PutValueInRank(nextValue);
-                MyDistribution.AddValueInOrderOfAppearance(nextValue);
+                MyDistribution.AddValueInOrderOfAppearance(nextValue, i);
             }
 
             // TODO: Estos valores corresponden a la media y desvio de toda la simulacion (los 20000 sucesos). Quizas debieran ser mostrados como 
@@ -65,7 +65,7 @@ namespace SimulationMethods
         public List<double> GetFirstNEvents(int count)
         {
             //TODO: verificar si es posible que la librería solo genere números positivos (lo hice pero no encontré la forma).
-            List<double> valuesPositive = MyDistribution.ValuesInOrderOfAppearance.Where(x => x >= 0).ToList();
+            List<double> valuesPositive = MyDistribution.ValuesInOrderOfAppearance.Where(x => x.Quantity >= 0).Select(y => y.Quantity).ToList();
 
             return valuesPositive.Take<double>(count).ToList();
         }

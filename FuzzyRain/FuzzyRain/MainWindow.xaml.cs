@@ -139,8 +139,7 @@ namespace FuzzyRain
 
             // Set Parsed Data
             SetInitialInputData(distributions);
-
-            Distribution[] simulations = new Distribution[13];
+            
             for (int i = 10; i <= 12; i++)
             {
                 // Iniciar la simulacion
@@ -163,7 +162,7 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution();                
+                monthsPrecipitations[i] = new Distribution(GetSimulationType());
                 monthsPrecipitations[i].Ranks = CreateRanks(rankCount, rankAmplitude);                
             }
 
@@ -178,7 +177,7 @@ namespace FuzzyRain
                     month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
                     precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
                                         
-                    monthsPrecipitations[month].PutValueInRank(precipitation, simulationType);                    
+                    monthsPrecipitations[month].PutValueInRank(precipitation);                    
                 }
 
             }
@@ -190,6 +189,7 @@ namespace FuzzyRain
             return monthsPrecipitations;
         }
         
+        // TODO: the ranks should be created by Distribution class.
         private Rank[] CreateRanks(int rankCount, int rankAmplitude)
         {
             Rank[] ranks = new Rank[rankCount];
