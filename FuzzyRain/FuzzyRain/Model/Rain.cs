@@ -8,11 +8,6 @@ namespace FuzzyRain.Model
     public class Rain
     {
         public double Quantity { get; set; }
-        public string Period { get; set; }
-
-        public string GetFormatedValue()
-        {
-            return Period + " --> " + Quantity;
-        }
+        public Period Period { get; set; }        
     }
 }

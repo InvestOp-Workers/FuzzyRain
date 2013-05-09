@@ -170,14 +170,21 @@ namespace FuzzyRain
             {
                 int month;
                 double precipitation;
+                int year;
                 SimulationType simulationType = GetSimulationType();
 
-                foreach (XmlNode item in xDoc.SelectNodes("/rainfall/yearfall/fall"))
-                {                    
-                    month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
-                    precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
-                                        
-                    monthsPrecipitations[month].PutValueInRank(precipitation);                    
+                foreach (XmlNode item in xDoc.SelectNodes("/rainfall/yearfall"))
+                {
+                    year = int.Parse(item.Attributes["year"].Value);
+                    
+                    //foreach (XmlNode item2 in xDoc.SelectNodes("/rainfall/yearfall/fall"))
+                    foreach (XmlNode item2 in item.SelectNodes("fall"))
+                    {
+                        month = int.Parse(item2.SelectSingleNode("month").Attributes["value"].InnerText);
+                        precipitation = double.Parse(item2.SelectSingleNode("precipitation").Attributes["value"].InnerText);
+
+                        monthsPrecipitations[month].PutValueInRank(year, precipitation);
+                    }
                 }
 
             }

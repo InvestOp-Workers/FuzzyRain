@@ -51,7 +51,7 @@ public class Distribution
         }        
     }
 
-    public bool PutValueInRank(double value)
+    public bool PutValueInRank(int year, double value)
     {
         var valueToAdd = GetValueAccordingSimulationType(value);
 
@@ -59,7 +59,7 @@ public class Distribution
         {
             if (valueToAdd <= Ranks[i].UpperLimit)
             {                
-                AddValueInRank(i, valueToAdd);                
+                AddValueInRank(i, year, valueToAdd);                
                 return true;
             }
         }
@@ -126,45 +126,49 @@ public class Distribution
         return valueInf + rankPortion * placeInRank;        
     }
 
-    private string GetPeriod(int indexPeriod)
+    private Period GetPeriod(int indexPeriod)
     {
         var count = ValuesInOrderOfAppearance.Count;
-        string period = "";
+        Period period = new Period();
         
         if (SimulationType == FuzzyRain.Model.SimulationType.Daily)
         {
-            int dia = count % (int)FuzzyRain.Model.SimulationType.Daily;
-            int anio = count / (int)FuzzyRain.Model.SimulationType.Daily;
+            int day = count % (int)FuzzyRain.Model.SimulationType.Daily;
+            int year = count / (int)FuzzyRain.Model.SimulationType.Daily;
 
-            dia++;            
-            anio++;
-            period = anio + "° año - " + dia + "° dia";
+            day++;            
+            year++;
+            period.Year = year.ToString();
+            period.Day = day.ToString();
         }
 
         if (SimulationType == FuzzyRain.Model.SimulationType.Weekly)
         {
-            int semana = count % (int)FuzzyRain.Model.SimulationType.Weekly;
-            int anio = count / (int)FuzzyRain.Model.SimulationType.Weekly;
+            int week = count % (int)FuzzyRain.Model.SimulationType.Weekly;
+            int year = count / (int)FuzzyRain.Model.SimulationType.Weekly;
 
-            semana++;           
-            anio++;
-            period = anio + "° año - " + semana + "° semana";
+            week++;           
+            year++;
+            period.Year = year.ToString();
+            period.Week = week.ToString();
         }
 
         if (SimulationType == FuzzyRain.Model.SimulationType.Monthly)
         {            
-            int anio = count / (int)FuzzyRain.Model.SimulationType.Monthly;
+            int year = count / (int)FuzzyRain.Model.SimulationType.Monthly;
             
-            anio++;
-            period = anio + "° año";
+            year++;
+            period.Year = year.ToString();
         }        
 
         return period;
     }
 
-    public Rain AddValueInOrderOfAppearance(double value, int indexPeriod)
+    public Rain AddValueInOrderOfAppearance(double value, int indexPeriod, int year = 0)
     {
-        Rain rain = new Rain() { Period = GetPeriod(indexPeriod), Quantity = value };
+        Period period = GetPeriod(indexPeriod);
+        period.Year = year == 0 ? period.Year : year.ToString();
+        Rain rain = new Rain() { Period = period, Quantity = value };        
         ValuesInOrderOfAppearance.Add(rain);
         return rain;
     }
@@ -174,12 +178,14 @@ public class Distribution
         return value / (int)SimulationType;
     }
 
-    private void AddValueInRank(int indexRank, double value)
+    private void AddValueInRank(int indexRank, int year, double value)
     {
         for (int i = 1; i <= (int)SimulationType; i++)
-        {            
-            Ranks[indexRank].Values.Add(new Rain() { Period = GetPeriod(i), Quantity = value });
-            AddValueInOrderOfAppearance(value, i);
+        {
+            Period period = GetPeriod(i);
+            period.Year = year.ToString();
+            Ranks[indexRank].Values.Add(new Rain() { Period = period, Quantity = value });
+            AddValueInOrderOfAppearance(value, i, year);
         }
 
         double allValuesCount = (double)ValuesInOrderOfAppearance.Count;

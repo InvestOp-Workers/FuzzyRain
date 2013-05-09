@@ -35,8 +35,8 @@ namespace FuzzyRain
         {
             double avg = distribution.Average;
             double desv = distribution.Std_Desv;
-
-            lwValues.ItemsSource = distribution.ValuesInOrderOfAppearance.Select(x => x.GetFormatedValue());
+            
+            lwValues.ItemsSource = distribution.ValuesInOrderOfAppearance;            
             txtAvg.Text = avg.ToString("#0.00");
             txtDesv.Text = desv.ToString("#0.00");
         }
@@ -54,7 +54,7 @@ namespace FuzzyRain
 
         public void AddNewSimulatedItem(Rain rain)
         {            
-            lwValues.Items.Add(rain.GetFormatedValue());
+            lwValues.Items.Add(rain);
         }
 
         public void Finalize(Distribution distribution)

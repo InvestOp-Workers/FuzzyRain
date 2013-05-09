@@ -3,7 +3,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Fuzzy Rain" Height="600" Width="800" ShowInTaskbar="True" WindowStartupLocation="CenterScreen" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" Icon="/FuzzyRain;component/Images/rain.png">
-    
+
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
+
     <StackPanel Orientation="Vertical">
         <Menu Grid.Row="0" IsMainMenu="True" Height="25" DockPanel.Dock="Top">
             <MenuItem Header="_Archivo">
