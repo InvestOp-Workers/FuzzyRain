@@ -11,7 +11,7 @@ namespace FuzzyRain.Model
         public string Week { get; set; }
         public string Day { get; set; }
 
-        public Period(string year = "", string week = "", string day = "")
+        public Period(string year = "-", string week = "-", string day = "-")
         {
             Year = year;
             Week = week;

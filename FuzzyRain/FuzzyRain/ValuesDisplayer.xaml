@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="310" d:DesignWidth="300">
+             d:DesignHeight="350" d:DesignWidth="300">
 
-    <StackPanel Height="310" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20" >
+    <StackPanel Height="350" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20" >
         <TextBlock x:Name="contentTitle" FontWeight="Bold"></TextBlock>
         <!--<StackPanel x:Name="valueConvPanel" Orientation="Horizontal" Visibility="Hidden" >
             <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
@@ -72,7 +72,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
+        <StackPanel HorizontalAlignment="Left" Height="22" Background="Azure">
+            <Button x:Name="btnCopy" Click="BtnCopy_Click">
+                Copy to clipboard
+            </Button>
+        </StackPanel>
+
     </StackPanel>
 
 </UserControl>

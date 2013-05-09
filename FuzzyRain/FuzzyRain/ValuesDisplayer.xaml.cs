@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -78,6 +79,27 @@ namespace FuzzyRain
 
             txtAvg.Text = string.Empty;
             txtDesv.Text = string.Empty;
+        }
+
+        private void BtnCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (lwValues.Items.Count > 0)
+            {                
+                var sb = new StringBuilder();
+                sb.AppendLine("Año\tSemana\tDia\tCantidad");
+                foreach (Rain rain in lwValues.Items)
+                {
+                    sb.AppendLine(string.Format("{0}\t{1}\t{2}\t{3}", rain.Period.Year, rain.Period.Week, rain.Period.Day, rain.Quantity));
+                }
+                try
+                {
+                    System.Windows.Clipboard.SetData(DataFormats.Text, sb.ToString());
+                }
+                catch (COMException)
+                {
+                    MessageBox.Show("No se pudo copiar la información");
+                }
+            }
         }
     }
 }

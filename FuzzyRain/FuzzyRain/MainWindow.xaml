@@ -90,7 +90,7 @@
                 <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
             </TabItem>
             <TabItem x:Name="tabItem_12" Header="Diciembre">
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                <myUserControl:MonthTabItemContent Height="369"></myUserControl:MonthTabItemContent>
             </TabItem>
         </TabControl>
         
