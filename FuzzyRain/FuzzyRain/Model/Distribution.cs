@@ -42,6 +42,15 @@ public class Distribution
         this.SimulationType = simulationType;
     }
 
+    public void CreateRanks(int rankCount, int rankAmplitude)
+    {
+        Ranks = new Rank[rankCount];
+        for (int i = 0; i < rankCount; i++)
+        {
+            Ranks[i] = new Rank(i * rankAmplitude, i * rankAmplitude + rankAmplitude);
+        }        
+    }
+
     public bool PutValueInRank(double value)
     {
         var valueToAdd = GetValueAccordingSimulationType(value);

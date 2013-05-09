@@ -162,8 +162,8 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution(GetSimulationType());
-                monthsPrecipitations[i].Ranks = CreateRanks(rankCount, rankAmplitude);                
+                monthsPrecipitations[i] = new Distribution(GetSimulationType());                
+                monthsPrecipitations[i].CreateRanks(rankCount, rankAmplitude);
             }
 
             try
@@ -187,19 +187,6 @@ namespace FuzzyRain
             }
 
             return monthsPrecipitations;
-        }
-        
-        // TODO: the ranks should be created by Distribution class.
-        private Rank[] CreateRanks(int rankCount, int rankAmplitude)
-        {
-            Rank[] ranks = new Rank[rankCount];
-
-            for (int i = 0; i < rankCount; i++)
-            {
-                ranks[i] = new Rank(i * rankAmplitude, i * rankAmplitude + rankAmplitude);
-            }
-
-            return ranks;
         }
 
         private SimulationType GetSimulationType()
