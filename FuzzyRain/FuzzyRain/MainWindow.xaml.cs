@@ -162,7 +162,7 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution(GetSimulationType());                
+                monthsPrecipitations[i] = new Distribution(GetSimulationType(), i);                
                 monthsPrecipitations[i].CreateRanks(rankCount, rankAmplitude);
             }
 

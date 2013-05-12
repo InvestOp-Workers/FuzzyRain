@@ -40,7 +40,7 @@ namespace FuzzyRain
         public void SetInitialOutputData(MonteCarloWithRanks model, int numberOfEvents)
         {
             myModel = model;
-            myDistribution = new Distribution(myModel.MyDistribution.SimulationType);
+            myDistribution = new Distribution(myModel.MyDistribution.SimulationType, int.Parse(myModel.MyDistribution.Month));
             eventsCount = numberOfEvents;
 
             ucOutputData.CleanData();

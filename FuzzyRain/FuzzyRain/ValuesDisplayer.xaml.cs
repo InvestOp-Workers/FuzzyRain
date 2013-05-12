@@ -86,10 +86,10 @@ namespace FuzzyRain
             if (lwValues.Items.Count > 0)
             {                
                 var sb = new StringBuilder();
-                sb.AppendLine("Año\tSemana\tDia\tCantidad");
+                sb.AppendLine("Año\tMes\tSemana\tDia\tCantidad");
                 foreach (Rain rain in lwValues.Items)
                 {
-                    sb.AppendLine(string.Format("{0}\t{1}\t{2}\t{3}", rain.Period.Year, rain.Period.Week, rain.Period.Day, rain.Quantity));
+                    sb.AppendLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}", rain.Period.Year, rain.Period.Month, rain.Period.Week, rain.Period.Day, rain.Quantity));
                 }
                 try
                 {

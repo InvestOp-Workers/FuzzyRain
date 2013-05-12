@@ -36,10 +36,13 @@ public class Distribution
         }
     }
 
-    public Distribution(SimulationType simulationType)
+    public string Month { get; set; }
+
+    public Distribution(SimulationType simulationType, int month)
     {
         ValuesInOrderOfAppearance = new List<Rain>();
         this.SimulationType = simulationType;
+        this.Month = month.ToString();
     }
 
     public void CreateRanks(int rankCount, int rankAmplitude)
@@ -130,7 +133,7 @@ public class Distribution
     {
         var count = ValuesInOrderOfAppearance.Count;
         Period period = new Period();
-        
+        period.Month = this.Month;
         if (SimulationType == FuzzyRain.Model.SimulationType.Daily)
         {
             int day = count % (int)FuzzyRain.Model.SimulationType.Daily;

@@ -45,7 +45,15 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
+                    <GridViewColumn Header="Mes" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Period.Month}" TextAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                     <GridViewColumn Header="Semana" Width="60">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -54,7 +62,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Dia" Width="60">
+                    <GridViewColumn Header="Dia" Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Period.Day}" TextAlignment="Center" />
