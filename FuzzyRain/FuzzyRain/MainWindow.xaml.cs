@@ -17,6 +17,7 @@ using System.IO;
 using System.Xml;
 using FuzzyRain.Model;
 using FuzzyLogic;
+using System.Globalization;
 
 namespace FuzzyRain
 {
@@ -181,7 +182,7 @@ namespace FuzzyRain
                     foreach (XmlNode item2 in item.SelectNodes("fall"))
                     {
                         month = int.Parse(item2.SelectSingleNode("month").Attributes["value"].InnerText);
-                        precipitation = double.Parse(item2.SelectSingleNode("precipitation").Attributes["value"].InnerText);
+                        precipitation = double.Parse(item2.SelectSingleNode("precipitation").Attributes["value"].InnerText, CultureInfo.InvariantCulture);
 
                         monthsPrecipitations[month].PutValueInRank(year, precipitation);
                     }
