@@ -139,8 +139,7 @@ namespace FuzzyRain
 
             // Set Parsed Data
             SetInitialInputData(distributions);
-
-            Distribution[] simulations = new Distribution[13];
+            
             for (int i = 10; i <= 12; i++)
             {
                 // Iniciar la simulacion
@@ -163,22 +162,29 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution();                
-                monthsPrecipitations[i].Ranks = CreateRanks(rankCount, rankAmplitude);                
+                monthsPrecipitations[i] = new Distribution(GetSimulationType(), i);                
+                monthsPrecipitations[i].CreateRanks(rankCount, rankAmplitude);
             }
 
             try
             {
                 int month;
                 double precipitation;
+                int year;
                 SimulationType simulationType = GetSimulationType();
 
-                foreach (XmlNode item in xDoc.SelectNodes("/rainfall/yearfall/fall"))
-                {                    
-                    month = int.Parse(item.SelectSingleNode("month").Attributes["value"].InnerText);
-                    precipitation = double.Parse(item.SelectSingleNode("precipitation").Attributes["value"].InnerText);
-                                        
-                    monthsPrecipitations[month].PutValueInRank(precipitation, simulationType);                    
+                foreach (XmlNode item in xDoc.SelectNodes("/rainfall/yearfall"))
+                {
+                    year = int.Parse(item.Attributes["year"].Value);
+                    
+                    //foreach (XmlNode item2 in xDoc.SelectNodes("/rainfall/yearfall/fall"))
+                    foreach (XmlNode item2 in item.SelectNodes("fall"))
+                    {
+                        month = int.Parse(item2.SelectSingleNode("month").Attributes["value"].InnerText);
+                        precipitation = double.Parse(item2.SelectSingleNode("precipitation").Attributes["value"].InnerText);
+
+                        monthsPrecipitations[month].PutValueInRank(year, precipitation);
+                    }
                 }
 
             }
@@ -188,18 +194,6 @@ namespace FuzzyRain
             }
 
             return monthsPrecipitations;
-        }
-        
-        private Rank[] CreateRanks(int rankCount, int rankAmplitude)
-        {
-            Rank[] ranks = new Rank[rankCount];
-
-            for (int i = 0; i < rankCount; i++)
-            {
-                ranks[i] = new Rank(i * rankAmplitude, i * rankAmplitude + rankAmplitude);
-            }
-
-            return ranks;
         }
 
         private SimulationType GetSimulationType()

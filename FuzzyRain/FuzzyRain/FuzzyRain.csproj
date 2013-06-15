@@ -64,6 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Period.cs" />
+    <Compile Include="Model\Rain.cs" />
     <Compile Include="ValuesDisplayer.xaml.cs">
       <DependentUpon>ValuesDisplayer.xaml</DependentUpon>
     </Compile>

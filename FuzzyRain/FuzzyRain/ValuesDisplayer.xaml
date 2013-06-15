@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="310" d:DesignWidth="250">
+             d:DesignHeight="350" d:DesignWidth="300">
 
-    <StackPanel Height="310" Width="250" HorizontalAlignment="Left" Margin="0,0,0,20" >
+    <StackPanel Height="350" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20" >
         <TextBlock x:Name="contentTitle" FontWeight="Bold"></TextBlock>
-        <StackPanel x:Name="valueConvPanel" Orientation="Horizontal" Visibility="Hidden" >
+        <!--<StackPanel x:Name="valueConvPanel" Orientation="Horizontal" Visibility="Hidden" >
             <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
             <TextBlock x:Name="txtValueConv"></TextBlock>
-        </StackPanel>
+        </StackPanel>-->
 
         <StackPanel x:Name="avgConvPanel" Orientation="Horizontal" Visibility="Hidden" >
             <TextBlock Margin="0,0,5,0">Media de Convergencia:</TextBlock>
@@ -34,8 +34,59 @@
             <TextBlock Margin="0,0,5,0">Desvio Estandar:</TextBlock>
             <TextBlock x:Name="txtDesv"></TextBlock>
         </StackPanel>
+       
+        <ListView Name="lwValues" Height="220">            
+            <ListView.View>                
+                <GridView>                                        
+                    <GridViewColumn Header="Año" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Period.Year}" TextAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
-        <ListView Name="lwValues" Height="220"/>
+                    <GridViewColumn Header="Mes" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Period.Month}" TextAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Semana" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Period.Week}" TextAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Dia" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Period.Day}" TextAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Cantidad" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Quantity}" TextAlignment="Right" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel HorizontalAlignment="Left" Height="22" Background="Azure">
+            <Button x:Name="btnCopy" Click="BtnCopy_Click">
+                Copy to clipboard
+            </Button>
+        </StackPanel>
+
     </StackPanel>
 
 </UserControl>

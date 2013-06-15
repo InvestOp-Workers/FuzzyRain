@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FuzzyRain.Model;
 
 public class Rank
 {
@@ -7,11 +8,11 @@ public class Rank
     public double CumFrequency { get; set; }
     public double CenterValueOfRank { get; set; }
     
-    public IList<double> Values  { get; set; }
+    public IList<Rain> Values  { get; set; }
 
     public Rank(double lowerLimit, double upperLimit)
     {
-        Values = new List<double>();
+        Values = new List<Rain>();
 
         LowerLimit = lowerLimit;
         UpperLimit = upperLimit;
