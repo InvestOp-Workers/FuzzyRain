@@ -28,7 +28,7 @@ namespace FuzzyRain
 
         public MonthTabItemContent()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         public void SetInitialInputData(Distribution distribution)
@@ -84,7 +84,9 @@ namespace FuzzyRain
             ImageSuperficie.Height = surface;
             LabelSuperficie.Content = surface.ToString("00.00") + "mm";
 
-            double volumen = FuzzyLogic.FuzzyRain.Instance.DoInference((float)rain, (float)surface);            
+
+
+            double volumen = FuzzyLogic.FuzzyRain.Instance.DoInference((float)rain, (float)surface, 100.0f);            
             ImageVolumen.Width = volumen;
             ImageVolumen.Height = volumen;
             LabelVolumen.Content = volumen.ToString("00.00") + "mm";

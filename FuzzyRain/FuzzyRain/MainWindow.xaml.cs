@@ -44,8 +44,6 @@ namespace FuzzyRain
             UpdateAnimationTimer = new DispatcherTimer();
             UpdateAnimationTimer.Tick += new EventHandler(UpdateAnimationTimer_Tick);
             UpdateAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-
-            //FuzzyLogic.FuzzyRain.Instance.DoInference(9);
         }
 
         private void OpenFile()
@@ -242,6 +240,11 @@ namespace FuzzyRain
         }
 
         #endregion        
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            FuzzyLogic.FuzzyRain.Instance.DoInference(9);
+        }
 
     }    
 }
