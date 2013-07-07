@@ -31,9 +31,9 @@ namespace FuzzyLogic
         private void InitFuzzyEngine()
         {
             //Superficie Captacion SC
-            FuzzySet scChico = new FuzzySet("Chico", new TrapezoidalFunction(81, 120, TrapezoidalFunction.EdgeType.Right));
-            FuzzySet scMediano = new FuzzySet("Mediano", new TrapezoidalFunction(80, 120, 121, 180));
-            FuzzySet scGrande = new FuzzySet("Grande", new TrapezoidalFunction(150, 200, 201, 250));
+            FuzzySet scChico = new FuzzySet("Chico", new TrapezoidalFunction(80, 120, TrapezoidalFunction.EdgeType.Right));
+            FuzzySet scMediano = new FuzzySet("Mediano", new TrapezoidalFunction(80, 120, 180));
+            FuzzySet scGrande = new FuzzySet("Grande", new TrapezoidalFunction(150, 200, 250));
             FuzzySet scMuyGrande = new FuzzySet("MuyGrande", new TrapezoidalFunction(200, 250, TrapezoidalFunction.EdgeType.Left));
 
             LinguisticVariable lvSuperficieCaptacion = new LinguisticVariable("SC", 0, 1200);
@@ -43,10 +43,10 @@ namespace FuzzyLogic
             lvSuperficieCaptacion.AddLabel(scMuyGrande);
 
             //volumen del sistema de almacenamiento VA
-            FuzzySet vaPequenio = new FuzzySet("Pequenio", new TrapezoidalFunction(11, 20, TrapezoidalFunction.EdgeType.Right));
-            FuzzySet vaIntermedio = new FuzzySet("Intermedio", new TrapezoidalFunction(10, 20, 21, 40));
+            FuzzySet vaPequenio = new FuzzySet("Pequenio", new TrapezoidalFunction(10, 20, TrapezoidalFunction.EdgeType.Right));
+            FuzzySet vaIntermedio = new FuzzySet("Intermedio", new TrapezoidalFunction(10, 20, 40));
             FuzzySet vaConsiderable = new FuzzySet("Considerable", new TrapezoidalFunction(30, 40, TrapezoidalFunction.EdgeType.Left));
-            
+
             LinguisticVariable lvVolumenAlmacenamiento = new LinguisticVariable("VA", 0, 100);
             lvVolumenAlmacenamiento.AddLabel(vaPequenio);
             lvVolumenAlmacenamiento.AddLabel(vaIntermedio);
@@ -54,9 +54,9 @@ namespace FuzzyLogic
 
             //precipitaciones pluviales PP
             FuzzySet ppMuyBaja = new FuzzySet("MuyBaja", new TrapezoidalFunction(20, 40, TrapezoidalFunction.EdgeType.Right));
-            FuzzySet ppBaja = new FuzzySet("Baja", new TrapezoidalFunction(20, 40, 41, 60));
-            FuzzySet ppMedia = new FuzzySet("Media", new TrapezoidalFunction(40, 70, 71, 100));
-            FuzzySet ppAlta = new FuzzySet("Alta", new TrapezoidalFunction(80, 130, 131, 180));
+            FuzzySet ppBaja = new FuzzySet("Baja", new TrapezoidalFunction(20, 40, 60));
+            FuzzySet ppMedia = new FuzzySet("Media", new TrapezoidalFunction(40, 70, 100));
+            FuzzySet ppAlta = new FuzzySet("Alta", new TrapezoidalFunction(80, 130, 180));
             FuzzySet ppMuyAlta = new FuzzySet("MuyAlta", new TrapezoidalFunction(150, 180, TrapezoidalFunction.EdgeType.Left));
 
             LinguisticVariable lvPrecipitacionesPluviales = new LinguisticVariable("PP", 0, 300);
@@ -65,12 +65,12 @@ namespace FuzzyLogic
             lvPrecipitacionesPluviales.AddLabel(ppMedia);
             lvPrecipitacionesPluviales.AddLabel(ppAlta);
             lvPrecipitacionesPluviales.AddLabel(ppMuyAlta);
-            
+
             //consumo C (OUTPUT)
             FuzzySet cBajo = new FuzzySet("Bajo", new TrapezoidalFunction(1000, 1200, TrapezoidalFunction.EdgeType.Right));
-            FuzzySet cPromedio = new FuzzySet("Promedio", new TrapezoidalFunction(1200, 1400, 1401, 1800));
+            FuzzySet cPromedio = new FuzzySet("Promedio", new TrapezoidalFunction(1200, 1400, 1800));
             FuzzySet dAlto = new FuzzySet("Alto", new TrapezoidalFunction(1400, 1800, TrapezoidalFunction.EdgeType.Left));
-            
+
             LinguisticVariable lvConsumo = new LinguisticVariable("C", 0, 3000);
             lvConsumo.AddLabel(cBajo);
             lvConsumo.AddLabel(cPromedio);
