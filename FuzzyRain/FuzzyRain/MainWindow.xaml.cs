@@ -239,12 +239,7 @@ namespace FuzzyRain
             }
         }
 
-        #endregion        
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            FuzzyLogic.FuzzyRain.Instance.DoInference(9);
-        }
+        #endregion
 
     }    
 }
