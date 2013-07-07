@@ -40,12 +40,14 @@ namespace FuzzyRain
         public void SetInitialOutputData(MonteCarloWithRanks model, int numberOfEvents)
         {
             myModel = model;
-            myDistribution = new Distribution(myModel.MyDistribution.SimulationType, int.Parse(myModel.MyDistribution.Month));
+            myDistribution = new Distribution(myModel.MyDistribution.SimulationData, int.Parse(myModel.MyDistribution.Month));
             eventsCount = numberOfEvents;
 
             ucOutputData.CleanData();
             ucOutputData.CleanDataList();
             ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);
+            //TODO: borrar esto. Es solo para corroborar los valores inferidos.
+            checkearInferencias.Items.Clear();
         }
 
         /// <summary>
@@ -56,6 +58,8 @@ namespace FuzzyRain
             ucInputData.CleanData();
             ucOutputData.CleanData();
             ucOutputData.CleanDataList();
+            //TODO: borrar esto. Es solo para corroborar los valores inferidos.
+            checkearInferencias.Items.Clear();
         }
 
         public void Tick()
@@ -79,17 +83,20 @@ namespace FuzzyRain
             ImageLLuvia.Height = rain;
             LabelLLuvia.Content = rain.ToString("00.00") + "mm";
 
-            double surface = 100;
+            double surface = myDistribution.SimulationData.Surface;
             ImageSuperficie.Width = surface;
             ImageSuperficie.Height = surface;
             LabelSuperficie.Content = surface.ToString("00.00") + "mm";
 
-
-
-            double volumen = FuzzyLogic.FuzzyRain.Instance.DoInference((float)rain, (float)surface, 100.0f);            
+            double volumen = myDistribution.SimulationData.Volumen;
             ImageVolumen.Width = volumen;
             ImageVolumen.Height = volumen;
             LabelVolumen.Content = volumen.ToString("00.00") + "mm";
+            
+            // TODO: actualizar este dato en una grafica. Podrían imprimirse en pantalla la lista de valores tambien.
+            float consumo = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain);
+            //TODO: borrar esto. Es solo para corroborar los valores inferidos.
+            checkearInferencias.Items.Add(consumo);
         }
     }
 }

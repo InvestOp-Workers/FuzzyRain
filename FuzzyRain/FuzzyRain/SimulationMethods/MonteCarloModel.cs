@@ -19,14 +19,14 @@ namespace SimulationMethods
         {
             _mean = mean;
             _std_dev = std_dev;
-            MyDistribution = new Distribution(SimulationType.Weekly, 0);
+            MyDistribution = new Distribution(new SimulationData(), 0);
             MyDistribution.Ranks = ranks;
             Run();
         }
 
         public MonteCarloModel(int rankCount, Rank[] ranks)
         {
-            MyDistribution = new Distribution(SimulationType.Weekly, 0);
+            MyDistribution = new Distribution(new SimulationData(), 0);
             MyDistribution.Ranks = ranks;
             Run();
         }
@@ -35,7 +35,7 @@ namespace SimulationMethods
         {
             _mean = mean;
             _std_dev = std_dev;
-            MyDistribution = new Distribution(SimulationType.Weekly, 0);
+            MyDistribution = new Distribution(new SimulationData(), 0);
             Run();
         }
 

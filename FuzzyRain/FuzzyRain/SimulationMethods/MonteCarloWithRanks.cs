@@ -25,7 +25,7 @@ namespace SimulationMethods
             int seed = unchecked( (int)DateTime.Now.Ticks );
             random = new Random(seed);
 
-            MyDistribution = new Distribution(distBase.SimulationType, int.Parse(distBase.Month));
+            MyDistribution = new Distribution(distBase.SimulationData, int.Parse(distBase.Month));
             MyDistribution.Ranks = distBase.Ranks;
             ConvergenceError = convergenceError;
             distributionBase = distBase;

@@ -18,7 +18,7 @@ public class Distribution
     }
     public Rank[] Ranks { get; set; }
     public IList<Rain> ValuesInOrderOfAppearance = new List<Rain>();
-    public SimulationType SimulationType { get; set; }
+    public SimulationData SimulationData { get; set; }
 
     public double Average
     {
@@ -38,10 +38,10 @@ public class Distribution
 
     public string Month { get; set; }
 
-    public Distribution(SimulationType simulationType, int month)
+    public Distribution(SimulationData simulationData, int month)
     {
         ValuesInOrderOfAppearance = new List<Rain>();
-        this.SimulationType = simulationType;
+        this.SimulationData = simulationData;
         this.Month = month.ToString();
     }
 
@@ -134,7 +134,7 @@ public class Distribution
         var count = ValuesInOrderOfAppearance.Count;
         Period period = new Period();
         period.Month = this.Month;
-        if (SimulationType == FuzzyRain.Model.SimulationType.Daily)
+        if (SimulationData.SimulationType == FuzzyRain.Model.SimulationType.Daily)
         {
             int day = count % (int)FuzzyRain.Model.SimulationType.Daily;
             int year = count / (int)FuzzyRain.Model.SimulationType.Daily;
@@ -145,7 +145,7 @@ public class Distribution
             period.Day = day.ToString();
         }
 
-        if (SimulationType == FuzzyRain.Model.SimulationType.Weekly)
+        if (SimulationData.SimulationType == FuzzyRain.Model.SimulationType.Weekly)
         {
             int week = count % (int)FuzzyRain.Model.SimulationType.Weekly;
             int year = count / (int)FuzzyRain.Model.SimulationType.Weekly;
@@ -156,7 +156,7 @@ public class Distribution
             period.Week = week.ToString();
         }
 
-        if (SimulationType == FuzzyRain.Model.SimulationType.Monthly)
+        if (SimulationData.SimulationType == FuzzyRain.Model.SimulationType.Monthly)
         {            
             int year = count / (int)FuzzyRain.Model.SimulationType.Monthly;
             
@@ -177,13 +177,13 @@ public class Distribution
     }
 
     private double GetValueAccordingSimulationType(double value)
-    { 
-        return value / (int)SimulationType;
+    {
+        return value / (int)SimulationData.SimulationType;
     }
 
     private void AddValueInRank(int indexRank, int year, double value)
     {
-        for (int i = 1; i <= (int)SimulationType; i++)
+        for (int i = 1; i <= (int)SimulationData.SimulationType; i++)
         {
             Period period = GetPeriod(i);
             period.Year = year.ToString();

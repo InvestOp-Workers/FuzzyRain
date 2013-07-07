@@ -32,8 +32,8 @@
             <Label Foreground="Red">(*)</Label>
                 <TextBox x:Name="txtCountEvents" VerticalAlignment="Center" Margin="0,0,5,0" Width="40"></TextBox>
         </StackPanel>
-        
-        <StackPanel Orientation="Horizontal">
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Rangos:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,20,0"></TextBlock>
             <TextBlock Text="Cantidad" VerticalAlignment="Center" ></TextBlock>
             <Label Foreground="Red">(*)</Label>
@@ -45,7 +45,31 @@
             <Label Foreground="Red">(*)</Label>
             <TextBox x:Name="txtConvError" Margin="0,0,20,0" Width="40"></TextBox>            
         </StackPanel>
-        
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Superficie(m2):" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
+            <ComboBox Name="cmbSurface" Width="150" HorizontalAlignment="Left">
+                <ComboBoxItem Content="100"></ComboBoxItem>
+                <ComboBoxItem Content="200"></ComboBoxItem>
+                <ComboBoxItem Content="400"></ComboBoxItem>
+                <ComboBoxItem Content="1200" IsSelected="True"></ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="Volumen(m3):" VerticalAlignment="Center" Margin="20,0,5,0"></TextBlock>
+            <ComboBox Name="cmbVolumen" Width="150" HorizontalAlignment="Left">
+                <ComboBoxItem Content="10"></ComboBoxItem>
+                <ComboBoxItem Content="30"></ComboBoxItem>
+                <ComboBoxItem Content="100" IsSelected="True"></ComboBoxItem>
+            </ComboBox>
+            <!--TODO: habilitar el combo cuando se manejen las diferentes reglas para las diferentes cantidades de personas.-->
+            <TextBlock Text="Cant. Personas:" VerticalAlignment="Center" Margin="20,0,5,0"></TextBlock>
+            <ComboBox Name="cmbPeopleCount" Width="150" HorizontalAlignment="Left" IsEnabled="False">
+                <ComboBoxItem Content="2" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="4"></ComboBoxItem>
+                <ComboBoxItem Content="6"></ComboBoxItem>
+                <ComboBoxItem Content="8"></ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal"  Height="36" Margin="0,10,0,0">
             <Button Content="Examinar..." Height="26" Margin="5" Name="ButtonExaminar" Width="Auto" Click="ButtonExaminar_Click" />
             <Button Content="Comenzar" Height="26" Margin="5" IsEnabled="False" Name="ButtonComenzar" Width="Auto" Click="ButtonComenzar_Click"/>

@@ -161,7 +161,7 @@ namespace FuzzyRain
 
             for (int i = 1; i <= 12; i++)
             {
-                monthsPrecipitations[i] = new Distribution(GetSimulationType(), i);                
+                monthsPrecipitations[i] = new Distribution(GetSimulationData(), i);                
                 monthsPrecipitations[i].CreateRanks(rankCount, rankAmplitude);
             }
 
@@ -193,6 +193,17 @@ namespace FuzzyRain
             }
 
             return monthsPrecipitations;
+        }
+
+        private SimulationData GetSimulationData()
+        {
+            SimulationData result = new SimulationData();
+            result.SimulationType = GetSimulationType();
+            result.PersonQuantity = int.Parse(cmbPeopleCount.Text);
+            result.Surface = int.Parse(cmbSurface.Text);
+            result.Volumen = int.Parse(cmbVolumen.Text);
+
+            return result;
         }
 
         private SimulationType GetSimulationType()
