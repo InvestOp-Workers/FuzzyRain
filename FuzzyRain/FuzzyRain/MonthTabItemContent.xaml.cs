@@ -22,8 +22,8 @@ namespace FuzzyRain
     /// </summary>
     public partial class MonthTabItemContent : UserControl
     {
-        private MonteCarloWithRanks myModel;
-        private Distribution myDistribution;
+        public MonteCarloWithRanks myModel;
+        public Distribution myDistribution;
         int eventsCount;
 
         public MonthTabItemContent()
@@ -62,9 +62,39 @@ namespace FuzzyRain
             checkearInferencias.Items.Clear();
         }
 
-        public void Tick()
+        public void Tick(double rain, double surface, double volumen)
         {
             if (eventsCount == 0)
+            {
+                ucOutputData.Finalize(myDistribution);
+                eventsCount -= 1;
+                return;
+            }
+
+            if (eventsCount < 0)
+                return;
+                
+            eventsCount -= 1;
+
+            ucOutputData.AddNewSimulatedItem(myDistribution.AddValueInOrderOfAppearance(rain, eventsCount));
+
+            ImageLLuvia.Width = rain;
+            ImageLLuvia.Height = rain;
+            LabelLLuvia.Content = rain.ToString("00.00") + "mm";
+
+            
+            ImageSuperficie.Width = surface;
+            ImageSuperficie.Height = surface;
+            LabelSuperficie.Content = surface.ToString("00.00") + "mm";
+
+            
+            ImageVolumen.Width = volumen;
+            ImageVolumen.Height = volumen;
+            LabelVolumen.Content = volumen.ToString("00.00") + "mm";
+         }
+    }
+
+            /*if (eventsCount == 0)
             {
                 ucOutputData.Finalize(myDistribution);
                 eventsCount -= 1;
@@ -102,7 +132,5 @@ namespace FuzzyRain
             checkearInferencias.Items.Add(consumo);
             checkearInferencias4.Items.Add(consumo4);
             checkearInferencias6.Items.Add(consumo6);
-            checkearInferencias8.Items.Add(consumo8);
-        }
-    }
+            checkearInferencias8.Items.Add(consumo8);*/
 }

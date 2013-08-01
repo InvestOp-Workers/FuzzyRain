@@ -2,7 +2,7 @@
         xmlns:myUserControl="clr-namespace:FuzzyRain"        
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Fuzzy Rain" Height="600" Width="800" ShowInTaskbar="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" Icon="/FuzzyRain;component/Images/rain.png">
+        Title="Fuzzy Rain" Height="815" Width="800" ShowInTaskbar="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" Icon="/FuzzyRain;component/Images/rain.png">
 
     <Window.Resources>
         <Style TargetType="ListViewItem">
@@ -20,94 +20,121 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
-            <TextBlock Text="Modo de simulación:" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
-            <ComboBox Name="cmbSimulationType" Width="200" HorizontalAlignment="Left">
-                <ComboBoxItem Content="Diario"></ComboBoxItem>
-                <ComboBoxItem Content="Semanal" IsSelected="True"></ComboBoxItem>
-                <ComboBoxItem Content="Mensual"></ComboBoxItem>
-            </ComboBox>
-            <TextBlock Text="CANTIDAD DE SUCESOS A SIMULAR" VerticalAlignment="Center" Margin="34,0,0,0" ></TextBlock>
-            <Label Foreground="Red">(*)</Label>
-                <TextBox x:Name="txtCountEvents" VerticalAlignment="Center" Margin="0,0,5,0" Width="40"></TextBox>
-        </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Rangos:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,20,0"></TextBlock>
-            <TextBlock Text="Cantidad" VerticalAlignment="Center" ></TextBlock>
-            <Label Foreground="Red">(*)</Label>
-            <TextBox x:Name="txtRankCount" Margin="0,0,20,0" Width="40"></TextBox>
-            <TextBlock Text="Amplitud" VerticalAlignment="Center" ></TextBlock>
-            <Label Foreground="Red">(*)</Label>
-            <TextBox x:Name="txtRankAmplitude" Margin="0,0,40,0" Width="40"></TextBox>
-            <TextBlock Text="Error de convergencia" VerticalAlignment="Center" ></TextBlock>
-            <Label Foreground="Red">(*)</Label>
-            <TextBox x:Name="txtConvError" Margin="0,0,20,0" Width="40"></TextBox>            
-        </StackPanel>
+        <TabControl>
+            <TabItem Header="Simulación y Lógica" >
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                        <TextBlock Text="Modo de simulación:" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
+                        <ComboBox Name="cmbSimulationType" Width="200" HorizontalAlignment="Left">
+                            <ComboBoxItem Content="Diario"></ComboBoxItem>
+                            <ComboBoxItem Content="Semanal" IsSelected="True"></ComboBoxItem>
+                            <ComboBoxItem Content="Mensual"></ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Text="CANTIDAD DE SUCESOS A SIMULAR" VerticalAlignment="Center" Margin="34,0,0,0" ></TextBlock>
+                        <Label Foreground="Red">(*)</Label>
+                        <TextBox x:Name="txtCountEvents" VerticalAlignment="Center" Margin="0,0,5,0" Width="40"></TextBox>
+                    </StackPanel>
 
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Superficie(m2):" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
-            <TextBox x:Name="txtSup" Margin="0,0,20,0" Width="80"></TextBox>
-            <TextBlock Text="Volumen(m3):" VerticalAlignment="Center" Margin="20,0,5,0"></TextBlock>
-            <TextBox x:Name="txtVol" Margin="0,0,20,0" Width="80"></TextBox>
-            <!--TODO: habilitar el combo cuando se manejen las diferentes reglas para las diferentes cantidades de personas.-->
-            <!--<TextBlock Text="Cant. Personas:" VerticalAlignment="Center" Margin="20,0,5,0"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock Text="Rangos:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,20,0"></TextBlock>
+                        <TextBlock Text="Cantidad" VerticalAlignment="Center" ></TextBlock>
+                        <Label Foreground="Red">(*)</Label>
+                        <TextBox x:Name="txtRankCount" Margin="0,0,20,0" Width="40"></TextBox>
+                        <TextBlock Text="Amplitud" VerticalAlignment="Center" ></TextBlock>
+                        <Label Foreground="Red">(*)</Label>
+                        <TextBox x:Name="txtRankAmplitude" Margin="0,0,40,0" Width="40"></TextBox>
+                        <TextBlock Text="Error de convergencia" VerticalAlignment="Center" ></TextBlock>
+                        <Label Foreground="Red">(*)</Label>
+                        <TextBox x:Name="txtConvError" Margin="0,0,20,0" Width="40"></TextBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Superficie(m2):" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
+                        <TextBox x:Name="txtSup" Margin="0,0,20,0" Width="80"></TextBox>
+                        <TextBlock Text="Volumen(m3):" VerticalAlignment="Center" Margin="20,0,5,0"></TextBlock>
+                        <TextBox x:Name="txtVol" Margin="0,0,20,0" Width="80"></TextBox>
+                        <!--TODO: habilitar el combo cuando se manejen las diferentes reglas para las diferentes cantidades de personas.-->
+                        <!--<TextBlock Text="Cant. Personas:" VerticalAlignment="Center" Margin="20,0,5,0"></TextBlock>
             <ComboBox Name="cmbPeopleCount" Width="150" HorizontalAlignment="Left" IsEnabled="False">
                 <ComboBoxItem Content="2" IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="4"></ComboBoxItem>
                 <ComboBoxItem Content="6"></ComboBoxItem>
                 <ComboBoxItem Content="8"></ComboBoxItem>
             </ComboBox>-->
-        </StackPanel>
+                    </StackPanel>
 
-        <StackPanel Orientation="Horizontal"  Height="36" Margin="0,10,0,0">
-            <Button Content="Examinar..." Height="26" Margin="5" Name="ButtonExaminar" Width="Auto" Click="ButtonExaminar_Click" />
-            <Button Content="Comenzar" Height="26" Margin="5" IsEnabled="False" Name="ButtonComenzar" Width="Auto" Click="ButtonComenzar_Click"/>
-            <TextBox Name="TextBoxArchivoEntrada" Margin="5" IsEnabled="False" Width="625"/>
-        </StackPanel>
-        
-        <Separator Height="20">
-        </Separator>
+                    <StackPanel Orientation="Horizontal"  Height="36" Margin="0,10,0,0">
+                        <Button Content="Examinar..." Height="26" Margin="5" Name="ButtonExaminar" Width="Auto" Click="ButtonExaminar_Click" />
+                        <Button Content="Comenzar" Height="26" Margin="5" IsEnabled="False" Name="ButtonComenzar" Width="Auto" Click="ButtonComenzar_Click"/>
+                        <TextBox Name="TextBoxArchivoEntrada" Margin="5" IsEnabled="False" Width="625"/>
+                    </StackPanel>
 
-        <TabControl x:Name="tabMonths" >
-            <TabItem x:Name="tabItem_01" Header="Enero" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                    <Separator Height="20">
+                    </Separator>
+
+                    <TabControl x:Name="tabMonths" >
+                        <TabItem x:Name="tabItem_01" Header="Enero" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_02" Header="Febrero" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_03" Header="Marzo" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_04" Header="Abril" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_05" Header="Mayo" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_06" Header="Junio" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_07" Header="Julio" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_08" Header="Agosto" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_09" Header="Septiembre" >
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_10" Header="Octubre" IsSelected="True">
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_11" Header="Noviembre">
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                        <TabItem x:Name="tabItem_12" Header="Diciembre">
+                            <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+                        </TabItem>
+                    </TabControl>
+
+                </StackPanel>
             </TabItem>
-            <TabItem x:Name="tabItem_02" Header="Febrero" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_03" Header="Marzo" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_04" Header="Abril" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_05" Header="Mayo" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_06" Header="Junio" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_07" Header="Julio" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_08" Header="Agosto" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_09" Header="Septiembre" >
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_10" Header="Octubre" IsSelected="True">
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_11" Header="Noviembre">
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
-            </TabItem>
-            <TabItem x:Name="tabItem_12" Header="Diciembre">
-                <myUserControl:MonthTabItemContent></myUserControl:MonthTabItemContent>
+            <TabItem Header="Results" >
+                <StackPanel Orientation="Vertical"  Height="auto">
+                    <chartingToolkit:Chart  Name="chartConsumo2" Title="Consumo 2 Personas" VerticalAlignment="Top">
+                        <chartingToolkit:LineSeries  DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}"/>
+                    </chartingToolkit:Chart>
+                    <chartingToolkit:Chart  Name="chartConsumo4" Title="Consumo 4 Personas" VerticalAlignment="Top">
+                        <chartingToolkit:LineSeries  DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" />
+                    </chartingToolkit:Chart>
+                    <chartingToolkit:Chart  Name="chartConsumo6" Title="Consumo 6 Personas" VerticalAlignment="Top">
+                        <chartingToolkit:LineSeries  DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" />
+                    </chartingToolkit:Chart>
+                    <chartingToolkit:Chart  Name="chartConsumo8" Title="Consumo 8 Personas" VerticalAlignment="Top">
+                        <chartingToolkit:LineSeries  DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" />
+                    </chartingToolkit:Chart>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Height="36" Margin="0,10,0,0">
+                        <Button Content="Guardar Resultados" Height="26" Margin="5" Name="ButtonGuardarExcel" Width="Auto" Click="ButtonGuardarExcel_Click" />
+                    </StackPanel>
+                </StackPanel>
             </TabItem>
         </TabControl>
+
         
     </StackPanel>
 </Window>

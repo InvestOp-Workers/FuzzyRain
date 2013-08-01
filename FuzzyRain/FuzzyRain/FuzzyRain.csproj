@@ -40,6 +40,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\AForge.Fuzzy.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>lib\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>lib\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>lib\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>lib\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="React.NET">
       <HintPath>lib\React.NET.dll</HintPath>
     </Reference>
@@ -64,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExcelWorkbookFormat.cs" />
     <Compile Include="Model\Period.cs" />
     <Compile Include="Model\Rain.cs" />
     <Compile Include="Model\SimulationData.cs" />
