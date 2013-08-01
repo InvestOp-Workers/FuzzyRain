@@ -13,7 +13,10 @@
             <myUserControl:ValuesDisplayer x:Name="ucInputData" Title="Datos de Entrada:" Margin="0,0,200,10" ></myUserControl:ValuesDisplayer>
             <myUserControl:ValuesDisplayer x:Name="ucOutputData" Title="Datos Simulados:" Margin="0,0,0,10" ></myUserControl:ValuesDisplayer>
             <!--TODO: borrar esto. Es solo para corroborar los valores inferidos.-->
-            <ListView Name="checkearInferencias" Height="190" Width="100" Margin="10,40,200,10"></ListView>
+            <ListView Name="checkearInferencias" Height="190" Width="100" Margin="30,40,50,10"></ListView>
+            <ListView Name="checkearInferencias4" Height="190" Width="100" Margin="10,40,50,10"></ListView>
+            <ListView Name="checkearInferencias6" Height="190" Width="100" Margin="10,40,50,10"></ListView>
+            <ListView Name="checkearInferencias8" Height="190" Width="100" Margin="10,40,50,10"></ListView>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"  Height="Auto" HorizontalAlignment="Center">

@@ -94,9 +94,15 @@ namespace FuzzyRain
             LabelVolumen.Content = volumen.ToString("00.00") + "mm";
             
             // TODO: actualizar este dato en una grafica. Podrían imprimirse en pantalla la lista de valores tambien.
-            float consumo = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain);
+            float consumo = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 2);
+            float consumo4 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 4);
+            float consumo6 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 6);
+            float consumo8 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 8);
             //TODO: borrar esto. Es solo para corroborar los valores inferidos.
             checkearInferencias.Items.Add(consumo);
+            checkearInferencias4.Items.Add(consumo4);
+            checkearInferencias6.Items.Add(consumo6);
+            checkearInferencias8.Items.Add(consumo8);
         }
     }
 }
