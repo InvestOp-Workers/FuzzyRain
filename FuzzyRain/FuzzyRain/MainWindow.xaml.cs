@@ -38,6 +38,9 @@ namespace FuzzyRain
 
         private const int NUMBER_OF_EVENTS_DEFAULT = 40;
 
+        private const double SURFACE = 1200.00;
+        private const double VOLUMEN = 100.00;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -113,6 +116,14 @@ namespace FuzzyRain
             var numberOfEvents = 0;
             int.TryParse(txtCountEvents.Text, out numberOfEvents);
             txtCountEvents.Text = numberOfEvents != 0 ? numberOfEvents.ToString() : NUMBER_OF_EVENTS_DEFAULT.ToString();
+
+            double surface = 0;
+            double.TryParse(txtSup.Text, out surface);
+            txtSup.Text = surface != 0 ? surface.ToString() : SURFACE.ToString();
+
+            double volumen = 0;
+            double.TryParse(txtVol.Text, out volumen);
+            txtVol.Text = volumen != 0 ? volumen.ToString() : VOLUMEN.ToString();
         }
 
         private void UpdateAnimationTimer_Tick(object sender, EventArgs e)
@@ -198,10 +209,9 @@ namespace FuzzyRain
         private SimulationData GetSimulationData()
         {
             SimulationData result = new SimulationData();
-            result.SimulationType = GetSimulationType();
-            result.PersonQuantity = int.Parse(cmbPeopleCount.Text);
-            result.Surface = int.Parse(cmbSurface.Text);
-            result.Volumen = int.Parse(cmbVolumen.Text);
+            result.SimulationType = GetSimulationType();            
+            result.Surface = int.Parse(txtSup.Text);
+            result.Volumen = int.Parse(txtVol.Text);
 
             return result;
         }
