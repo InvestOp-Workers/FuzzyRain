@@ -45,12 +45,12 @@ namespace FuzzyRain
         public void SetConvergenceData(double avg, double desv, int eventNumberOfConvergence)
         {
             //txtValueConv.Text = eventNumberOfConvergence.ToString();
-            txtAvgConv.Text = avg.ToString("#0.00");
-            txtDesvConv.Text = desv.ToString("#0.00");
+            //txtAvgConv.Text = avg.ToString("#0.00");
+            //txtDesvConv.Text = desv.ToString("#0.00");
 
             //valueConvPanel.Visibility = System.Windows.Visibility.Visible;
-            avgConvPanel.Visibility = System.Windows.Visibility.Visible;
-            desvConvPanel.Visibility = System.Windows.Visibility.Visible;
+            //avgConvPanel.Visibility = System.Windows.Visibility.Visible;
+            //desvConvPanel.Visibility = System.Windows.Visibility.Visible;
         }
 
         public void AddNewSimulatedItem(Rain rain)
@@ -74,8 +74,8 @@ namespace FuzzyRain
             lwValues.ItemsSource = null;
 
             //txtValueConv.Text = string.Empty;
-            txtAvgConv.Text = string.Empty;
-            txtDesvConv.Text = string.Empty;
+            //txtAvgConv.Text = string.Empty;
+            //txtDesvConv.Text = string.Empty;
 
             txtAvg.Text = string.Empty;
             txtDesv.Text = string.Empty;

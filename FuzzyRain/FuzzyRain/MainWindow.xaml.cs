@@ -45,11 +45,6 @@ namespace FuzzyRain
         private const double SURFACE = 1200.00;
         private const double VOLUMEN = 100.00;
 
-        List<KeyValuePair<double, float>> listConsumo2 = new List<KeyValuePair<double, float>>();
-        List<KeyValuePair<double, float>> listConsumo4 = new List<KeyValuePair<double, float>>();
-        List<KeyValuePair<double, float>> listConsumo6 = new List<KeyValuePair<double, float>>();
-        List<KeyValuePair<double, float>> listConsumo8 = new List<KeyValuePair<double, float>>();
-
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
         public MainWindow()
@@ -110,20 +105,21 @@ namespace FuzzyRain
 
         private void ButtonComenzar_Click(object sender, RoutedEventArgs e)
         {
-            InitInputValues();
-
-            BeginSimulation();
+            InitInputValues();            
 
             // Parseo
             Distribution[] valuesParsed = ParseFile(TextBoxArchivoEntrada.Text);
 
             // Simulación de Monte Carlo
             Simulation(valuesParsed);
+
+            UpdateAnimationTimer.Start();
             
-
+            TabItem _tabMain = (TabItem)tabMain.Items[1];
+            _tabMain.Focus();
+            UpdateLayout();
+            
             ButtonComenzar.Content = "Re-intentar";
-
-
         }
 
         private void InitInputValues()
@@ -157,36 +153,20 @@ namespace FuzzyRain
         {
             for (int i = 10; i <= 12; i++)
             {
-                TabItem tab = (TabItem)tabMonths.Items[i - 1];
-
-                double rain = ((MonthTabItemContent)tab.Content).myModel.NextValue();
-                double surface = ((MonthTabItemContent)tab.Content).myDistribution.SimulationData.Surface;
-                double volumen = ((MonthTabItemContent)tab.Content).myDistribution.SimulationData.Volumen;
+                TabItem tab = (TabItem)tabMonths.Items[i - 1];                
             
-                float consumo2 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 2);
-                float consumo4 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 4);
-                float consumo6 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 6);
-                float consumo8 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 8);
-            
-                ((MonthTabItemContent)tab.Content).Tick(rain, surface, volumen);
+                var evaluationResult = ((MonthTabItemContent)tab.Content).Tick();
 
-                listConsumo2.Add(new KeyValuePair<double, float>(rain, consumo2));
-                listConsumo4.Add(new KeyValuePair<double, float>(rain, consumo4));
-                listConsumo6.Add(new KeyValuePair<double, float>(rain, consumo6));
-                listConsumo8.Add(new KeyValuePair<double, float>(rain, consumo8));
-               
-                //Setting data for column chart
-                chartConsumo2.DataContext = listConsumo2;
-                chartConsumo4.DataContext = listConsumo4;
-                chartConsumo6.DataContext = listConsumo6;
-                chartConsumo8.DataContext = listConsumo8;
+                if (evaluationResult == ProcessStatusEnum.finished)
+                {
+                    break;
+                }
+                else if (evaluationResult == ProcessStatusEnum.stop)
+                {
+                    UpdateAnimationTimer.Stop();
+                }
             }
-        }
-
-        private void BeginSimulation()
-        {
-            UpdateAnimationTimer.Start();
-        }
+        }        
 
         #region Simulation Methods
 
@@ -308,61 +288,7 @@ namespace FuzzyRain
             }
         }
 
-        #endregion
-
-        private void ButtonGuardarExcel_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog dialog = new SaveFileDialog()
-            {
-                Filter = "Excel 97-2003 WorkBook|*.xls"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                IWorkbook workbook = new HSSFWorkbook();
-                int rowNumber = 0;
-                ISheet sheetConsumo2 = workbook.CreateSheet("Consumo2");
-                ISheet sheetConsumo4 = workbook.CreateSheet("Consumo4");
-                ISheet sheetConsumo6 = workbook.CreateSheet("Consumo6");
-                ISheet sheetConsumo8 = workbook.CreateSheet("Consumo8");
-
-                for (int i = 0; i < listConsumo2.Count; i++)
-                {
-                    IRow rowConsumo2 = sheetConsumo2.CreateRow(rowNumber);
-                    IRow rowConsumo4 = sheetConsumo4.CreateRow(rowNumber);
-                    IRow rowConsumo6 = sheetConsumo6.CreateRow(rowNumber);
-                    IRow rowConsumo8 = sheetConsumo8.CreateRow(rowNumber);
-
-                    ICell cellRainConsumo2 = rowConsumo2.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo2 = rowConsumo2.CreateCell(1, CellType.NUMERIC);
-
-                    ICell cellRainConsumo4 = rowConsumo4.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo4 = rowConsumo4.CreateCell(1, CellType.NUMERIC);
-
-                    ICell cellRainConsumo6 = rowConsumo6.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo6 = rowConsumo6.CreateCell(1, CellType.NUMERIC);
-
-                    ICell cellRainConsumo8 = rowConsumo8.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo8 = rowConsumo8.CreateCell(1, CellType.NUMERIC);
-
-                    cellRainConsumo2.SetCellValue(listConsumo2.ElementAt(i).Key);
-                    cellRainConsumo4.SetCellValue(listConsumo2.ElementAt(i).Key);
-                    cellRainConsumo6.SetCellValue(listConsumo2.ElementAt(i).Key);
-                    cellRainConsumo8.SetCellValue(listConsumo2.ElementAt(i).Key);
-
-                    cellConsumoConsumo2.SetCellValue(listConsumo2.ElementAt(i).Value);
-                    cellConsumoConsumo4.SetCellValue(listConsumo4.ElementAt(i).Value);
-                    cellConsumoConsumo6.SetCellValue(listConsumo6.ElementAt(i).Value);
-                    cellConsumoConsumo8.SetCellValue(listConsumo8.ElementAt(i).Value);
-
-                    rowNumber++;
-                }
-
-                FileStream sw = File.Create(dialog.FileName);
-                workbook.Write(sw);
-                sw.Close();
-            }
-        }
+        #endregion        
 
     }    
 }

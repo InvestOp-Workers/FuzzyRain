@@ -4,37 +4,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="1000" d:DesignWidth="1200">
 
-    <StackPanel Height="600">
+    <StackPanel Orientation="Horizontal">        
 
-        <StackPanel Orientation="Horizontal">
-            <myUserControl:ValuesDisplayer x:Name="ucInputData" Title="Datos de Entrada:" Margin="0,0,200,10" ></myUserControl:ValuesDisplayer>
+        <StackPanel Orientation="Vertical"  Height="auto" Width="850" Margin="0,0,30,0">            
+            <chartingToolkit:Chart Height="350">               
+                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List2}" IndependentValuePath="Rain" DependentValuePath="Consumed" Title="Cons. x 2"/>            
+                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List4}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 4"/>            
+                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List6}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 6"/>            
+                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List8}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 8"/>
+            </chartingToolkit:Chart>
+
+            <chartingToolkit:Chart Height="350">
+                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List2}" IndependentValuePath="Rain" DependentValuePath="Consumed" Title="Cons. x 2"/>
+                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List4}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 4"/>
+                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List6}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 6"/>
+                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List8}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 8"/>
+            </chartingToolkit:Chart>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Height="36" Margin="0,10,0,0">
+                <Button Content="Guardar Resultados" Height="26" Margin="5" Name="ButtonGuardarExcel" Width="Auto" Click="ButtonGuardarExcel_Click" />
+            </StackPanel>
+        </StackPanel>    
+
+        <StackPanel Orientation="Vertical" Height="auto" Width="500">
+            <myUserControl:ValuesDisplayer x:Name="ucInputData" Title="Datos de Entrada:" Margin="0,0,200,10" />
             <myUserControl:ValuesDisplayer x:Name="ucOutputData" Title="Datos Simulados:" Margin="0,0,0,10" ></myUserControl:ValuesDisplayer>
             <!--TODO: borrar esto. Es solo para corroborar los valores inferidos.-->
-            <ListView Name="checkearInferencias" Height="190" Width="100" Margin="30,40,50,10"></ListView>
-            <ListView Name="checkearInferencias4" Height="190" Width="100" Margin="10,40,50,10"></ListView>
-            <ListView Name="checkearInferencias6" Height="190" Width="100" Margin="10,40,50,10"></ListView>
-            <ListView Name="checkearInferencias8" Height="190" Width="100" Margin="10,40,50,10"></ListView>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"  Height="Auto" HorizontalAlignment="Center">
-            <StackPanel VerticalAlignment="Center" Orientation="Vertical"  Height="Auto" Width="220">
-                <Image VerticalAlignment="Center" Height="200" Name="ImageLLuvia" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/rain.png">
-                </Image>
-                <Label Name="LabelLLuvia" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
-            </StackPanel>
-            <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
-                <Image VerticalAlignment="Center" Height="200" Name="ImageSuperficie" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/surface.jpg">
-                </Image>
-                <Label Name="LabelSuperficie" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
-            </StackPanel>
-            <StackPanel VerticalAlignment="Center" Orientation="Vertical" Height="Auto" Width="220">
-                <Image VerticalAlignment="Center" Height="200" Name="ImageVolumen" Stretch="Fill" Width="200" Source="/FuzzyRain;component/Images/volume.png">
-                </Image>
-                <Label Name="LabelVolumen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#FF2C4F9D"></Label>
-            </StackPanel>
+            <!--<ListView Name="checkearInferencias" Width="100" Margin="30,40,50,10"></ListView>
+            <ListView Name="checkearInferencias4" Width="100" Margin="10,40,50,10"></ListView>
+            <ListView Name="checkearInferencias6" Width="100" Margin="10,40,50,10"></ListView>
+            <ListView Name="checkearInferencias8" Width="100" Margin="10,40,50,10"></ListView>-->
         </StackPanel>
 
     </StackPanel>
