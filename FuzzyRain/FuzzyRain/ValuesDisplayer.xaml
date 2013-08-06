@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
 
-    <StackPanel Height="350" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20" >
+    <StackPanel Height="auto" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20" >
         <TextBlock x:Name="contentTitle" FontWeight="Bold"></TextBlock>
         <!--<StackPanel x:Name="valueConvPanel" Orientation="Horizontal" Visibility="Hidden" >
             <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
