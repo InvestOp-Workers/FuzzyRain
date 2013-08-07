@@ -52,6 +52,8 @@ namespace FuzzyRain
         public Distribution myDistribution;
         int eventsCount;
 
+        public string MonthName { get; set; }
+
         ObservableCollection<Point> _list2 = new ObservableCollection<Point>();
         public ObservableCollection<Point> List2
         {
@@ -170,6 +172,8 @@ namespace FuzzyRain
             return ProcessStatusEnum.processing;
         }
 
+        #region Export Methods
+
         private void ButtonGuardarExcel_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog()
@@ -177,51 +181,129 @@ namespace FuzzyRain
                 Filter = "Excel 97-2003 WorkBook|*.xls"
             };
 
+            dialog.FileName = "lluvia_" + this.MonthName;
             if (dialog.ShowDialog() == true)
             {
                 IWorkbook workbook = new HSSFWorkbook();
-                int rowNumber = 0;
+
+                CreatePrecipitacionSheet(workbook);
                 ISheet sheetConsumo2 = workbook.CreateSheet("Consumo2");
                 ISheet sheetConsumo4 = workbook.CreateSheet("Consumo4");
                 ISheet sheetConsumo6 = workbook.CreateSheet("Consumo6");
                 ISheet sheetConsumo8 = workbook.CreateSheet("Consumo8");
 
+                int rowNumber = 0;
+                CreateRowExtraInfo(sheetConsumo2, "Cant. Personas", 2, rowNumber);
+                CreateRowExtraInfo(sheetConsumo4, "Cant. Personas", 4, rowNumber);
+                CreateRowExtraInfo(sheetConsumo6, "Cant. Personas", 6, rowNumber);
+                CreateRowExtraInfo(sheetConsumo8, "Cant. Personas", 8, rowNumber);
+
+                rowNumber++;
+                CreateRowExtraInfo(sheetConsumo2, "Superficie (m2)", myDistribution.SimulationData.Surface, rowNumber);
+                CreateRowExtraInfo(sheetConsumo4, "Superficie (m2)", myDistribution.SimulationData.Surface, rowNumber);
+                CreateRowExtraInfo(sheetConsumo6, "Superficie (m2)", myDistribution.SimulationData.Surface, rowNumber);
+                CreateRowExtraInfo(sheetConsumo8, "Superficie (m2)", myDistribution.SimulationData.Surface, rowNumber);
+
+                rowNumber++;
+                CreateRowExtraInfo(sheetConsumo2, "Volumen (m3)", myDistribution.SimulationData.Volumen, rowNumber);
+                CreateRowExtraInfo(sheetConsumo4, "Volumen (m3)", myDistribution.SimulationData.Volumen, rowNumber);
+                CreateRowExtraInfo(sheetConsumo6, "Volumen (m3)", myDistribution.SimulationData.Volumen, rowNumber);
+                CreateRowExtraInfo(sheetConsumo8, "Volumen (m3)", myDistribution.SimulationData.Volumen, rowNumber);
+
+                // para dejar una fila de espacio.
+                rowNumber++;
+
+                rowNumber++;
+                CreateRowTitles(sheetConsumo2, rowNumber);
+                CreateRowTitles(sheetConsumo4, rowNumber);
+                CreateRowTitles(sheetConsumo6, rowNumber);
+                CreateRowTitles(sheetConsumo8, rowNumber);
+
                 for (int i = 0; i < _list2.Count; i++)
                 {
-                    IRow rowConsumo2 = sheetConsumo2.CreateRow(rowNumber);
-                    IRow rowConsumo4 = sheetConsumo4.CreateRow(rowNumber);
-                    IRow rowConsumo6 = sheetConsumo6.CreateRow(rowNumber);
-                    IRow rowConsumo8 = sheetConsumo8.CreateRow(rowNumber);
-
-                    ICell cellRainConsumo2 = rowConsumo2.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo2 = rowConsumo2.CreateCell(1, CellType.NUMERIC);
-
-                    ICell cellRainConsumo4 = rowConsumo4.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo4 = rowConsumo4.CreateCell(1, CellType.NUMERIC);
-
-                    ICell cellRainConsumo6 = rowConsumo6.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo6 = rowConsumo6.CreateCell(1, CellType.NUMERIC);
-
-                    ICell cellRainConsumo8 = rowConsumo8.CreateCell(0, CellType.NUMERIC);
-                    ICell cellConsumoConsumo8 = rowConsumo8.CreateCell(1, CellType.NUMERIC);
-
-                    cellRainConsumo2.SetCellValue(_list2.ElementAt<Point>(i).Rain);
-                    cellRainConsumo4.SetCellValue(_list4.ElementAt(i).Rain);
-                    cellRainConsumo6.SetCellValue(_list6.ElementAt(i).Rain);
-                    cellRainConsumo8.SetCellValue(_list8.ElementAt(i).Rain);
-
-                    cellConsumoConsumo2.SetCellValue(_list2.ElementAt(i).Consumed);
-                    cellConsumoConsumo4.SetCellValue(_list4.ElementAt(i).Consumed);
-                    cellConsumoConsumo6.SetCellValue(_list6.ElementAt(i).Consumed);
-                    cellConsumoConsumo8.SetCellValue(_list8.ElementAt(i).Consumed);
-
                     rowNumber++;
+                    CreateRowValues(sheetConsumo2, rowNumber, _list2.ElementAt(i).Rain, _list2.ElementAt(i).Consumed);
+                    CreateRowValues(sheetConsumo4, rowNumber, _list4.ElementAt(i).Rain, _list4.ElementAt(i).Consumed);
+                    CreateRowValues(sheetConsumo6, rowNumber, _list6.ElementAt(i).Rain, _list6.ElementAt(i).Consumed);
+                    CreateRowValues(sheetConsumo8, rowNumber, _list8.ElementAt(i).Rain, _list8.ElementAt(i).Consumed);
                 }
 
                 FileStream sw = File.Create(dialog.FileName);
                 workbook.Write(sw);
                 sw.Close();
+            }            
+        }
+
+        private void CreatePrecipitacionSheet(IWorkbook workbook)
+        {
+            ISheet precipitacionSheet = workbook.CreateSheet("Precipitacion_Simulada");
+
+            int rowNumber = 0;
+            IRow rowTitle = precipitacionSheet.CreateRow(rowNumber);
+
+            ICell cellAnioTitle = rowTitle.CreateCell(0, CellType.STRING);
+            ICell cellMesTitle = rowTitle.CreateCell(1, CellType.STRING);
+            ICell cellSemanaTitle = rowTitle.CreateCell(2, CellType.STRING);
+            ICell cellDiaTitle = rowTitle.CreateCell(3, CellType.STRING);
+            ICell cellCantTitle = rowTitle.CreateCell(4, CellType.STRING);
+
+            cellAnioTitle.SetCellValue("Año");
+            cellMesTitle.SetCellValue("Mes");
+            cellSemanaTitle.SetCellValue("Semana");
+            cellDiaTitle.SetCellValue("Dia");
+            cellCantTitle.SetCellValue("Cantidad Lluvia (mm)");
+
+            foreach (Rain rain in myDistribution.ValuesInOrderOfAppearance)
+            {
+                rowNumber++;
+                IRow rowValue = precipitacionSheet.CreateRow(rowNumber);
+
+                ICell cellAnioValue = rowValue.CreateCell(0, CellType.STRING);
+                ICell cellMesValue = rowValue.CreateCell(1, CellType.STRING);
+                ICell cellSemanaValue = rowValue.CreateCell(2, CellType.STRING);
+                ICell cellDiaValue = rowValue.CreateCell(3, CellType.STRING);
+                ICell cellCantValue = rowValue.CreateCell(4, CellType.NUMERIC);
+                
+                cellAnioValue.SetCellValue(rain.Period.Year);
+                cellMesValue.SetCellValue(rain.Period.Month);
+                cellSemanaValue.SetCellValue(rain.Period.Week);
+                cellDiaValue.SetCellValue(rain.Period.Day);
+                cellCantValue.SetCellValue(rain.Quantity);
             }
         }
+
+        private void CreateRowExtraInfo(ISheet sheet, string title, int value, int rowNumber)
+        {
+            IRow row = sheet.CreateRow(rowNumber);
+            ICell cellTitle = row.CreateCell(0, CellType.STRING);
+            ICell cellValue = row.CreateCell(1, CellType.NUMERIC);
+
+            cellTitle.SetCellValue(title);
+            cellValue.SetCellValue(value);
+        }
+
+        private void CreateRowTitles(ISheet sheet, int rowNumber)
+        {
+            IRow rowTitle = sheet.CreateRow(rowNumber);
+            
+            ICell cellRainTitle = rowTitle.CreateCell(0, CellType.STRING);
+            ICell cellConsumedTitle = rowTitle.CreateCell(1, CellType.STRING);
+
+            cellRainTitle.SetCellValue("Cant. Lluvia (mm)");
+            cellConsumedTitle.SetCellValue("Consumo (ltrs)");
+        }
+
+        private void CreateRowValues(ISheet sheet, int rowNumber, double rain, double consumed)
+        {
+            IRow row = sheet.CreateRow(rowNumber);
+
+            ICell cellRainValue = row.CreateCell(0, CellType.NUMERIC);
+            ICell cellConsumedValue = row.CreateCell(1, CellType.NUMERIC);
+
+            cellRainValue.SetCellValue(rain);
+            cellConsumedValue.SetCellValue(consumed);
+        }
+
+        #endregion
     }
 }

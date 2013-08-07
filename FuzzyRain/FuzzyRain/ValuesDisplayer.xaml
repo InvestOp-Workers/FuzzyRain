@@ -81,11 +81,11 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel HorizontalAlignment="Left" Height="22" Background="Azure">
+        <!--<StackPanel HorizontalAlignment="Left" Height="22" Background="Azure">
             <Button x:Name="btnCopy" Click="BtnCopy_Click">
                 Copy to clipboard
             </Button>
-        </StackPanel>
+        </StackPanel>-->
 
     </StackPanel>
 
