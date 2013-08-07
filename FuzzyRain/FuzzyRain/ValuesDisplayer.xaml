@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="300">
+             d:DesignHeight="200" d:DesignWidth="350">
 
-    <StackPanel Height="auto" Width="300" HorizontalAlignment="Left" Margin="0,0,0,20" >
+    <StackPanel Height="auto" Width="330" HorizontalAlignment="Left" Margin="0,0,0,20" >
         <TextBlock x:Name="contentTitle" FontWeight="Bold"></TextBlock>
         <!--<StackPanel x:Name="valueConvPanel" Orientation="Horizontal" Visibility="Hidden" >
             <TextBlock Margin="0,0,5,0">N° Suceso Convergencia:</TextBlock>
@@ -70,7 +70,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Cantidad" Width="60">
+                    <GridViewColumn Header="Lluvia (mm)" Width="65">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Quantity}" TextAlignment="Right" />
