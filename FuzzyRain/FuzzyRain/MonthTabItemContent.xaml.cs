@@ -169,6 +169,77 @@ namespace FuzzyRain
             {
                 IWorkbook workbook = new HSSFWorkbook();
 
+                ISheet precipitacionSheet = workbook.CreateSheet("datos_simulados");
+
+                int rowNumber = 0;
+                IRow rowTitle = precipitacionSheet.CreateRow(rowNumber);
+
+                ICell cellAnioTitle = rowTitle.CreateCell(0, CellType.STRING);
+                ICell cellMesTitle = rowTitle.CreateCell(1, CellType.STRING);
+                ICell cellSemanaTitle = rowTitle.CreateCell(2, CellType.STRING);
+                ICell cellDiaTitle = rowTitle.CreateCell(3, CellType.STRING);
+                ICell cellCantTitle = rowTitle.CreateCell(4, CellType.STRING);
+                ICell cellCons2Title = rowTitle.CreateCell(5, CellType.STRING);
+                ICell cellCons4Title = rowTitle.CreateCell(6, CellType.STRING);
+                ICell cellCons6Title = rowTitle.CreateCell(7, CellType.STRING);
+                ICell cellCons8Title = rowTitle.CreateCell(8, CellType.STRING);
+
+                cellAnioTitle.SetCellValue("Año");
+                cellMesTitle.SetCellValue("Mes");
+                cellSemanaTitle.SetCellValue("Semana");
+                cellDiaTitle.SetCellValue("Dia");
+                cellCantTitle.SetCellValue("Cantidad Lluvia (mm)");
+                cellCons2Title.SetCellValue("X 2 per. (lts)");
+                cellCons4Title.SetCellValue("X 4 per. (lts)");
+                cellCons6Title.SetCellValue("X 6 per. (lts)");
+                cellCons8Title.SetCellValue("X 8 per. (lts)");
+
+                for (int i = 0; i < myDistribution.ValuesInOrderOfAppearance.Count; i++)
+                {
+                    Rain rain = myDistribution.ValuesInOrderOfAppearance[i];
+
+                    rowNumber++;
+                    IRow rowValue = precipitacionSheet.CreateRow(rowNumber);
+
+                    ICell cellAnioValue = rowValue.CreateCell(0, CellType.STRING);
+                    ICell cellMesValue = rowValue.CreateCell(1, CellType.STRING);
+                    ICell cellSemanaValue = rowValue.CreateCell(2, CellType.STRING);
+                    ICell cellDiaValue = rowValue.CreateCell(3, CellType.STRING);
+                    ICell cellCantValue = rowValue.CreateCell(4, CellType.NUMERIC);
+                    ICell cellCons2Value = rowValue.CreateCell(5, CellType.NUMERIC);
+                    ICell cellCons4Value = rowValue.CreateCell(6, CellType.NUMERIC);
+                    ICell cellCons6Value = rowValue.CreateCell(7, CellType.NUMERIC);
+                    ICell cellCons8Value = rowValue.CreateCell(8, CellType.NUMERIC);
+
+                    cellAnioValue.SetCellValue(rain.Period.Year);
+                    cellMesValue.SetCellValue(rain.Period.Month);
+                    cellSemanaValue.SetCellValue(rain.Period.Week);
+                    cellDiaValue.SetCellValue(rain.Period.Day);
+                    cellCantValue.SetCellValue(rain.Quantity);
+                    cellCons2Value.SetCellValue(_list2.ElementAt(i).Consumed);
+                    cellCons4Value.SetCellValue(_list4.ElementAt(i).Consumed);
+                    cellCons6Value.SetCellValue(_list6.ElementAt(i).Consumed);
+                    cellCons8Value.SetCellValue(_list8.ElementAt(i).Consumed);
+                }
+
+                FileStream sw = File.Create(dialog.FileName);
+                workbook.Write(sw);
+                sw.Close();
+            }
+        }
+
+        private void ButtonGuardarExcel_Click2(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "Excel 97-2003 WorkBook|*.xls"
+            };
+
+            dialog.FileName = "lluvia_" + this.MonthName;
+            if (dialog.ShowDialog() == true)
+            {
+                IWorkbook workbook = new HSSFWorkbook();
+
                 CreatePrecipitacionSheet(workbook);
                 ISheet sheetConsumo2 = workbook.CreateSheet("Consumo2");
                 ISheet sheetConsumo4 = workbook.CreateSheet("Consumo4");
@@ -219,7 +290,7 @@ namespace FuzzyRain
 
         private void CreatePrecipitacionSheet(IWorkbook workbook)
         {
-            ISheet precipitacionSheet = workbook.CreateSheet("Precipitacion_Simulada");
+            ISheet precipitacionSheet = workbook.CreateSheet("datos_simulados");
 
             int rowNumber = 0;
             IRow rowTitle = precipitacionSheet.CreateRow(rowNumber);
