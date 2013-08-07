@@ -98,12 +98,7 @@ namespace FuzzyRain
 
             ucOutputData.CleanData();
             ucOutputData.CleanDataList();
-            ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);
-            //TODO: borrar esto. Es solo para corroborar los valores inferidos.
-            //checkearInferencias.Items.Clear();
-            //checkearInferencias4.Items.Clear();
-            //checkearInferencias6.Items.Clear();
-            //checkearInferencias8.Items.Clear();
+            ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);            
 
             List2.Clear();
             List4.Clear();
@@ -119,12 +114,7 @@ namespace FuzzyRain
             ucInputData.CleanData();
             ucOutputData.CleanData();
             ucOutputData.CleanDataList();
-            //TODO: borrar esto. Es solo para corroborar los valores inferidos.
-            //checkearInferencias.Items.Clear();
-            //checkearInferencias4.Items.Clear();
-            //checkearInferencias6.Items.Clear();
-            //checkearInferencias8.Items.Clear();
-
+            
             List2.Clear();
             List4.Clear();
             List6.Clear();
@@ -151,18 +141,11 @@ namespace FuzzyRain
             double surface = myDistribution.SimulationData.Surface;
             
             double volumen = myDistribution.SimulationData.Volumen;            
-
-            // TODO: actualizar este dato en una grafica. Podrían imprimirse en pantalla la lista de valores tambien.
+            
             float consumo2 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 2);
             float consumo4 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 4);
             float consumo6 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 6);
             float consumo8 = FuzzyLogic.FuzzyRain.Instance.DoInference((float)surface, (float)volumen, (float)rain, 8);
-
-            //TODO: borrar esto. Es solo para corroborar los valores inferidos.
-            //checkearInferencias.Items.Add(consumo2);
-            //checkearInferencias4.Items.Add(consumo4);
-            //checkearInferencias6.Items.Add(consumo6);
-            //checkearInferencias8.Items.Add(consumo8);
 
             _list2.Add(new Point(rain, consumo2));
             _list4.Add(new Point(rain, consumo4));

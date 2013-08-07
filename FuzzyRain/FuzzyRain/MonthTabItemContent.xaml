@@ -32,12 +32,7 @@
 
         <StackPanel Orientation="Vertical" Height="auto" Width="500">
             <myUserControl:ValuesDisplayer x:Name="ucInputData" Title="Datos estadísticos:" Margin="0,0,0,10" />
-            <myUserControl:ValuesDisplayer x:Name="ucOutputData" Title="Datos simulados:" Margin="0,0,0,10" ></myUserControl:ValuesDisplayer>
-            <!--TODO: borrar esto. Es solo para corroborar los valores inferidos.-->
-            <!--<ListView Name="checkearInferencias" Width="100" Margin="30,40,50,10"></ListView>
-            <ListView Name="checkearInferencias4" Width="100" Margin="10,40,50,10"></ListView>
-            <ListView Name="checkearInferencias6" Width="100" Margin="10,40,50,10"></ListView>
-            <ListView Name="checkearInferencias8" Width="100" Margin="10,40,50,10"></ListView>-->
+            <myUserControl:ValuesDisplayer x:Name="ucOutputData" Title="Datos simulados:" Margin="0,0,0,10" ></myUserControl:ValuesDisplayer>            
         </StackPanel>
 
     </StackPanel>
