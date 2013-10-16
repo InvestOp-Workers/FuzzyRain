@@ -121,20 +121,8 @@ namespace FuzzyRain
             List8.Clear();
         }
 
-        public ProcessStatusEnum Tick()
+        public void Tick()
         {
-            if (eventsCount == 0)
-            {
-                ucOutputData.Finalize(myDistribution);
-                eventsCount -= 1;
-                return ProcessStatusEnum.finished;
-            }
-
-            if (eventsCount < 0)
-                return ProcessStatusEnum.stop;
-
-            eventsCount -= 1;
-
             double rain = myModel.NextValue();
             ucOutputData.AddNewSimulatedItem(myDistribution.AddValueInOrderOfAppearance(rain, eventsCount));           
 
@@ -152,7 +140,11 @@ namespace FuzzyRain
             _list6.Add(new Point(rain, consumo6));
             _list8.Add(new Point(rain, consumo8));
 
-            return ProcessStatusEnum.processing;
+            eventsCount -= 1;
+            if (eventsCount == 0)
+            {
+                ucOutputData.Finalize(myDistribution);                
+            }            
         }
 
         #region Export Methods

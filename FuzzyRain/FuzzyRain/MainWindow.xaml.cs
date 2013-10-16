@@ -47,6 +47,8 @@ namespace FuzzyRain
 
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
+        private int numberOfEvents = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -120,6 +122,7 @@ namespace FuzzyRain
             UpdateLayout();
             
             ButtonComenzar.Content = "Re-intentar";
+            ButtonComenzar.IsEnabled = false;
         }
 
         private void InitInputValues()
@@ -150,21 +153,19 @@ namespace FuzzyRain
         }
 
         private void UpdateAnimationTimer_Tick(object sender, EventArgs e)
-        {
+        {            
+            if (numberOfEvents == 0)
+            {
+                UpdateAnimationTimer.Stop();
+                ButtonComenzar.IsEnabled = true;
+                return;
+            }
+            
+            this.numberOfEvents--;
             for (int i = 10; i <= 12; i++)
             {
-                TabItem tab = (TabItem)tabMonths.Items[i - 1];                
-            
-                var evaluationResult = ((MonthTabItemContent)tab.Content).Tick();
-
-                if (evaluationResult == ProcessStatusEnum.finished)
-                {
-                    break;
-                }
-                else if (evaluationResult == ProcessStatusEnum.stop)
-                {
-                    UpdateAnimationTimer.Stop();
-                }
+                TabItem tab = (TabItem)tabMonths.Items[i - 1];
+                ((MonthTabItemContent)tab.Content).Tick();                
             }
         }        
 
@@ -172,8 +173,8 @@ namespace FuzzyRain
 
         private void Simulation(Distribution[] distributions)
         {
-            double ErrorOfConvergence = double.Parse(txtConvError.Text);
-            int numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? NUMBER_OF_EVENTS_DEFAULT : int.Parse(txtCountEvents.Text);
+            double ErrorOfConvergence = double.Parse(txtConvError.Text);            
+            this.numberOfEvents = string.IsNullOrEmpty(txtCountEvents.Text) ? NUMBER_OF_EVENTS_DEFAULT : int.Parse(txtCountEvents.Text);
 
             // Set Parsed Data
             SetInitialInputData(distributions);
