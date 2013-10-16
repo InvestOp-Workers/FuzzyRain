@@ -123,6 +123,7 @@ namespace FuzzyRain
             
             ButtonComenzar.Content = "Re-intentar";
             ButtonComenzar.IsEnabled = false;
+            ButtonGuardarExcel.IsEnabled = false;
         }
 
         private void InitInputValues()
@@ -158,6 +159,7 @@ namespace FuzzyRain
             {
                 UpdateAnimationTimer.Stop();
                 ButtonComenzar.IsEnabled = true;
+                ButtonGuardarExcel.IsEnabled = true;
                 return;
             }
             
@@ -167,7 +169,85 @@ namespace FuzzyRain
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
                 ((MonthTabItemContent)tab.Content).Tick();                
             }
-        }        
+        }
+
+        private void ButtonGuardarExcel_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "Excel 97-2003 WorkBook|*.xls"
+            };
+
+            dialog.FileName = "lluvia";
+            if (dialog.ShowDialog() == true)
+            {
+                IWorkbook workbook = new HSSFWorkbook();
+
+                for (int i = 10; i <= 12; i++)
+                {
+                    TabItem tab = (TabItem)tabMonths.Items[i - 1];
+                    Distribution myDistribution = ((MonthTabItemContent)tab.Content).myDistribution;
+
+
+                    ISheet precipitacionSheet = workbook.CreateSheet(((MonthTabItemContent)tab.Content).MonthName);
+
+                    int rowNumber = 0;
+                    IRow rowTitle = precipitacionSheet.CreateRow(rowNumber);
+
+                    ICell cellAnioTitle = rowTitle.CreateCell(0, CellType.STRING);
+                    ICell cellMesTitle = rowTitle.CreateCell(1, CellType.STRING);
+                    ICell cellSemanaTitle = rowTitle.CreateCell(2, CellType.STRING);
+                    ICell cellDiaTitle = rowTitle.CreateCell(3, CellType.STRING);
+                    ICell cellCantTitle = rowTitle.CreateCell(4, CellType.STRING);
+                    ICell cellCons2Title = rowTitle.CreateCell(5, CellType.STRING);
+                    ICell cellCons4Title = rowTitle.CreateCell(6, CellType.STRING);
+                    ICell cellCons6Title = rowTitle.CreateCell(7, CellType.STRING);
+                    ICell cellCons8Title = rowTitle.CreateCell(8, CellType.STRING);
+
+                    cellAnioTitle.SetCellValue("Año");
+                    cellMesTitle.SetCellValue("Mes");
+                    cellSemanaTitle.SetCellValue("Semana");
+                    cellDiaTitle.SetCellValue("Dia");
+                    cellCantTitle.SetCellValue("Cantidad Lluvia (mm)");
+                    cellCons2Title.SetCellValue("X 2 per. (lts)");
+                    cellCons4Title.SetCellValue("X 4 per. (lts)");
+                    cellCons6Title.SetCellValue("X 6 per. (lts)");
+                    cellCons8Title.SetCellValue("X 8 per. (lts)");
+
+                    for (int j = 0; j < myDistribution.ValuesInOrderOfAppearance.Count; j++)
+                    {
+                        Rain rain = myDistribution.ValuesInOrderOfAppearance[j];
+
+                        rowNumber++;
+                        IRow rowValue = precipitacionSheet.CreateRow(rowNumber);
+
+                        ICell cellAnioValue = rowValue.CreateCell(0, CellType.STRING);
+                        ICell cellMesValue = rowValue.CreateCell(1, CellType.STRING);
+                        ICell cellSemanaValue = rowValue.CreateCell(2, CellType.STRING);
+                        ICell cellDiaValue = rowValue.CreateCell(3, CellType.STRING);
+                        ICell cellCantValue = rowValue.CreateCell(4, CellType.NUMERIC);
+                        ICell cellCons2Value = rowValue.CreateCell(5, CellType.NUMERIC);
+                        ICell cellCons4Value = rowValue.CreateCell(6, CellType.NUMERIC);
+                        ICell cellCons6Value = rowValue.CreateCell(7, CellType.NUMERIC);
+                        ICell cellCons8Value = rowValue.CreateCell(8, CellType.NUMERIC);
+
+                        cellAnioValue.SetCellValue(rain.Period.Year);
+                        cellMesValue.SetCellValue(rain.Period.Month);
+                        cellSemanaValue.SetCellValue(rain.Period.Week);
+                        cellDiaValue.SetCellValue(rain.Period.Day);
+                        cellCantValue.SetCellValue(rain.Quantity);
+                        cellCons2Value.SetCellValue(((MonthTabItemContent)tab.Content).List2.ElementAt(j).Consumed);
+                        cellCons4Value.SetCellValue(((MonthTabItemContent)tab.Content).List4.ElementAt(j).Consumed);
+                        cellCons6Value.SetCellValue(((MonthTabItemContent)tab.Content).List6.ElementAt(j).Consumed);
+                        cellCons8Value.SetCellValue(((MonthTabItemContent)tab.Content).List8.ElementAt(j).Consumed);
+                    }
+                }
+
+                FileStream sw = File.Create(dialog.FileName);
+                workbook.Write(sw);
+                sw.Close();
+            }
+        }
 
         #region Simulation Methods
 
