@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Distribution
 {
-    private const int RANK_PRECISENESS = 40;
+    private const int RANK_PRECISENESS = 1000;
     public int RankCount 
     {
         get
