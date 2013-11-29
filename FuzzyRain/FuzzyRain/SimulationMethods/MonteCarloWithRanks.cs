@@ -60,9 +60,9 @@ namespace SimulationMethods
             while (cantEvents < 20 || Math.Abs(originalAvg - avg) > ConvergenceError) //|| Math.Abs(originalDesv - desv) > ConvergenceError)
             {
                 //TODO: incrementa el error de convergencia en un 0.1 cada 100 mil eventos para que no se de el caso que nunca converja y se cuelgue la app. Consultar.
-                if (cantEvents > x * 100000)
+                if (cantEvents > x * 10000)
                 {
-                    ConvergenceError += 1;
+                    ConvergenceError += 0.5;
                     x++;
                 }
 
