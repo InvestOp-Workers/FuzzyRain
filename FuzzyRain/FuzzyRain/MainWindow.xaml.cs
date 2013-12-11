@@ -164,7 +164,7 @@ namespace FuzzyRain
             }
             
             this.numberOfEvents--;
-            for (int i = 10; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
                 ((MonthTabItemContent)tab.Content).Tick();                
@@ -259,7 +259,7 @@ namespace FuzzyRain
             // Set Parsed Data
             SetInitialInputData(distributions);
             
-            for (int i = 10; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 // Iniciar la simulacion
                 models[i] = new MonteCarloWithRanks(ErrorOfConvergence, distributions[i]);
@@ -344,7 +344,7 @@ namespace FuzzyRain
 
         private void CleanAllInitialData()
         {
-            for (int i = 10; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
                 ((MonthTabItemContent)tab.Content).CleanInitialData();
@@ -353,7 +353,7 @@ namespace FuzzyRain
 
         private void SetInitialInputData(Distribution[] distributions)
         {
-            for (int i = 10; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
                 ((MonthTabItemContent)tab.Content).SetInitialInputData(distributions[i]);
@@ -362,7 +362,7 @@ namespace FuzzyRain
 
         private void SetInitialOutputData(MonteCarloWithRanks[] models, int numberOfEvents)
         {
-            for (int i = 10; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 TabItem tab = (TabItem)tabMonths.Items[i - 1];
                 ((MonthTabItemContent)tab.Content).SetInitialOutputData(models[i], numberOfEvents);

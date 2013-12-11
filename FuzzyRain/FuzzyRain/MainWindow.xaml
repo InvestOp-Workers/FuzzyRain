@@ -76,40 +76,40 @@
 
                 <TabControl x:Name="tabMonths" >
                     <TabItem x:Name="tabItem_01" Header="Enero" >
-                        <myUserControl:MonthTabItemContent MonthName="Enero"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Enero" MonthNumber="1"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_02" Header="Febrero" >
-                        <myUserControl:MonthTabItemContent MonthName="Febrero"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Febrero" MonthNumber="2"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_03" Header="Marzo" >
-                        <myUserControl:MonthTabItemContent MonthName="Marzo"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Marzo" MonthNumber="3"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_04" Header="Abril" >
-                        <myUserControl:MonthTabItemContent MonthName="Abril"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Abril" MonthNumber="4"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_05" Header="Mayo" >
-                        <myUserControl:MonthTabItemContent MonthName="Mayo"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Mayo" MonthNumber="5"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_06" Header="Junio" >
-                        <myUserControl:MonthTabItemContent MonthName="Junio"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Junio" MonthNumber="6"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_07" Header="Julio" >
-                        <myUserControl:MonthTabItemContent MonthName="Julio"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Julio" MonthNumber="7"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_08" Header="Agosto" >
-                        <myUserControl:MonthTabItemContent MonthName="Agosto"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Agosto" MonthNumber="8"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_09" Header="Septiembre" >
-                        <myUserControl:MonthTabItemContent MonthName="Septiembre"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Septiembre" MonthNumber="9"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_10" Header="Octubre" IsSelected="True">
-                        <myUserControl:MonthTabItemContent MonthName="Octubre"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Octubre" MonthNumber="10"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_11" Header="Noviembre">
-                        <myUserControl:MonthTabItemContent MonthName="Noviembre"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Noviembre" MonthNumber="11"></myUserControl:MonthTabItemContent>
                     </TabItem>
                     <TabItem x:Name="tabItem_12" Header="Diciembre">
-                        <myUserControl:MonthTabItemContent MonthName="Diciembre"></myUserControl:MonthTabItemContent>
+                        <myUserControl:MonthTabItemContent MonthName="Diciembre" MonthNumber="12"></myUserControl:MonthTabItemContent>
                     </TabItem>
                 </TabControl>
                                 

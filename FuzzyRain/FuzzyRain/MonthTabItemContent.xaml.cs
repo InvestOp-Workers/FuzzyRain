@@ -43,6 +43,27 @@ namespace FuzzyRain
         }
     }
 
+    public class Point2 : DependencyObject
+    {
+        public static readonly DependencyProperty _period = DependencyProperty.Register("Period", typeof(int), typeof(Point2));
+        public Point2(int period, double rain)
+        {
+            Period = period;
+            Rain = rain;
+        }
+        public int Period
+        {
+            get { return (int)GetValue(_period); }
+            set { SetValue(_period, value); }
+        }
+        public static readonly DependencyProperty _rain = DependencyProperty.Register("Rain", typeof(double), typeof(Point2));
+        public double Rain
+        {
+            get { return (double)GetValue(_rain); }
+            set { SetValue(_rain, value); }
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MonthTab.xaml
     /// </summary>
@@ -53,6 +74,13 @@ namespace FuzzyRain
         int eventsCount;
 
         public string MonthName { get; set; }
+        public int MonthNumber { get; set; }
+
+        ObservableCollection<Point2> _listRainPeriods = new ObservableCollection<Point2>();
+        public ObservableCollection<Point2> ListRainPeriods
+        {
+            get { return _listRainPeriods; }
+        }
 
         ObservableCollection<Point> _list2 = new ObservableCollection<Point>();
         public ObservableCollection<Point> List2
@@ -98,8 +126,10 @@ namespace FuzzyRain
 
             ucOutputData.CleanData();
             ucOutputData.CleanDataList();
-            ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);            
+            ucOutputData.SetConvergenceData(model.ConvergenceAvg, model.ConvergenceDesv, model.ConvergenceValue);
 
+            ListRainPeriods.Clear();
+            serieRainPeriod.Title = GetLabelText();
             List2.Clear();
             List4.Clear();
             List6.Clear();
@@ -114,7 +144,9 @@ namespace FuzzyRain
             ucInputData.CleanData();
             ucOutputData.CleanData();
             ucOutputData.CleanDataList();
-            
+
+            ListRainPeriods.Clear();
+            serieRainPeriod.Title = "";
             List2.Clear();
             List4.Clear();
             List6.Clear();
@@ -140,10 +172,49 @@ namespace FuzzyRain
             _list6.Add(new Point(rain, consumo6));
             _list8.Add(new Point(rain, consumo8));
 
+            _listRainPeriods.Add(new Point2(GetPeriodAsInteger(myDistribution.ValuesInOrderOfAppearance.Last().Period), myDistribution.ValuesInOrderOfAppearance.Last().Quantity));
+
             eventsCount -= 1;
             if (eventsCount == 0)
             {
                 ucOutputData.Finalize(myDistribution);                
+            }            
+        }
+
+        private string GetLabelText()
+        {
+            if (myDistribution != null)
+            {
+                switch (myDistribution.SimulationData.SimulationType)
+                {
+                    case SimulationType.Daily:
+                        return "precip. (mm) \n x día";
+                    case SimulationType.Weekly:
+                        return "precip. (mm) \n x semana";
+                    case SimulationType.Monthly:
+                        return "precip. (mm) \n x mes";
+                    default:
+                        return "precip. (mm) \n x semana";
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private int GetPeriodAsInteger(Period period)
+        {
+            switch (myDistribution.SimulationData.SimulationType)
+            {
+                case SimulationType.Daily:
+                    return period.DayInt + ((period.YearInt - 1) * 30);
+                case SimulationType.Weekly:
+                    return period.WeekInt + ((period.YearInt - 1) * 4);
+                case SimulationType.Monthly:
+                    return period.YearInt;
+                default:
+                    return period.WeekInt + ((period.YearInt - 1) * 4);
             }            
         }
 
