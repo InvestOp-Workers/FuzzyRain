@@ -64,6 +64,27 @@ namespace FuzzyRain
         }
     }
 
+    public class Point3 : DependencyObject
+    {
+        public static readonly DependencyProperty _period = DependencyProperty.Register("PeriodOfConsume", typeof(int), typeof(Point2));
+        public Point3(int period, double consume)
+        {
+            PeriodOfConsume = period;
+            Consume = consume;
+        }
+        public int PeriodOfConsume
+        {
+            get { return (int)GetValue(_period); }
+            set { SetValue(_period, value); }
+        }
+        public static readonly DependencyProperty _consume = DependencyProperty.Register("Consume", typeof(double), typeof(Point2));
+        public double Consume
+        {
+            get { return (double)GetValue(_consume); }
+            set { SetValue(_consume, value); }
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MonthTab.xaml
     /// </summary>
@@ -80,6 +101,30 @@ namespace FuzzyRain
         public ObservableCollection<Point2> ListRainPeriods
         {
             get { return _listRainPeriods; }
+        }
+
+        ObservableCollection<Point3> _listConsumePeriod2 = new ObservableCollection<Point3>();
+        public ObservableCollection<Point3> ListConsumePeriod2
+        {
+            get { return _listConsumePeriod2; }
+        }
+
+        ObservableCollection<Point3> _listConsumePeriod4 = new ObservableCollection<Point3>();
+        public ObservableCollection<Point3> ListConsumePeriod4
+        {
+            get { return _listConsumePeriod4; }
+        }
+
+        ObservableCollection<Point3> _listConsumePeriod6 = new ObservableCollection<Point3>();
+        public ObservableCollection<Point3> ListConsumePeriod6
+        {
+            get { return _listConsumePeriod6; }
+        }
+
+        ObservableCollection<Point3> _listConsumePeriod8 = new ObservableCollection<Point3>();
+        public ObservableCollection<Point3> ListConsumePeriod8
+        {
+            get { return _listConsumePeriod8; }
         }
 
         ObservableCollection<Point> _list2 = new ObservableCollection<Point>();
@@ -130,6 +175,19 @@ namespace FuzzyRain
 
             ListRainPeriods.Clear();
             serieRainPeriod.Title = GetLabelText();
+            serieConsumedPeriod2.Title = GetLabelTextConsumePeriod("2");
+            serieConsumedPeriod4.Title = GetLabelTextConsumePeriod("4");
+            serieConsumedPeriod6.Title = GetLabelTextConsumePeriod("6");
+            serieConsumedPeriod8.Title = GetLabelTextConsumePeriod("8");
+            serieConsumedRain2.Title = GetLabelTextConsumeRain("2");
+            serieConsumedRain4.Title = GetLabelTextConsumeRain("4");
+            serieConsumedRain6.Title = GetLabelTextConsumeRain("6");
+            serieConsumedRain8.Title = GetLabelTextConsumeRain("8");
+            
+            ListConsumePeriod2.Clear();
+            ListConsumePeriod4.Clear();
+            ListConsumePeriod6.Clear();
+            ListConsumePeriod8.Clear();
             List2.Clear();
             List4.Clear();
             List6.Clear();
@@ -147,6 +205,18 @@ namespace FuzzyRain
 
             ListRainPeriods.Clear();
             serieRainPeriod.Title = "";
+            serieConsumedPeriod2.Title = "";
+            serieConsumedPeriod4.Title = "";
+            serieConsumedPeriod6.Title = "";
+            serieConsumedPeriod8.Title = "";
+            serieConsumedRain2.Title = "";
+            serieConsumedRain4.Title = "";
+            serieConsumedRain6.Title = "";
+            serieConsumedRain8.Title = "";
+            ListConsumePeriod2.Clear();
+            ListConsumePeriod4.Clear();
+            ListConsumePeriod6.Clear();
+            ListConsumePeriod8.Clear();
             List2.Clear();
             List4.Clear();
             List6.Clear();
@@ -173,6 +243,10 @@ namespace FuzzyRain
             _list8.Add(new Point(rain, consumo8));
 
             _listRainPeriods.Add(new Point2(GetPeriodAsInteger(myDistribution.ValuesInOrderOfAppearance.Last().Period), myDistribution.ValuesInOrderOfAppearance.Last().Quantity));
+            _listConsumePeriod2.Add(new Point3(GetPeriodAsInteger(myDistribution.ValuesInOrderOfAppearance.Last().Period), consumo2));
+            _listConsumePeriod4.Add(new Point3(GetPeriodAsInteger(myDistribution.ValuesInOrderOfAppearance.Last().Period), consumo4));
+            _listConsumePeriod6.Add(new Point3(GetPeriodAsInteger(myDistribution.ValuesInOrderOfAppearance.Last().Period), consumo6));
+            _listConsumePeriod8.Add(new Point3(GetPeriodAsInteger(myDistribution.ValuesInOrderOfAppearance.Last().Period), consumo8));
 
             eventsCount -= 1;
             if (eventsCount == 0)
@@ -195,6 +269,50 @@ namespace FuzzyRain
                         return "precip. (mm) \n x mes";
                     default:
                         return "precip. (mm) \n x semana";
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private string GetLabelTextConsumePeriod(string countConsumers)
+        {
+            if (myDistribution != null)
+            {
+                switch (myDistribution.SimulationData.SimulationType)
+                {
+                    case SimulationType.Daily:
+                        return "Cons x" + countConsumers + " (lts x día)";
+                    case SimulationType.Weekly:
+                        return "Cons x" + countConsumers + " (lts x sem)";
+                    case SimulationType.Monthly:
+                        return "Cons x" + countConsumers + " (lts x mes)";
+                    default:
+                        return "Cons x" + countConsumers + " (lts x sem)";
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private string GetLabelTextConsumeRain(string countConsumers)
+        {
+            if (myDistribution != null)
+            {
+                switch (myDistribution.SimulationData.SimulationType)
+                {
+                    case SimulationType.Daily:
+                        return "Cons x" + countConsumers + " (lts) x prec(mm)";
+                    case SimulationType.Weekly:
+                        return "Cons x" + countConsumers + " (lts) x prec(mm)";
+                    case SimulationType.Monthly:
+                        return "Cons x" + countConsumers + " (lts) x prec(mm)";
+                    default:
+                        return "Cons x" + countConsumers + " (lts) x prec(mm)";
                 }
             }
             else

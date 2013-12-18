@@ -12,23 +12,23 @@
 
         <StackPanel Orientation="Vertical"  Height="auto" Width="850" Margin="0,0,30,0">
 
-            <chartingToolkit:Chart Height="280">
+            <chartingToolkit:Chart Height="200">
                 <chartingToolkit:ColumnSeries Name="serieRainPeriod" ItemsSource="{Binding Path=ListRainPeriods}" IndependentValuePath="Period" DependentValuePath="Rain" />
             </chartingToolkit:Chart>
-            
-            <chartingToolkit:Chart Height="280">               
-                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List2}" IndependentValuePath="Rain" DependentValuePath="Consumed" Title="Cons. x 2"/>            
-                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List4}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 4"/>            
-                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List6}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 6"/>            
-                <chartingToolkit:LineSeries ItemsSource="{Binding Path=List8}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 8"/>
+
+            <chartingToolkit:Chart Height="200">
+                <chartingToolkit:ColumnSeries Name="serieConsumedPeriod2" ItemsSource="{Binding Path=ListConsumePeriod2}" IndependentValuePath="PeriodOfConsume" DependentValuePath="Consume" Title="Cons. x 2" />
+                <chartingToolkit:ColumnSeries Name="serieConsumedPeriod4" ItemsSource="{Binding Path=ListConsumePeriod4}" IndependentValuePath="PeriodOfConsume" DependentValuePath="Consume" Title="Cons. x 4" />
+                <chartingToolkit:ColumnSeries Name="serieConsumedPeriod6" ItemsSource="{Binding Path=ListConsumePeriod6}" IndependentValuePath="PeriodOfConsume" DependentValuePath="Consume" Title="Cons. x 6" />
+                <chartingToolkit:ColumnSeries Name="serieConsumedPeriod8" ItemsSource="{Binding Path=ListConsumePeriod8}" IndependentValuePath="PeriodOfConsume" DependentValuePath="Consume" />
             </chartingToolkit:Chart>
 
-            <!--<chartingToolkit:Chart Height="280">
-                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List2}" IndependentValuePath="Rain" DependentValuePath="Consumed" Title="Cons. x 2"/>
-                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List4}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 4"/>
-                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List6}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 6"/>
-                <chartingToolkit:ScatterSeries ItemsSource="{Binding Path=List8}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 8"/>
-            </chartingToolkit:Chart>-->
+            <chartingToolkit:Chart Height="200">
+                <chartingToolkit:LineSeries Name="serieConsumedRain2" ItemsSource="{Binding Path=List2}" IndependentValuePath="Rain" DependentValuePath="Consumed" Title="Cons. x 2"/>
+                <chartingToolkit:LineSeries Name="serieConsumedRain4" ItemsSource="{Binding Path=List4}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 4"/>
+                <chartingToolkit:LineSeries Name="serieConsumedRain6" ItemsSource="{Binding Path=List6}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 6"/>
+                <chartingToolkit:LineSeries Name="serieConsumedRain8" ItemsSource="{Binding Path=List8}" IndependentValuePath="Rain" DependentValuePath="Consumed"  Title="Cons. x 8"/>
+            </chartingToolkit:Chart>
 
             <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Height="36" Margin="0,10,0,0">
                 <Button Content="Guardar Resultados" Height="26" Margin="5" Name="ButtonGuardarExcel" Width="Auto" Click="ButtonGuardarExcel_Click" />

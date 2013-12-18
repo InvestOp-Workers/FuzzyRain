@@ -40,7 +40,7 @@ namespace FuzzyRain
 
         private const double CONVERGENCE_ERROR = 0.25;
 
-        private const int NUMBER_OF_EVENTS_DEFAULT = 40;
+        private const int NUMBER_OF_EVENTS_DEFAULT = 20;
 
         private const double SURFACE = 1200.00;
         private const double VOLUMEN = 100.00;
